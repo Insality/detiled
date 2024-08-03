@@ -55,7 +55,7 @@ After that, select `Project ▸ Fetch Libraries` to update [library dependencies
 
 ## Game Example
 
-Look at [Shooting Circles](https://github.com/Insality/shooting_circles) game example to see how to use the Decore library in a real game project.
+Look at [Shooting Circles](https://github.com/Insality/shooting_circles) game example to see how to use the Detiled library in a real game project.
 
 
 ## API Reference
