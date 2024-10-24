@@ -147,7 +147,8 @@ end
 ---@param tile_global_id number
 ---@return detiled.tileset.tile|nil, detiled.tileset|nil
 function M.get_tile_by_gid(map, tile_global_id)
-	for tileset_index = 1, #map.tilesets do
+	-- TODO: is always tilesest goes in sorted order?
+	for tileset_index = #map.tilesets, 1, -1 do
 		local tileset = map.tilesets[tileset_index]
 		local first_gid = tileset.firstgid
 		if tile_global_id >= first_gid then

@@ -56,25 +56,26 @@ local function get_entities_from_object_layer(layer, map)
 	local entities = {}
 
 	local map_height = map.height * map.tileheight
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 1
+	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
 	for object_index = 1, #layer.objects do
 		local object = layer.objects[object_index]
 		local rotation = -object.rotation
 
 		local object_gid = object.gid
-		if object_gid then
-			-- If object has a tileset
+		if object_gid then -- If object has a tileset, spawn from tileset
 			local tile, tileset = detiled_internal.get_tile_by_gid(map, object_gid)
 			if tile and tileset then
 				local entity = {}
 				local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, tile, map_height)
+				position_x = position_x + (layer.offsetx or 0)
+				position_y = position_y - (layer.offsety or 0)
 
 				local components = {
 					name = object.name ~= "" and object.name or nil,
 					prefab_id = tile.class,
 					pack_id = tileset.class,
-					tiled_id = object.id,
+					tiled_id = tostring(object.id),
 					layer_id = layer.name,
 
 					transform = {
@@ -108,7 +109,7 @@ local function get_entities_from_object_layer(layer, map)
 
 				table.insert(entities, entity)
 			end
-		elseif (object.class and object.class ~= "") or (object.properties) then
+		elseif (object.class and object.class ~= "") or (object.properties) then -- If object not from tileset and has a prefab to spawn
 			local entity = {}
 			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
 			--position_y = map_height - position_y
@@ -119,7 +120,7 @@ local function get_entities_from_object_layer(layer, map)
 			local components = {
 				name = object.name ~= "" and object.name or nil,
 				prefab_id = object.class ~= "" and object.class or nil,
-				tiled_id = object.id,
+				tiled_id = tostring(object.id),
 				layer_id = layer.name,
 
 				transform = {
@@ -145,7 +146,7 @@ local function get_entities_from_object_layer(layer, map)
 			entity.components = components
 
 			table.insert(entities, entity)
-		else
+		else -- Empty object from tiled
 			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
 			position_x = position_x + (layer.offsetx or 0)
 			position_y = position_y - (layer.offsety or 0)
@@ -154,7 +155,7 @@ local function get_entities_from_object_layer(layer, map)
 			local entity = {
 				components = {
 					name = object.name ~= "" and object.name or nil,
-					tiled_id = object.id,
+					tiled_id = tostring(object.id),
 					layer_id = layer.name,
 
 					transform = {
@@ -372,7 +373,7 @@ end
 function M.get_decore_entities(tiled_tileset)
 	---@type decore.entities_pack_data
 	local entities = {
-		pack_id = tiled_tileset.class,
+		pack_id = tiled_tileset.class or "tiled",
 		entities = {}
 	}
 

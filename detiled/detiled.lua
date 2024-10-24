@@ -5,7 +5,7 @@ local detiled_decore = require("detiled.detiled_decore")
 local M = {}
 
 
----@param logger_instance detiled.logger|nil
+---@param logger_instance detiled.logger|table|nil
 function M.set_logger(logger_instance)
 	detiled_internal.logger = logger_instance or detiled_internal.empty_logger
 end
