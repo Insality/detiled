@@ -88,6 +88,25 @@ function M.load_json(json_path)
 end
 
 
+---@generic T
+---@param config_or_path T|table|string
+---@return T|table|nil
+function M.load_config(config_or_path)
+	if type(config_or_path) == "string" then
+		local entities_path = config_or_path --[[@as string]]
+		local entities_data = M.load_json(entities_path)
+		if not entities_data then
+			M.logger:error("Can't load config at path", config_or_path)
+			return nil
+		end
+
+		return entities_data
+	end
+
+	return config_or_path --[[@as table]]
+end
+
+
 -- Get the filename (image) when given a complete path
 function M.get_filename(path)
 	local parts = M.split(path, "/")

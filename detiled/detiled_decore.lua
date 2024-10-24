@@ -1,4 +1,3 @@
-local decore = require("decore.decore")
 local detiled_internal = require("detiled.detiled_internal")
 
 
@@ -29,10 +28,8 @@ local function get_entities_from_tile_layer(layer, map)
 			---@type decore.entities_pack_data.instance
 			local entity = {}
 			entity.prefab_id = tile.class
-			entity.pack_id = tileset.class
 			entity.components = {
 				prefab_id = tile.class,
-				pack_id = tileset.class,
 				layer_id = layer.name,
 				transform = {
 					position_x = pos_x,
@@ -75,7 +72,6 @@ local function get_entities_from_object_layer(layer, map)
 				local components = {
 					name = object.name ~= "" and object.name or nil,
 					prefab_id = tile.class,
-					pack_id = tileset.class,
 					tiled_id = tostring(object.id),
 					layer_id = layer.name,
 
@@ -105,7 +101,6 @@ local function get_entities_from_object_layer(layer, map)
 				end
 
 				entity.prefab_id = tile.class
-				entity.pack_id = tileset.class
 				entity.components = components
 
 				table.insert(entities, entity)
@@ -291,33 +286,20 @@ function M.create_world_from_tiled_map(tiled_map_path)
 	local map = detiled_internal.load_json(tiled_map_path)
 	if not map then
 		detiled_internal.logger:error("Failed to load map", tiled_map_path)
-		return nil
+		return {}
 	end
 
 	return M.get_decore_world(map)
 end
 
 
----@param world_id string
----@param tiled_map_path string
----@return table<string, decore.world.instance>|nil
-function M.create_worlds_from_tiled_map(world_id, tiled_map_path)
-	local map = detiled_internal.load_json(tiled_map_path)
-	if not map then
-		detiled_internal.logger:error("Failed to load map", tiled_map_path)
-		return nil
-	end
-
-	return M.get_decore_worlds(world_id, map)
-end
-
-
 ---@param tiled_tileset_path string
----@return decore.entities_pack_data|nil
+---@return table<string, entity>
 function M.create_entities_from_tiled_tileset(tiled_tileset_path)
 	local tileset = detiled_internal.load_json(tiled_tileset_path)
 	if not tileset then
-		return nil
+		detiled_internal.logger:error("Failed to load tileset", tiled_tileset_path)
+		return {}
 	end
 
 	detiled_internal.load_tileset(tileset)
@@ -362,7 +344,6 @@ function M.get_decore_worlds(world_id, tiled_map)
 
 	local main_world = worlds[world_id] or {
 		entities = {},
-		included_worlds = {},
 	}
 	worlds[world_id] = main_world
 
@@ -377,13 +358,10 @@ end
 
 
 ---@param tiled_tileset detiled.tileset
----@return decore.entities_pack_data
+---@return table<string, entity> entities Key is prefab_id
 function M.get_decore_entities(tiled_tileset)
-	---@type decore.entities_pack_data
-	local entities = {
-		pack_id = tiled_tileset.class or "tiled",
-		entities = {}
-	}
+	---@type entity[]
+	local entities = {}
 
 	local tiles = tiled_tileset.tiles
 	for index = 1, #tiles do
@@ -393,7 +371,7 @@ function M.get_decore_entities(tiled_tileset)
 		local entity = detiled_internal.get_components_property(tile.properties) or {}
 		--entity.transform = decore.create_component("transform")
 		assert(prefab_id, "The class field in entity in tiled tileset should be set")
-		entities.entities[prefab_id] = entity
+		entities[prefab_id] = entity
 	end
 
 	return entities
