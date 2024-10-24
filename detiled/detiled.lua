@@ -1,8 +1,21 @@
+local decore = require("decore.decore")
 local detiled_internal = require("detiled.detiled_internal")
 local detiled_decore = require("detiled.detiled_decore")
 
 ---@class detiled
 local M = {}
+
+
+function M.init()
+	decore.register_components({
+		pack_id = "detiled",
+		components = {
+			name = false,
+			tiled_id = false,
+			layer_id = false,
+		}
+	})
+end
 
 
 ---@param logger_instance detiled.logger|table|nil

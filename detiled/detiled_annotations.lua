@@ -1,5 +1,10 @@
 ---Download Defold annotations from here: https://github.com/astrochili/defold-annotations/releases/
 
+---@class entity
+---@field name string|nil @The entity name
+---@field tiled_id number|nil @The entity id from Tiled, autofilled by decore.create_entity
+---@field layer_id number|nil @The layer name from Tiled, autofilled by decore.create_entity
+
 ---@class detiled.tileset
 ---@field class string
 ---@field columns number
@@ -119,11 +124,3 @@
 ---@class detiled.map.tileset
 ---@field firstgid number
 ---@field source string
-
----Logger interface
----@class detiled.logger
----@field trace fun(logger: detiled.logger, message: string, data: any|nil)
----@field debug fun(logger: detiled.logger, message: string, data: any|nil)
----@field info fun(logger: detiled.logger, message: string, data: any|nil)
----@field warn fun(logger: detiled.logger, message: string, data: any|nil)
----@field error fun(logger: detiled.logger, message: string, data: any|nil)

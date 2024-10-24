@@ -1,6 +1,7 @@
 local decore = require("decore.decore")
 local detiled_internal = require("detiled.detiled_internal")
 
+
 local M = {}
 local LAYER_TILE = "tilelayer"
 local LAYER_OBJECTS = "objectgroup"
@@ -99,7 +100,7 @@ local function get_entities_from_object_layer(layer, map)
 							tiled_components.position_z = nil
 						end
 
-						decore.apply_components(components, tiled_components)
+						detiled_internal.apply_components(components, tiled_components)
 					end
 				end
 
@@ -109,7 +110,7 @@ local function get_entities_from_object_layer(layer, map)
 
 				table.insert(entities, entity)
 			end
-		elseif (object.class and object.class ~= "") or (object.properties) then -- If object not from tileset and has a prefab to spawn
+		elseif object.class and object.class ~= "" then -- If object not from tileset and has a prefab to spawn
 			local entity = {}
 			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
 			--position_y = map_height - position_y
@@ -120,7 +121,7 @@ local function get_entities_from_object_layer(layer, map)
 			local components = {
 				name = object.name ~= "" and object.name or nil,
 				prefab_id = object.class ~= "" and object.class or nil,
-				tiled_id = tostring(object.id),
+				tiled_id = object.id,
 				layer_id = layer.name,
 
 				transform = {
@@ -138,7 +139,7 @@ local function get_entities_from_object_layer(layer, map)
 			if object.properties then
 				local tiled_components = detiled_internal.get_components_property(object.properties)
 				if tiled_components then
-					decore.apply_components(components, tiled_components)
+					detiled_internal.apply_components(components, tiled_components)
 				end
 			end
 
@@ -155,7 +156,7 @@ local function get_entities_from_object_layer(layer, map)
 			local entity = {
 				components = {
 					name = object.name ~= "" and object.name or nil,
-					tiled_id = tostring(object.id),
+					tiled_id = object.id,
 					layer_id = layer.name,
 
 					transform = {
@@ -168,6 +169,13 @@ local function get_entities_from_object_layer(layer, map)
 					}
 				}
 			}
+
+			if object.properties then
+				local tiled_components = detiled_internal.get_components_property(object.properties)
+				if tiled_components then
+					detiled_internal.apply_components(entity.components, tiled_components)
+				end
+			end
 
 			table.insert(entities, entity)
 		end
@@ -383,7 +391,7 @@ function M.get_decore_entities(tiled_tileset)
 		local prefab_id = tile.class
 		---@type entity
 		local entity = detiled_internal.get_components_property(tile.properties) or {}
-		entity.transform = decore.create_component("transform")
+		--entity.transform = decore.create_component("transform")
 		assert(prefab_id, "The class field in entity in tiled tileset should be set")
 		entities.entities[prefab_id] = entity
 	end

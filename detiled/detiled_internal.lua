@@ -2,10 +2,18 @@ local LOADED_TILESETS = {}
 
 local M = {}
 
+local TYPE_TABLE = "table"
 local EMPTY_FUNCTION = function(self, message, context) end
 
----@type detiled.logger
-M.empty_logger = {
+---@class detiled.logger
+---@field trace fun(self: detiled.logger, message: string, context: any)
+---@field debug fun(self: detiled.logger, message: string, context: any)
+---@field info fun(self: detiled.logger, message: string, context: any)
+---@field warn fun(self: detiled.logger, message: string, context: any)
+---@field error fun(self: detiled.logger, message: string, context: any)
+
+---@type detiled.logger|nil
+M.logger = {
 	trace = EMPTY_FUNCTION,
 	debug = EMPTY_FUNCTION,
 	info = EMPTY_FUNCTION,
@@ -13,13 +21,12 @@ M.empty_logger = {
 	error = EMPTY_FUNCTION,
 }
 
----@type detiled.logger
-M.logger = {
-	trace = function(_, msg) print("TRACE: " .. msg) end,
-	debug = function(_, msg, data) pprint("DEBUG: " .. msg, data) end,
-	info = function(_, msg, data) pprint("INFO: " .. msg, data) end,
-	warn = function(_, msg, data) pprint("WARN: " .. msg, data) end,
-	error = function(_, msg, data) pprint("ERROR: " .. msg, data) end
+M.empty_logger = {
+	trace = EMPTY_FUNCTION,
+	debug = EMPTY_FUNCTION,
+	info = EMPTY_FUNCTION,
+	warn = EMPTY_FUNCTION,
+	error = EMPTY_FUNCTION,
 }
 
 
@@ -218,6 +225,34 @@ function M.get_components_property(components)
 	end
 
 	return parsed_components
+end
+
+
+--- Merge one table into another recursively
+---@param t1 table
+---@param t2 any
+function M.merge_tables(t1, t2)
+	for k, v in pairs(t2) do
+		if type(v) == "table" and type(t1[k]) == "table" then
+			M.merge_tables(t1[k], v)
+		else
+			t1[k] = v
+		end
+	end
+end
+
+
+---@param entity entity
+---@param components table<string, any>
+function M.apply_components(entity, components)
+	for component_id, component_data in pairs(components) do
+		if type(component_data) == TYPE_TABLE then
+			entity[component_id] = entity[component_id] or {}
+			M.merge_tables(entity[component_id], component_data)
+		else
+			entity[component_id] = component_data
+		end
+	end
 end
 
 
