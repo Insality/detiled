@@ -55,28 +55,28 @@ end
 ---@param map_path string
 ---@return decore.world.instance
 function M.get_world_from_tiled_map(map_path)
-	return detiled_decore.create_world_from_tiled_map(map_path)
-end
-
-
----@param maps_list_path string|table
----@return decore.worlds_pack_data[]
-function M.get_worlds_from_tiled_maps(maps_list_path)
-	local map_list = detiled_internal.load_config(maps_list_path)
-	if not map_list then
+	local map = detiled_internal.load_json(map_path)
+	if not map then
+		detiled_internal.logger:error("Failed to load map", map_path)
 		return {}
 	end
 
-	local worlds_pack = {}
+	return detiled_decore.create_world_from_tiled_map(map)
+end
 
-	for map_id, map_path in pairs(map_list) do
-		local world = detiled_decore.create_world_from_tiled_map(map_path)
-		if world then
-			worlds_pack[map_id] = world
-		end
+
+---Split a Tiled map into multiple worlds, one for each layer. Main world contains all layers, except the with "exclude" property
+---@param world_id string
+---@param map_path string
+---@return table<string, decore.world.instance> world_pack Each layer from the Tiled map is a sub-world with the world_id:layer_id format
+function M.get_worlds_from_tiled_map(world_id, map_path)
+	local map = detiled_internal.load_json(map_path)
+	if not map then
+		detiled_internal.logger:error("Failed to load map", map_path)
+		return {}
 	end
 
-	return worlds_pack
+	return detiled_decore.create_worlds_from_tiled_map(world_id, map)
 end
 
 

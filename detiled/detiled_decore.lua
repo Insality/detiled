@@ -134,6 +134,12 @@ local function get_entities_from_object_layer(layer, map)
 			if object.properties then
 				local tiled_components = detiled_internal.get_components_property(object.properties)
 				if tiled_components then
+					-- Unique case
+					if tiled_components.position_z then
+						components.transform.position_z = components.transform.position_z + tiled_components.position_z
+						tiled_components.position_z = nil
+					end
+
 					detiled_internal.apply_components(components, tiled_components)
 				end
 			end
@@ -168,6 +174,12 @@ local function get_entities_from_object_layer(layer, map)
 			if object.properties then
 				local tiled_components = detiled_internal.get_components_property(object.properties)
 				if tiled_components then
+					-- Unique case
+					if tiled_components.position_z then
+						entity.components.transform.position_z = entity.components.transform.position_z + tiled_components.position_z
+						tiled_components.position_z = nil
+					end
+
 					detiled_internal.apply_components(entity.components, tiled_components)
 				end
 			end
@@ -280,47 +292,20 @@ end
 
 
 
----@param tiled_map_path string
----@return decore.world.instance|nil
-function M.create_world_from_tiled_map(tiled_map_path)
-	local map = detiled_internal.load_json(tiled_map_path)
-	if not map then
-		detiled_internal.logger:error("Failed to load map", tiled_map_path)
-		return {}
-	end
-
-	return M.get_decore_world(map)
-end
-
-
----@param tiled_tileset_path string
----@return table<string, entity>
-function M.create_entities_from_tiled_tileset(tiled_tileset_path)
-	local tileset = detiled_internal.load_json(tiled_tileset_path)
-	if not tileset then
-		detiled_internal.logger:error("Failed to load tileset", tiled_tileset_path)
-		return {}
-	end
-
-	detiled_internal.load_tileset(tileset)
-	return M.get_decore_entities(tileset)
-end
-
-
 ---@param tiled_map detiled.map
 ---@return decore.world.instance
-function M.get_decore_world(tiled_map)
+function M.create_world_from_tiled_map(tiled_map)
 	return {
 		entities = M.get_entities(tiled_map),
 	}
 end
 
 
----Split each layer to separate world. Uses included_worlds to main world
----Layers with "exclude" tag will be ignored in included_worlds, but will be added to world data pack
+---Split each layer to separate world, return as map of worlds
+---@param world_id string
 ---@param tiled_map detiled.map
 ---@return table<string, decore.world.instance>
-function M.get_decore_worlds(world_id, tiled_map)
+function M.create_worlds_from_tiled_map(world_id, tiled_map)
 	local entities = M.get_entities(tiled_map)
 	local worlds = {}
 	local world_ids = {}
@@ -344,6 +329,7 @@ function M.get_decore_worlds(world_id, tiled_map)
 
 	local main_world = worlds[world_id] or {
 		entities = {},
+		included_worlds = {},
 	}
 	worlds[world_id] = main_world
 
@@ -354,6 +340,20 @@ function M.get_decore_worlds(world_id, tiled_map)
 	end
 
 	return worlds
+end
+
+
+---@param tiled_tileset_path string
+---@return table<string, entity>
+function M.create_entities_from_tiled_tileset(tiled_tileset_path)
+	local tileset = detiled_internal.load_json(tiled_tileset_path)
+	if not tileset then
+		detiled_internal.logger:error("Failed to load tileset", tiled_tileset_path)
+		return {}
+	end
+
+	detiled_internal.load_tileset(tileset)
+	return M.get_decore_entities(tileset)
 end
 
 
@@ -369,7 +369,6 @@ function M.get_decore_entities(tiled_tileset)
 		local prefab_id = tile.class
 		---@type entity
 		local entity = detiled_internal.get_components_property(tile.properties) or {}
-		--entity.transform = decore.create_component("transform")
 		assert(prefab_id, "The class field in entity in tiled tileset should be set")
 		entities[prefab_id] = entity
 	end
