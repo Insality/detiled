@@ -1,10 +1,5 @@
 ---Download Defold annotations from here: https://github.com/astrochili/defold-annotations/releases/
 
----@class entity
----@field name string|nil @The entity name
----@field tiled_id string|nil @The entity id from Tiled, autofilled by decore.create_entity
----@field layer_id string|nil @The layer name from Tiled, autofilled by decore.create_entity
-
 ---@class detiled.tileset
 ---@field class string
 ---@field columns number
@@ -30,6 +25,7 @@
 
 ---@class detiled.tileset.tile
 ---@field class string
+---@field type string
 ---@field id number
 ---@field image string
 ---@field imageheight number

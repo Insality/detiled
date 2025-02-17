@@ -1,6 +1,5 @@
 local detiled_internal = require("detiled.detiled_internal")
 
-
 local M = {}
 local LAYER_TILE = "tilelayer"
 local LAYER_OBJECTS = "objectgroup"
@@ -20,6 +19,7 @@ local function get_entities_from_tile_layer(layer, map)
 		local tile_gid = layer.data[tile_index]
 		local tile, tileset = detiled_internal.get_tile_by_gid(map, tile_gid)
 		if tile and tileset then
+			-- TODO: Thid is works only for grid based maps, for isometric or hex we need to use another approach
 			local tile_i = ((tile_index - 1) % map.width)
 			local tile_j = (math.floor((tile_index - 1) / map.width)) + 1
 			local pos_x = tile_i * map.tilewidth
@@ -30,7 +30,7 @@ local function get_entities_from_tile_layer(layer, map)
 			entity.prefab_id = tile.class
 			entity.components = {
 				prefab_id = tile.class,
-				layer_id = layer.name,
+				tiled_layer_id = layer.name,
 				transform = {
 					position_x = pos_x,
 					position_y = map_height - pos_y,
@@ -71,9 +71,9 @@ local function get_entities_from_object_layer(layer, map)
 
 				local components = {
 					name = object.name ~= "" and object.name or nil,
-					prefab_id = tile.class,
+					prefab_id = tile.class or tile.type,
 					tiled_id = tostring(object.id),
-					layer_id = layer.name,
+					tiled_layer_id = layer.name,
 
 					transform = {
 						position_x = position_x,
@@ -100,7 +100,7 @@ local function get_entities_from_object_layer(layer, map)
 					end
 				end
 
-				entity.prefab_id = tile.class
+				entity.prefab_id = tile.class or tile.type
 				entity.components = components
 
 				table.insert(entities, entity)
@@ -117,7 +117,7 @@ local function get_entities_from_object_layer(layer, map)
 				name = object.name ~= "" and object.name or nil,
 				prefab_id = object.class ~= "" and object.class or nil,
 				tiled_id = object.id,
-				layer_id = layer.name,
+				tiled_layer_id = layer.name,
 
 				transform = {
 					position_x = position_x,
@@ -158,7 +158,7 @@ local function get_entities_from_object_layer(layer, map)
 				components = {
 					name = object.name ~= "" and object.name or nil,
 					tiled_id = object.id,
-					layer_id = layer.name,
+					tiled_layer_id = layer.name,
 
 					transform = {
 						position_x = position_x,
@@ -346,16 +346,24 @@ end
 ---@param tiled_tileset_path string
 ---@return table<string, entity>
 function M.create_entities_from_tiled_tileset(tiled_tileset_path)
-	local tileset = detiled_internal.load_json(tiled_tileset_path)
+	local tileset = M.load_tileset(tiled_tileset_path)
+	return M.get_decore_entities(tileset)
+end
+
+
+---@param tileset_path string
+---@return detiled.tileset
+function M.load_tileset(tileset_path)
+	local tileset = detiled_internal.load_json(tileset_path)
 	if not tileset then
-		detiled_internal.logger:error("Failed to load tileset", tiled_tileset_path)
+		detiled_internal.logger:error("Failed to load tileset", tileset_path)
 		return {}
 	end
 
 	detiled_internal.load_tileset(tileset)
-	return M.get_decore_entities(tileset)
-end
 
+	return tileset
+end
 
 ---@param tiled_tileset detiled.tileset
 ---@return table<string, entity> entities Key is prefab_id

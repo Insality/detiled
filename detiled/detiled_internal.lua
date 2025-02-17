@@ -14,11 +14,11 @@ local EMPTY_FUNCTION = function(self, message, context) end
 
 ---@type detiled.logger|nil
 M.logger = {
-	trace = EMPTY_FUNCTION,
-	debug = EMPTY_FUNCTION,
-	info = EMPTY_FUNCTION,
-	warn = EMPTY_FUNCTION,
-	error = EMPTY_FUNCTION,
+	trace = function(_, msg) print("TRACE: " .. msg) end,
+	debug = function(_, msg, data) print("DEBUG: " .. msg, data) end,
+	info = function(_, msg, data) print("INFO: " .. msg, data) end,
+	warn = function(_, msg, data) pprint("WARN: " .. msg, data) end,
+	error = function(_, msg, data) pprint(data) error("ERROR: " .. msg) end
 }
 
 M.empty_logger = {

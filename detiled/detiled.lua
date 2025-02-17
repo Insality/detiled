@@ -12,7 +12,7 @@ function M.init()
 		components = {
 			name = false,
 			tiled_id = false,
-			layer_id = false,
+			tiled_layer_id = false,
 		}
 	})
 end
@@ -49,6 +49,30 @@ end
 ---@return table<string, entity>
 function M.get_entities_from_tileset(tileset_path)
 	return detiled_decore.create_entities_from_tiled_tileset(tileset_path)
+end
+
+
+function M.load_tileset(tileset_path)
+	detiled_decore.load_tileset(tileset_path)
+end
+
+---@param map_or_path detiled.map|string
+---@return entity
+function M.get_entity_from_tiled_map(map_or_path)
+	local map = map_or_path
+	if type(map_or_path) == "string" then
+		map = detiled_internal.load_json(map_or_path) --[[@as detiled.map]]
+		if not map then
+			detiled_internal.logger:error("Failed to load map", map_or_path)
+			return {}
+		end
+	end
+	---@cast map detiled.map
+
+	local entities = detiled_decore.get_entities(map)
+	return {
+		child_instancies = entities,
+	}
 end
 
 
