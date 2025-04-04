@@ -1,8 +1,6 @@
 local detiled_internal = require("detiled.detiled_internal")
 
 local M = {}
-local LAYER_TILE = "tilelayer"
-local LAYER_OBJECTS = "objectgroup"
 
 
 ---@param layer detiled.map.layer
@@ -27,9 +25,9 @@ local function get_entities_from_tile_layer(layer, map)
 
 			---@type decore.entities_pack_data.instance
 			local entity = {}
-			entity.prefab_id = tile.class
+			entity.prefab_id = tile.type
 			entity.components = {
-				prefab_id = tile.class,
+				prefab_id = tile.type,
 				tiled_layer_id = layer.name,
 				transform = {
 					position_x = pos_x,
@@ -201,14 +199,14 @@ function M.get_entities(tiled_map)
 	for layer_index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[layer_index]
 
-		if layer.type == LAYER_TILE then
+		if layer.type == "tilelayer" then
 			local layer_entities = get_entities_from_tile_layer(layer, tiled_map)
 			for index = 1, #layer_entities do
 				table.insert(entities, layer_entities[index])
 			end
 		end
 
-		if layer.type == LAYER_OBJECTS then
+		if layer.type == "objectgroup" then
 			local layer_entities = get_entities_from_object_layer(layer, tiled_map)
 			for index = 1, #layer_entities do
 				table.insert(entities, layer_entities[index])

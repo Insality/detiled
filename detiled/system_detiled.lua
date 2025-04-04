@@ -1,11 +1,9 @@
 local decore = require("decore.decore")
 
-local ecs = require("decore.ecs")
-
 ---@class entity
----@field name string
----@field tiled_id number
----@field tiled_layer_id string
+---@field name string|nil
+---@field tiled_id string|nil
+---@field tiled_layer_id string|nil
 
 decore.register_component("name", "")
 decore.register_component("tiled_id", false)
@@ -18,8 +16,7 @@ local M = {}
 
 ---@return system.detiled
 function M.create_system()
-	local system = setmetatable(ecs.system({id = "detiled"}), { __index = M })
-	return system
+	return decore.system(M, "detiled")
 end
 
 

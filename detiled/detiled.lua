@@ -6,16 +6,14 @@ local detiled_decore = require("detiled.detiled_decore")
 local M = {}
 
 
-function M.init()
-	decore.register_components({
-		pack_id = "detiled",
-		components = {
-			name = false,
-			tiled_id = false,
-			tiled_layer_id = false,
-		}
-	})
-end
+decore.register_components({
+	pack_id = "detiled",
+	components = {
+		name = false,
+		tiled_id = false,
+		tiled_layer_id = false,
+	}
+})
 
 
 ---@param logger_instance detiled.logger|table|nil
@@ -56,6 +54,8 @@ function M.load_tileset(tileset_path)
 	detiled_decore.load_tileset(tileset_path)
 end
 
+
+---Load a tiled map as a decore entity
 ---@param map_or_path detiled.map|string
 ---@return entity
 function M.get_entity_from_tiled_map(map_or_path)
