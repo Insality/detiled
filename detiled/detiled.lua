@@ -5,60 +5,41 @@ local detiled_decore = require("detiled.detiled_decore")
 ---@class detiled
 local M = {}
 
+---All instances created from Tiled will have these components
+decore.register_component("name", nil, "detiled")
+decore.register_component("tiled_id", nil, "detiled")
+decore.register_component("tiled_layer_id", nil, "detiled")
 
-decore.register_components({
-	pack_id = "detiled",
-	components = {
-		name = false,
-		tiled_id = false,
-		tiled_layer_id = false,
-	}
-})
-
-
+---Set a logger instance
 ---@param logger_instance detiled.logger|table|nil
 function M.set_logger(logger_instance)
 	detiled_internal.logger = logger_instance or detiled_internal.empty_logger
 end
 
 
----@param tilesets_path string
----@return decore.entities_pack_data[]|nil
-function M.get_entities_packs_data(tilesets_path)
-	local tileset_list = detiled_internal.load_json(tilesets_path)
-	if not tileset_list then
-		return
-	end
-
-	local entity_packs = {}
-	for index = 1, #tileset_list.tilesets do
-		local tileset_path = tileset_list.tilesets[index]
-
-		local entities = detiled_decore.create_entities_from_tiled_tileset(tileset_path)
-		if entities then
-			table.insert(entity_packs, entities)
-		end
-	end
-
-	return entity_packs
-end
-
-
+---Get all entities descriptions from a tileset
+---You can register these entities with `decore.register_entities`
+---All properties will be configured now from Tiled
 ---@return table<string, entity>
 function M.get_entities_from_tileset(tileset_path)
 	return detiled_decore.create_entities_from_tiled_tileset(tileset_path)
 end
 
 
+---Call this to load a tileset.
+---All tilesets should be loaded before using get_entity_from_map
+---@param tileset_path string
+---@return detiled.tileset
 function M.load_tileset(tileset_path)
-	detiled_decore.load_tileset(tileset_path)
+	return detiled_decore.load_tileset(tileset_path)
 end
 
 
----Load a tiled map as a decore entity
+---Load a tiled map as a Decore entity
+---You can add this entity with `world:addEntity(entity)`
 ---@param map_or_path detiled.map|string
 ---@return entity
-function M.get_entity_from_tiled_map(map_or_path)
+function M.get_entity_from_map(map_or_path)
 	local map = map_or_path
 	if type(map_or_path) == "string" then
 		map = detiled_internal.load_json(map_or_path) --[[@as detiled.map]]
@@ -73,34 +54,6 @@ function M.get_entity_from_tiled_map(map_or_path)
 	return {
 		child_instancies = entities,
 	}
-end
-
-
----@param map_path string
----@return decore.world.instance
-function M.get_world_from_tiled_map(map_path)
-	local map = detiled_internal.load_json(map_path)
-	if not map then
-		detiled_internal.logger:error("Failed to load map", map_path)
-		return {}
-	end
-
-	return detiled_decore.create_world_from_tiled_map(map)
-end
-
-
----Split a Tiled map into multiple worlds, one for each layer. Main world contains all layers, except the with "exclude" property
----@param world_id string
----@param map_path string
----@return table<string, decore.world.instance> world_pack Each layer from the Tiled map is a sub-world with the world_id:layer_id format
-function M.get_worlds_from_tiled_map(world_id, map_path)
-	local map = detiled_internal.load_json(map_path)
-	if not map then
-		detiled_internal.logger:error("Failed to load map", map_path)
-		return {}
-	end
-
-	return detiled_decore.create_worlds_from_tiled_map(world_id, map)
 end
 
 

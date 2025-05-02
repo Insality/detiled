@@ -52,7 +52,7 @@ local function get_entities_from_object_layer(layer, map)
 	local entities = {}
 
 	local map_height = map.height * map.tileheight
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
+	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or nil
 
 	for object_index = 1, #layer.objects do
 		local object = layer.objects[object_index]
@@ -77,8 +77,8 @@ local function get_entities_from_object_layer(layer, map)
 						position_x = position_x,
 						position_y = position_y,
 						position_z = position_z,
-						size_x = object.width,
-						size_y = object.height,
+						size_x = scale_x ~= 1 and object.width or nil,
+						size_y = scale_y ~= 1 and object.height or nil,
 						scale_x = scale_x ~= 1 and scale_x or nil,
 						scale_y = scale_y ~= 1 and scale_y or nil,
 						rotation = rotation,
@@ -102,6 +102,13 @@ local function get_entities_from_object_layer(layer, map)
 				entity.components = components
 
 				table.insert(entities, entity)
+			else
+				detiled_internal.logger:warn("Tile is not found in tileset", {
+					gid = object_gid,
+					class = object.class,
+					name = object.name,
+					id = object.id,
+				})
 			end
 		elseif object.class and object.class ~= "" then -- If object not from tileset and has a prefab to spawn
 			local entity = {}
