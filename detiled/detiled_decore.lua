@@ -51,6 +51,7 @@ local function get_entities_from_object_layer(layer, map)
 	---@type decore.entities_pack_data.instance[]
 	local entities = {}
 
+	local map_width = map.width * map.tilewidth
 	local map_height = map.height * map.tileheight
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or nil
 
@@ -63,7 +64,7 @@ local function get_entities_from_object_layer(layer, map)
 			local tile, tileset = detiled_internal.get_tile_by_gid(map, object_gid)
 			if tile and tileset then
 				local entity = {}
-				local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, tile, map_height)
+				local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, tile, map_width, map_height)
 				position_x = position_x + (layer.offsetx or 0)
 				position_y = position_y - (layer.offsety or 0)
 
@@ -117,9 +118,9 @@ local function get_entities_from_object_layer(layer, map)
 					id = object.id,
 				})
 			end
-		elseif object.class and object.class ~= "" then -- If object not from tileset and has a prefab to spawn
+		elseif object.class and object.class ~= "" then -- If object is map-created-object and has a prefab to spawn instead
 			local entity = {}
-			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
+			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_width, map_height)
 			--position_y = map_height - position_y
 			position_x = position_x + (layer.offsetx or 0)
 			position_y = position_y - (layer.offsety or 0)
@@ -160,8 +161,8 @@ local function get_entities_from_object_layer(layer, map)
 			entity.components = components
 
 			table.insert(entities, entity)
-		else -- Empty object from tiled
-			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
+		else -- Empty object from tiled without any prefabs
+			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_width, map_height)
 			position_x = position_x + (layer.offsetx or 0)
 			position_y = position_y - (layer.offsety or 0)
 			position_y = position_y - object.height
@@ -248,10 +249,12 @@ end
 
 ---@param object detiled.map.object
 ---@param tile detiled.tileset.tile|nil
+---@param map_width number|nil
 ---@param map_height number|nil
 ---@return number, number, number, number
-function M.get_defold_position_from_tiled_object(object, tile, map_height)
+function M.get_defold_position_from_tiled_object(object, tile, map_width, map_height)
 	map_height = map_height or 0
+	map_width = map_width or 0
 
 	-- Get offset from object point in Tiled to Defold assets object
 	-- Tiled point in left bottom, Defold - in object center
@@ -298,6 +301,10 @@ function M.get_defold_position_from_tiled_object(object, tile, map_height)
 
 	local position_x = object.x + rotated_offset_x
 	local position_y = map_height - (object.y - rotated_offset_y)
+
+	-- Transform center from left bottom to center
+	position_x = position_x - map_width / 2
+	position_y = position_y - map_height / 2
 
 	return position_x, position_y, scale_x, scale_y
 end
