@@ -17,15 +17,6 @@ function M.set_logger(logger_instance)
 end
 
 
----Get all entities descriptions from a tileset
----You can register these entities with `decore.register_entities`
----All properties will be configured now from Tiled
----@return table<string, entity>
-function M.get_entities_from_tileset(tileset_path)
-	return detiled_decore.create_entities_from_tiled_tileset(tileset_path)
-end
-
-
 ---Call this to load a tileset.
 ---All tilesets should be loaded before using get_entity_from_map
 ---@param tileset_path string

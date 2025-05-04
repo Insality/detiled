@@ -77,13 +77,20 @@ local function get_entities_from_object_layer(layer, map)
 						position_x = position_x,
 						position_y = position_y,
 						position_z = position_z,
-						size_x = scale_x ~= 1 and object.width or nil,
-						size_y = scale_y ~= 1 and object.height or nil,
+						size_x = object.width,
+						size_y = object.height,
 						scale_x = scale_x ~= 1 and scale_x or nil,
 						scale_y = scale_y ~= 1 and scale_y or nil,
 						rotation = rotation,
 					}
 				}
+
+				if tile.properties then
+					local tiled_components = detiled_internal.get_components_property(tile.properties)
+					if tiled_components then
+						detiled_internal.apply_components(components, tiled_components)
+					end
+				end
 
 				if object.properties then
 					local tiled_components = detiled_internal.get_components_property(object.properties)
@@ -379,7 +386,7 @@ function M.get_decore_entities(tiled_tileset)
 	local tiles = tiled_tileset.tiles
 	for index = 1, #tiles do
 		local tile = tiles[index]
-		local prefab_id = tile.class
+		local prefab_id = tile.type
 		---@type entity
 		local entity = detiled_internal.get_components_property(tile.properties) or {}
 		assert(prefab_id, "The class field in entity in tiled tileset should be set")
