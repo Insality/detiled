@@ -64,8 +64,8 @@ Look at [Shooting Circles](https://github.com/Insality/shooting_circles) game ex
 
 ```lua
 detiled.set_logger(logger_instance)
-detiled.get_entities_packs_data(tilesets_path)
-detiled.get_worlds_packs_data(maps_list_path)
+detiled.load_tileset(tileset_path)
+detiled.get_entity_from_map(map_or_path)
 ```
 
 ### API Reference
