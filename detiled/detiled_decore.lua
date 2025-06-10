@@ -68,9 +68,11 @@ local function get_entities_from_object_layer(layer, map)
 				position_x = position_x + (layer.offsetx or 0)
 				position_y = position_y - (layer.offsety or 0)
 
+				local prefab_id = tile.class or tile.type
+
 				local components = {
 					name = object.name ~= "" and object.name or nil,
-					prefab_id = tile.class or tile.type,
+					prefab_id = prefab_id,
 					tiled_id = tostring(object.id),
 					tiled_layer_id = layer.name,
 
@@ -379,6 +381,7 @@ function M.load_tileset(tileset_path)
 		return {}
 	end
 
+	detiled_internal.logger:debug("Loaded tileset", tileset_path)
 	detiled_internal.load_tileset(tileset)
 
 	return tileset
