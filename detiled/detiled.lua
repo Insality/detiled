@@ -1,28 +1,14 @@
-local decore = require("decore.decore")
 local detiled_internal = require("detiled.detiled_internal")
 local detiled_decore = require("detiled.detiled_decore")
 
 ---@class detiled
 local M = {}
 
----All instances created from Tiled will have these components
-decore.register_component("name", nil, "detiled")
-decore.register_component("tiled_id", nil, "detiled")
-decore.register_component("tiled_layer_id", nil, "detiled")
 
 ---Set a logger instance
 ---@param logger_instance detiled.logger|table|nil
 function M.set_logger(logger_instance)
 	detiled_internal.logger = logger_instance or detiled_internal.empty_logger
-end
-
-
----Call this to load a tileset.
----All tilesets should be loaded before using get_entity_from_map
----@param tileset_path string
----@return detiled.tileset
-function M.load_tileset(tileset_path)
-	return detiled_decore.load_tileset(tileset_path)
 end
 
 
