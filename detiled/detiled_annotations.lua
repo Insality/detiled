@@ -82,6 +82,7 @@
 
 ---@class detiled.map.layer
 ---@field data number[] @global tile id
+---@field encoding string
 ---@field height number
 ---@field id number
 ---@field name string
@@ -109,6 +110,7 @@
 ---@field height number
 ---@field id number
 ---@field name string
+---@field type string?
 ---@field rotation number
 ---@field visible boolean
 ---@field width number

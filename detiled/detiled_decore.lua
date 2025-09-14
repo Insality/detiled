@@ -1,4 +1,5 @@
 local detiled_internal = require("detiled.detiled_internal")
+local base64 = require("detiled.base64")
 
 local M = {}
 
@@ -13,8 +14,51 @@ local function get_entities_from_tile_layer(layer, map)
 	local map_height = map.height * map.tileheight
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
-	for tile_index = 1, #layer.data do
-		local tile_gid = layer.data[tile_index]
+	local layer_data = layer.data
+	--[[
+		y = 0,
+		opacity = 1,
+		x = 0,
+		visible = true,
+		name = "floor",
+		id = 4,
+		width = 11,
+		encoding = "base64",
+		compression = "zlib",
+		type = "tilelayer",
+		height = 11,
+		data = "eJxjYKA94EDDxKjBp4daaklxAy61xPoPmx2EAClq8QEAXtMBcQ=="
+	]]--
+	--if layer.encoding == "base64" then
+	--	--print("Base64 encoding")
+	--	--layer_data = base64.decode(layer_data)
+	--	--pprint("After base64 decode", layer_data)
+	--	--layer_data = zlib.inflate(layer_data)
+	--	--pprint("After zlib inflate", layer_data)
+	--	-- base64.decode is fine (Defold's built-in)
+	--	layer_data = base64.decode(layer_data)
+	--	print("after base64:", #layer_data, "bytes") -- don't pprint raw binary
+
+	--	-- zlib: create an inflater, then feed it the data
+	--	local raw = zlib.inflate(layer_data)                 -- or zlib.inflate{ windowBits = 15 }
+
+	--	print("inflated:", #raw, "bytes")
+
+	--	local tiles = {}
+	--	for i = 1, #raw, 4 do
+	--		local b1, b2, b3, b4 = raw:byte(i, i+3)
+	--		local gid = b1 + b2*256 + b3*65536 + b4*16777216
+
+	--		-- Strip Tiled flip flags (keep only lower 29 bits)
+	--		local id = bit.band(gid, 0x1FFFFFFF)
+	--		tiles[#tiles+1] = id
+	--	end
+
+	--	layer_data = tiles
+	--end
+
+	for tile_index = 1, #layer_data do
+		local tile_gid = layer_data[tile_index]
 		local tile, tileset = detiled_internal.get_tile_by_gid(map, tile_gid)
 		if tile and tileset then
 			-- TODO: Thid is works only for grid based maps, for isometric or hex we need to use another approach
@@ -57,7 +101,7 @@ local function get_entities_from_object_layer(layer, map)
 
 	for object_index = 1, #layer.objects do
 		local object = layer.objects[object_index]
-		local rotation = -object.rotation
+		local rotation = -(object.rotation or 0)
 
 		local object_gid = object.gid
 		if object_gid then -- If object has a tileset, spawn from tileset
@@ -69,6 +113,14 @@ local function get_entities_from_object_layer(layer, map)
 				position_y = position_y - (layer.offsety or 0)
 
 				local prefab_id = tile.class or tile.type
+
+				if not prefab_id or prefab_id == "" then
+					-- Take from tile.image as a default prefab_id and strip path + extension
+					local image_path = tile.image
+					if image_path and image_path ~= "" then
+						prefab_id = detiled_internal.get_filename(image_path)
+					end
+				end
 
 				local components = {
 					name = object.name ~= "" and object.name or nil,
@@ -108,7 +160,7 @@ local function get_entities_from_object_layer(layer, map)
 					end
 				end
 
-				entity.prefab_id = tile.class or tile.type
+				entity.prefab_id = prefab_id
 				entity.components = components
 
 				table.insert(entities, entity)
@@ -172,6 +224,7 @@ local function get_entities_from_object_layer(layer, map)
 			local entity = {
 				components = {
 					name = object.name ~= "" and object.name or nil,
+					prefab_id = object.type ~= "" and object.type or nil,
 					tiled_id = object.id,
 					tiled_layer_id = layer.name,
 
@@ -191,13 +244,15 @@ local function get_entities_from_object_layer(layer, map)
 				if tiled_components then
 					-- Unique case
 					if tiled_components.position_z then
-						entity.components.transform.position_z = entity.components.transform.position_z + tiled_components.position_z
+						entity.components.transform.position_z = (entity.components.transform.position_z or 0) + tiled_components.position_z
 						tiled_components.position_z = nil
 					end
 
 					detiled_internal.apply_components(entity.components, tiled_components)
 				end
 			end
+
+			entity.prefab_id = entity.components.prefab_id
 
 			table.insert(entities, entity)
 		end

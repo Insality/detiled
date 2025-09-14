@@ -34,15 +34,16 @@ function M.get_entity_from_map(map_or_path)
 end
 
 
-function M.merge_arrays(...)
-	local arrays = {...}
-	local merged_array = {}
-	for _, array in ipairs(arrays) do
-		for i = 1, #array do
-			table.insert(merged_array, array[i])
-		end
+---Load a tileset
+---@param tileset_or_path detiled.tileset|string
+function M.load_tileset(tileset_or_path)
+	local tileset = tileset_or_path
+	if type(tileset_or_path) == "string" then
+		tileset = detiled_internal.load_json(tileset_or_path) --[[@as detiled.tileset]]
 	end
-	return merged_array
+	---@cast tileset detiled.tileset
+
+	detiled_internal.load_tileset(tileset)
 end
 
 
