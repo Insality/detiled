@@ -17,8 +17,8 @@ M.logger = {
 	trace = function(_, msg) print("TRACE: " .. msg) end,
 	debug = function(_, msg, data) print("DEBUG: " .. msg, data) end,
 	info = function(_, msg, data) print("INFO: " .. msg, data) end,
-	warn = function(_, msg, data) pprint("WARN: " .. msg, data) end,
-	error = function(_, msg, data) pprint(data) error("ERROR: " .. msg) end
+	warn = function(_, msg, data) print("WARN: " .. msg, data) end,
+	error = function(_, msg, data) print(data) error("ERROR: " .. msg) end
 }
 
 M.empty_logger = {
@@ -85,25 +85,6 @@ function M.load_json(json_path)
 	end
 
 	return json.decode(resource)
-end
-
-
----@generic T
----@param config_or_path T|table|string
----@return T|table|nil
-function M.load_config(config_or_path)
-	if type(config_or_path) == "string" then
-		local entities_path = config_or_path --[[@as string]]
-		local entities_data = M.load_json(entities_path)
-		if not entities_data then
-			M.logger:error("Can't load config at path", config_or_path)
-			return nil
-		end
-
-		return entities_data
-	end
-
-	return config_or_path --[[@as table]]
 end
 
 

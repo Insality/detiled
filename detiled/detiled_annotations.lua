@@ -81,8 +81,9 @@
 ---@field width number
 
 ---@class detiled.map.layer
----@field data number[] @global tile id
----@field encoding string
+---@field data number[] Global tile id
+---@field encoding string Example: "base64"
+---@field compression string Example: "zlib"
 ---@field height number
 ---@field id number
 ---@field name string

@@ -29,53 +29,64 @@ local function get_entities_from_tile_layer(layer, map)
 		height = 11,
 		data = "eJxjYKA94EDDxKjBp4daaklxAy61xPoPmx2EAClq8QEAXtMBcQ=="
 	]]--
-	--if layer.encoding == "base64" then
-	--	--print("Base64 encoding")
-	--	--layer_data = base64.decode(layer_data)
-	--	--pprint("After base64 decode", layer_data)
-	--	--layer_data = zlib.inflate(layer_data)
-	--	--pprint("After zlib inflate", layer_data)
-	--	-- base64.decode is fine (Defold's built-in)
-	--	layer_data = base64.decode(layer_data)
-	--	print("after base64:", #layer_data, "bytes") -- don't pprint raw binary
+	if layer.encoding == "base64" then
+		local decoded_data  = base64.decode(layer_data) --[[ @as string ]]
 
-	--	-- zlib: create an inflater, then feed it the data
-	--	local raw = zlib.inflate(layer_data)                 -- or zlib.inflate{ windowBits = 15 }
+		if layer.compression == "zlib" then
+			local inflated_data = zlib.inflate(decoded_data)
+			local tiles = {}
 
-	--	print("inflated:", #raw, "bytes")
+			for i = 1, #inflated_data, 4 do
+				local b1, b2, b3, b4 = inflated_data:byte(i, i+3)
+				local gid = b1 + b2*256 + b3*65536 + b4*16777216
 
-	--	local tiles = {}
-	--	for i = 1, #raw, 4 do
-	--		local b1, b2, b3, b4 = raw:byte(i, i+3)
-	--		local gid = b1 + b2*256 + b3*65536 + b4*16777216
+				-- Strip Tiled flip flags (keep only lower 29 bits)
+				local id = bit.band(gid, 0x1FFFFFFF)
+				tiles[#tiles+1] = id
+			end
 
-	--		-- Strip Tiled flip flags (keep only lower 29 bits)
-	--		local id = bit.band(gid, 0x1FFFFFFF)
-	--		tiles[#tiles+1] = id
-	--	end
-
-	--	layer_data = tiles
-	--end
+			layer_data = tiles
+		end
+	end
 
 	for tile_index = 1, #layer_data do
 		local tile_gid = layer_data[tile_index]
 		local tile, tileset = detiled_internal.get_tile_by_gid(map, tile_gid)
 		if tile and tileset then
-			-- TODO: Thid is works only for grid based maps, for isometric or hex we need to use another approach
+			-- TODO: This works only for grid based maps, for isometric or hex we need to use another approach
 			local tile_i = ((tile_index - 1) % map.width)
-			local tile_j = (math.floor((tile_index - 1) / map.width)) + 1
+			local tile_j = (math.floor((tile_index - 1) / map.width))
 			local pos_x = tile_i * map.tilewidth
 			local pos_y = tile_j * map.tileheight
 
+			-- Center the tile position (tiles are positioned at their center, not top-left corner)
+			pos_x = pos_x + map.tilewidth / 2
+			pos_y = pos_y + map.tileheight / 2
+
+			-- Apply the same coordinate transformation as objects
+			local map_width = map.width * map.tilewidth
+			pos_y = map_height - pos_y  -- Flip Y axis
+			pos_x = pos_x - map_width / 2   -- Center X relative to map center
+			pos_y = pos_y - map_height / 2  -- Center Y relative to map center
+
+			local prefab_id = tile.class or tile.type
+			if not prefab_id or prefab_id == "" then
+				-- Take from tile.image as a default prefab_id and strip path + extension
+				local image_path = tile.image
+				if image_path and image_path ~= "" then
+					prefab_id = detiled_internal.get_filename(image_path)
+				end
+			end
+
 			---@type decore.entities_pack_data.instance
 			local entity = {}
-			entity.prefab_id = tile.type
+			entity.prefab_id = prefab_id
 			entity.components = {
-				prefab_id = tile.type,
+				prefab_id = prefab_id,
 				tiled_layer_id = layer.name,
 				transform = {
 					position_x = pos_x,
-					position_y = map_height - pos_y,
+					position_y = pos_y,
 					position_z = position_z,
 				}
 			}
@@ -322,6 +333,17 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	local scale_y = 1
 	local anchor_x = 0
 	local anchor_y = 0
+
+	if not base_width or not base_height then
+		pprint(object, tile)
+		detiled_internal.logger:warn("Base width or height is not set", {
+			base_width = base_width,
+			base_height = base_height,
+			object = object,
+			tile = tile,
+		})
+		return 0, 0, 1, 1
+	end
 
 	if base_width > 0 and base_height > 0 then
 		scale_x = object.width / base_width
