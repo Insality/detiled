@@ -32,6 +32,8 @@
 		"describe",
 		"before",
 		"after",
-		"it"
+		"it",
+		"zlib",
+		"bit"
 	]
 }

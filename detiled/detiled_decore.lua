@@ -15,20 +15,7 @@ local function get_entities_from_tile_layer(layer, map)
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
 	local layer_data = layer.data
-	--[[
-		y = 0,
-		opacity = 1,
-		x = 0,
-		visible = true,
-		name = "floor",
-		id = 4,
-		width = 11,
-		encoding = "base64",
-		compression = "zlib",
-		type = "tilelayer",
-		height = 11,
-		data = "eJxjYKA94EDDxKjBp4daaklxAy61xPoPmx2EAClq8QEAXtMBcQ=="
-	]]--
+
 	if layer.encoding == "base64" then
 		local decoded_data  = base64.decode(layer_data) --[[ @as string ]]
 
@@ -39,10 +26,7 @@ local function get_entities_from_tile_layer(layer, map)
 			for i = 1, #inflated_data, 4 do
 				local b1, b2, b3, b4 = inflated_data:byte(i, i+3)
 				local gid = b1 + b2*256 + b3*65536 + b4*16777216
-
-				-- Strip Tiled flip flags (keep only lower 29 bits)
-				local id = bit.band(gid, 0x1FFFFFFF)
-				tiles[#tiles+1] = id
+				table.insert(tiles, bit.band(gid, 0x1FFFFFFF))
 			end
 
 			layer_data = tiles
@@ -393,9 +377,7 @@ end
 ---@param tiled_map detiled.map
 ---@return decore.world.instance
 function M.create_world_from_tiled_map(tiled_map)
-	return {
-		entities = M.get_entities(tiled_map),
-	}
+	return { entities = M.get_entities(tiled_map) }
 end
 
 

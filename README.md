@@ -87,10 +87,30 @@ Prefab IDs are determined in this order:
 
 ### Custom Properties
 
-Custom properties from Tiled become Decore components:
-- Properties with `propertytype` matching the property name become components
-- Regular properties become component values
-- Nested object properties are merged into existing components
+To override component properties from Tiled:
+
+1. **Setup Custom Types in Tiled**:
+   - Go to `View -> Custom Types Editor`
+   - Add your custom class with the property name matching your component
+   - Example: Create a `movement` class with `stick` (bool) and `speed` (int) properties
+
+2. **Use in Tilesets or Maps**:
+   - Add the custom property to tiles in tilesets or directly to object instances in maps
+   - Properties with `propertytype` matching the property name become components
+
+3. **Property Override Hierarchy** (highest priority first):
+   - Map instance properties
+   - Tileset properties
+   - Entity definition properties
+   - Default Decore component values
+
+Example: If an entity has `movement = { can_jump = true, speed = 20 }` by default, you can override just the `speed` in Tiled while keeping `can_jump = true`.
+
+### Layer Properties
+
+Layers support special properties:
+- `position_z` - Sets the Z position for all entities spawned from this layer
+- Objects can have their own `position_z` property that gets added to the layer's `position_z`
 
 
 ## Game Example
