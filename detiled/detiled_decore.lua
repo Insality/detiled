@@ -178,7 +178,7 @@ local function get_entities_from_object_layer(layer, map)
 			local components = {
 				name = object.name ~= "" and object.name or nil,
 				prefab_id = object.class ~= "" and object.class or nil,
-				tiled_id = object.id,
+				tiled_id = tostring(object.id),
 				tiled_layer_id = layer.name,
 
 				transform = {
@@ -220,7 +220,7 @@ local function get_entities_from_object_layer(layer, map)
 				components = {
 					name = object.name ~= "" and object.name or nil,
 					prefab_id = object.type ~= "" and object.type or nil,
-					tiled_id = object.id,
+					tiled_id = tostring(object.id),
 					tiled_layer_id = layer.name,
 
 					transform = {
@@ -319,7 +319,6 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	local anchor_y = 0
 
 	if not base_width or not base_height then
-		pprint(object, tile)
 		detiled_internal.logger:warn("Base width or height is not set", {
 			base_width = base_width,
 			base_height = base_height,

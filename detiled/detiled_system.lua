@@ -15,7 +15,7 @@ local M = {}
 
 
 ---@return system.detiled
-function M.create_system()
+function M.create()
 	return decore.system(M, "detiled")
 end
 
