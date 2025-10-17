@@ -3,32 +3,6 @@ local LOADED_TILESETS = {}
 local M = {}
 
 local TYPE_TABLE = "table"
-local EMPTY_FUNCTION = function(self, message, context) end
-
----@class detiled.logger
----@field trace fun(self: detiled.logger, message: string, context: any)
----@field debug fun(self: detiled.logger, message: string, context: any)
----@field info fun(self: detiled.logger, message: string, context: any)
----@field warn fun(self: detiled.logger, message: string, context: any)
----@field error fun(self: detiled.logger, message: string, context: any)
-
----@type detiled.logger|nil
-M.logger = {
-	trace = function(_, msg) print("TRACE: " .. msg) end,
-	debug = function(_, msg, data) print("DEBUG: " .. msg, data) end,
-	info = function(_, msg, data) print("INFO: " .. msg, data) end,
-	warn = function(_, msg, data) print("WARN: " .. msg, data) end,
-	error = function(_, msg, data) print(data) error("ERROR: " .. msg) end
-}
-
-M.empty_logger = {
-	trace = EMPTY_FUNCTION,
-	debug = EMPTY_FUNCTION,
-	info = EMPTY_FUNCTION,
-	warn = EMPTY_FUNCTION,
-	error = EMPTY_FUNCTION,
-}
-
 
 ---Split string by separator
 ---@param s string
@@ -163,7 +137,6 @@ function M.get_tile_by_gid(map, tile_global_id)
 
 			local tileset_data = M.get_tileset_by_source(tileset.source)
 			if not tileset_data then
-				M.logger:error("Tileset not found", tileset.source)
 				return nil, nil
 			end
 

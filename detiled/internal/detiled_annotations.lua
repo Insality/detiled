@@ -1,5 +1,3 @@
----Download Defold annotations from here: https://github.com/astrochili/defold-annotations/releases/
-
 ---@class detiled.tileset
 ---@field class string
 ---@field columns number

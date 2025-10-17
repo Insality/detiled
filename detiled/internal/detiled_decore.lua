@@ -1,5 +1,6 @@
-local detiled_internal = require("detiled.detiled_internal")
-local base64 = require("detiled.base64")
+local detiled_internal = require("detiled.internal.detiled_internal")
+local logger = require("detiled.internal.detiled_logger")
+local base64 = require("detiled.internal.base64")
 
 local M = {}
 
@@ -160,7 +161,7 @@ local function get_entities_from_object_layer(layer, map)
 
 				table.insert(entities, entity)
 			else
-				detiled_internal.logger:warn("Tile is not found in tileset", {
+				logger:warn("Tile is not found in tileset", {
 					gid = object_gid,
 					class = object.class,
 					name = object.name,
@@ -319,7 +320,7 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	local anchor_y = 0
 
 	if not base_width or not base_height then
-		detiled_internal.logger:warn("Base width or height is not set", {
+		logger:warn("Base width or height is not set", {
 			base_width = base_width,
 			base_height = base_height,
 			object = object,
@@ -435,11 +436,11 @@ end
 function M.load_tileset(tileset_path)
 	local tileset = detiled_internal.load_json(tileset_path)
 	if not tileset then
-		detiled_internal.logger:error("Failed to load tileset", tileset_path)
+		logger:error("Failed to load tileset", tileset_path)
 		return {}
 	end
 
-	detiled_internal.logger:debug("Loaded tileset", tileset_path)
+	logger:debug("Loaded tileset", tileset_path)
 	detiled_internal.load_tileset(tileset)
 
 	return tileset
