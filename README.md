@@ -130,12 +130,8 @@ detiled.get_entity_from_map(map_path_or_data)
 
 ### API Reference
 
-Read the [API Reference](API_REFERENCE.md) file to see the full API documentation for the module.
+Read the [API Reference](api/detiled_api.md) file to see the full API documentation for the module.
 
-
-## Use Cases
-
-Read the [Use Cases](USE_CASES.md) file to see several examples of how to use the this module in your Defold game development projects.
 
 ## License
 
