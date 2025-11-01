@@ -37,6 +37,7 @@ end
 
 ---Load a tileset
 ---@param tileset_or_path detiled.tileset|string
+---@return detiled.tileset
 function M.load_tileset(tileset_or_path)
 	local tileset = tileset_or_path
 	if type(tileset_or_path) == "string" then
@@ -44,7 +45,7 @@ function M.load_tileset(tileset_or_path)
 	end
 	---@cast tileset detiled.tileset
 
-	detiled_internal.load_tileset(tileset)
+	return detiled_internal.load_tileset(tileset)
 end
 
 

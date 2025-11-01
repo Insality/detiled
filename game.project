@@ -12,11 +12,12 @@ height = 640
 input_method = HiddenInputField
 
 [project]
-title = detiled
-version = 1
+title = Detiled
+version = 2
 custom_resources = /resources
-dependencies#0 = https://github.com/Insality/decore/archive/refs/tags/1.zip
+dependencies#0 = https://github.com/Insality/decore/archive/refs/tags/2.zip
 dependencies#1 = https://github.com/britzl/deftest/archive/master.zip
+dependencies#2 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
 
 [library]
 include_dirs = detiled

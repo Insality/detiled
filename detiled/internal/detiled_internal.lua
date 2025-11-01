@@ -113,6 +113,7 @@ end
 
 
 ---@param tileset detiled.tileset
+---@return detiled.tileset
 function M.load_tileset(tileset)
 	if LOADED_TILESETS[tileset.name] then
 		return LOADED_TILESETS[tileset.name]
@@ -120,7 +121,7 @@ function M.load_tileset(tileset)
 
 	LOADED_TILESETS[tileset.name] = tileset
 
-	return true
+	return tileset
 end
 
 
