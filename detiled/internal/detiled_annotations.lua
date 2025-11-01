@@ -1,5 +1,3 @@
----Download Defold annotations from here: https://github.com/astrochili/defold-annotations/releases/
-
 ---@class detiled.tileset
 ---@field class string
 ---@field columns number
@@ -25,6 +23,7 @@
 
 ---@class detiled.tileset.tile
 ---@field class string
+---@field type string
 ---@field id number
 ---@field image string
 ---@field imageheight number
@@ -80,7 +79,9 @@
 ---@field width number
 
 ---@class detiled.map.layer
----@field data number[] @global tile id
+---@field data number[] Global tile id
+---@field encoding string Example: "base64"
+---@field compression string Example: "zlib"
 ---@field height number
 ---@field id number
 ---@field name string
@@ -108,6 +109,7 @@
 ---@field height number
 ---@field id number
 ---@field name string
+---@field type string?
 ---@field rotation number
 ---@field visible boolean
 ---@field width number
@@ -119,11 +121,3 @@
 ---@class detiled.map.tileset
 ---@field firstgid number
 ---@field source string
-
----Logger interface
----@class detiled.logger
----@field trace fun(logger: detiled.logger, message: string, data: any|nil)
----@field debug fun(logger: detiled.logger, message: string, data: any|nil)
----@field info fun(logger: detiled.logger, message: string, data: any|nil)
----@field warn fun(logger: detiled.logger, message: string, data: any|nil)
----@field error fun(logger: detiled.logger, message: string, data: any|nil)

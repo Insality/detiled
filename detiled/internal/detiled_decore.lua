@@ -1,9 +1,8 @@
-local decore = require("decore.decore")
-local detiled_internal = require("detiled.detiled_internal")
+local detiled_internal = require("detiled.internal.detiled_internal")
+local logger = require("detiled.internal.detiled_logger")
+local base64 = require("detiled.internal.base64")
 
 local M = {}
-local LAYER_TILE = "tilelayer"
-local LAYER_OBJECTS = "objectgroup"
 
 
 ---@param layer detiled.map.layer
@@ -16,26 +15,63 @@ local function get_entities_from_tile_layer(layer, map)
 	local map_height = map.height * map.tileheight
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
-	for tile_index = 1, #layer.data do
-		local tile_gid = layer.data[tile_index]
+	local layer_data = layer.data
+
+	if layer.encoding == "base64" then
+		local decoded_data  = base64.decode(layer_data) --[[ @as string ]]
+
+		if layer.compression == "zlib" then
+			local inflated_data = zlib.inflate(decoded_data)
+			local tiles = {}
+
+			for i = 1, #inflated_data, 4 do
+				local b1, b2, b3, b4 = inflated_data:byte(i, i+3)
+				local gid = b1 + b2*256 + b3*65536 + b4*16777216
+				table.insert(tiles, bit.band(gid, 0x1FFFFFFF))
+			end
+
+			layer_data = tiles
+		end
+	end
+
+	for tile_index = 1, #layer_data do
+		local tile_gid = layer_data[tile_index]
 		local tile, tileset = detiled_internal.get_tile_by_gid(map, tile_gid)
 		if tile and tileset then
+			-- TODO: This works only for grid based maps, for isometric or hex we need to use another approach
 			local tile_i = ((tile_index - 1) % map.width)
-			local tile_j = (math.floor((tile_index - 1) / map.width)) + 1
+			local tile_j = (math.floor((tile_index - 1) / map.width))
 			local pos_x = tile_i * map.tilewidth
 			local pos_y = tile_j * map.tileheight
 
+			-- Center the tile position (tiles are positioned at their center, not top-left corner)
+			pos_x = pos_x + map.tilewidth / 2
+			pos_y = pos_y + map.tileheight / 2
+
+			-- Apply the same coordinate transformation as objects
+			local map_width = map.width * map.tilewidth
+			pos_y = map_height - pos_y  -- Flip Y axis
+			pos_x = pos_x - map_width / 2   -- Center X relative to map center
+			pos_y = pos_y - map_height / 2  -- Center Y relative to map center
+
+			local prefab_id = tile.class or tile.type
+			if not prefab_id or prefab_id == "" then
+				-- Take from tile.image as a default prefab_id and strip path + extension
+				local image_path = tile.image
+				if image_path and image_path ~= "" then
+					prefab_id = detiled_internal.get_filename(image_path)
+				end
+			end
+
 			---@type decore.entities_pack_data.instance
 			local entity = {}
-			entity.prefab_id = tile.class
-			entity.pack_id = tileset.class
+			entity.prefab_id = prefab_id
 			entity.components = {
-				prefab_id = tile.class,
-				pack_id = tileset.class,
-				layer_id = layer.name,
+				prefab_id = prefab_id,
+				tiled_layer_id = layer.name,
 				transform = {
 					position_x = pos_x,
-					position_y = map_height - pos_y,
+					position_y = pos_y,
 					position_z = position_z,
 				}
 			}
@@ -55,39 +91,57 @@ local function get_entities_from_object_layer(layer, map)
 	---@type decore.entities_pack_data.instance[]
 	local entities = {}
 
+	local map_width = map.width * map.tilewidth
 	local map_height = map.height * map.tileheight
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 1
+	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or nil
 
 	for object_index = 1, #layer.objects do
 		local object = layer.objects[object_index]
-		local rotation = -object.rotation
+		local rotation = -(object.rotation or 0)
 
 		local object_gid = object.gid
-		if object_gid then
-			-- If object has a tileset
+		if object_gid then -- If object has a tileset, spawn from tileset
 			local tile, tileset = detiled_internal.get_tile_by_gid(map, object_gid)
 			if tile and tileset then
 				local entity = {}
-				local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, tile, map_height)
+				local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, tile, map_width, map_height)
+				position_x = position_x + (layer.offsetx or 0)
+				position_y = position_y - (layer.offsety or 0)
+
+				local prefab_id = tile.class or tile.type
+
+				if not prefab_id or prefab_id == "" then
+					-- Take from tile.image as a default prefab_id and strip path + extension
+					local image_path = tile.image
+					if image_path and image_path ~= "" then
+						prefab_id = detiled_internal.get_filename(image_path)
+					end
+				end
 
 				local components = {
 					name = object.name ~= "" and object.name or nil,
-					prefab_id = tile.class,
-					pack_id = tileset.class,
-					tiled_id = object.id,
-					layer_id = layer.name,
+					prefab_id = prefab_id,
+					tiled_id = tostring(object.id),
+					tiled_layer_id = layer.name,
 
 					transform = {
 						position_x = position_x,
 						position_y = position_y,
 						position_z = position_z,
-						size_x = object.width,
-						size_y = object.height,
+						size_x = scale_x ~= 1 and object.width or nil,
+						size_y = scale_y ~= 1 and object.height or nil,
 						scale_x = scale_x ~= 1 and scale_x or nil,
 						scale_y = scale_y ~= 1 and scale_y or nil,
 						rotation = rotation,
 					}
 				}
+
+				if tile.properties then
+					local tiled_components = detiled_internal.get_components_property(tile.properties)
+					if tiled_components then
+						detiled_internal.apply_components(components, tiled_components)
+					end
+				end
 
 				if object.properties then
 					local tiled_components = detiled_internal.get_components_property(object.properties)
@@ -98,19 +152,25 @@ local function get_entities_from_object_layer(layer, map)
 							tiled_components.position_z = nil
 						end
 
-						decore.apply_components(components, tiled_components)
+						detiled_internal.apply_components(components, tiled_components)
 					end
 				end
 
-				entity.prefab_id = tile.class
-				entity.pack_id = tileset.class
+				entity.prefab_id = prefab_id
 				entity.components = components
 
 				table.insert(entities, entity)
+			else
+				logger:warn("Tile is not found in tileset", {
+					gid = object_gid,
+					class = object.class,
+					name = object.name,
+					id = object.id,
+				})
 			end
-		elseif (object.class and object.class ~= "") or (object.properties) then
+		elseif object.class and object.class ~= "" then -- If object is map-created-object and has a prefab to spawn instead
 			local entity = {}
-			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
+			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_width, map_height)
 			--position_y = map_height - position_y
 			position_x = position_x + (layer.offsetx or 0)
 			position_y = position_y - (layer.offsety or 0)
@@ -119,8 +179,8 @@ local function get_entities_from_object_layer(layer, map)
 			local components = {
 				name = object.name ~= "" and object.name or nil,
 				prefab_id = object.class ~= "" and object.class or nil,
-				tiled_id = object.id,
-				layer_id = layer.name,
+				tiled_id = tostring(object.id),
+				tiled_layer_id = layer.name,
 
 				transform = {
 					position_x = position_x,
@@ -137,7 +197,13 @@ local function get_entities_from_object_layer(layer, map)
 			if object.properties then
 				local tiled_components = detiled_internal.get_components_property(object.properties)
 				if tiled_components then
-					decore.apply_components(components, tiled_components)
+					-- Unique case
+					if tiled_components.position_z then
+						components.transform.position_z = components.transform.position_z + tiled_components.position_z
+						tiled_components.position_z = nil
+					end
+
+					detiled_internal.apply_components(components, tiled_components)
 				end
 			end
 
@@ -145,8 +211,8 @@ local function get_entities_from_object_layer(layer, map)
 			entity.components = components
 
 			table.insert(entities, entity)
-		else
-			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_height)
+		else -- Empty object from tiled without any prefabs
+			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_width, map_height)
 			position_x = position_x + (layer.offsetx or 0)
 			position_y = position_y - (layer.offsety or 0)
 			position_y = position_y - object.height
@@ -154,8 +220,9 @@ local function get_entities_from_object_layer(layer, map)
 			local entity = {
 				components = {
 					name = object.name ~= "" and object.name or nil,
-					tiled_id = object.id,
-					layer_id = layer.name,
+					prefab_id = object.type ~= "" and object.type or nil,
+					tiled_id = tostring(object.id),
+					tiled_layer_id = layer.name,
 
 					transform = {
 						position_x = position_x,
@@ -167,6 +234,21 @@ local function get_entities_from_object_layer(layer, map)
 					}
 				}
 			}
+
+			if object.properties then
+				local tiled_components = detiled_internal.get_components_property(object.properties)
+				if tiled_components then
+					-- Unique case
+					if tiled_components.position_z then
+						entity.components.transform.position_z = (entity.components.transform.position_z or 0) + tiled_components.position_z
+						tiled_components.position_z = nil
+					end
+
+					detiled_internal.apply_components(entity.components, tiled_components)
+				end
+			end
+
+			entity.prefab_id = entity.components.prefab_id
 
 			table.insert(entities, entity)
 		end
@@ -185,14 +267,14 @@ function M.get_entities(tiled_map)
 	for layer_index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[layer_index]
 
-		if layer.type == LAYER_TILE then
+		if layer.type == "tilelayer" then
 			local layer_entities = get_entities_from_tile_layer(layer, tiled_map)
 			for index = 1, #layer_entities do
 				table.insert(entities, layer_entities[index])
 			end
 		end
 
-		if layer.type == LAYER_OBJECTS then
+		if layer.type == "objectgroup" then
 			local layer_entities = get_entities_from_object_layer(layer, tiled_map)
 			for index = 1, #layer_entities do
 				table.insert(entities, layer_entities[index])
@@ -220,10 +302,12 @@ end
 
 ---@param object detiled.map.object
 ---@param tile detiled.tileset.tile|nil
+---@param map_width number|nil
 ---@param map_height number|nil
 ---@return number, number, number, number
-function M.get_defold_position_from_tiled_object(object, tile, map_height)
+function M.get_defold_position_from_tiled_object(object, tile, map_width, map_height)
 	map_height = map_height or 0
+	map_width = map_width or 0
 
 	-- Get offset from object point in Tiled to Defold assets object
 	-- Tiled point in left bottom, Defold - in object center
@@ -234,6 +318,16 @@ function M.get_defold_position_from_tiled_object(object, tile, map_height)
 	local scale_y = 1
 	local anchor_x = 0
 	local anchor_y = 0
+
+	if not base_width or not base_height then
+		logger:warn("Base width or height is not set", {
+			base_width = base_width,
+			base_height = base_height,
+			object = object,
+			tile = tile,
+		})
+		return 0, 0, 1, 1
+	end
 
 	if base_width > 0 and base_height > 0 then
 		scale_x = object.width / base_width
@@ -271,65 +365,27 @@ function M.get_defold_position_from_tiled_object(object, tile, map_height)
 	local position_x = object.x + rotated_offset_x
 	local position_y = map_height - (object.y - rotated_offset_y)
 
+	-- Transform center from left bottom to center
+	position_x = position_x - map_width / 2
+	position_y = position_y - map_height / 2
+
 	return position_x, position_y, scale_x, scale_y
 end
 
 
 
----@param tiled_map_path string
----@return decore.world.instance|nil
-function M.create_world_from_tiled_map(tiled_map_path)
-	local map = detiled_internal.load_json(tiled_map_path)
-	if not map then
-		detiled_internal.logger:error("Failed to load map", tiled_map_path)
-		return nil
-	end
-
-	return M.get_decore_world(map)
-end
-
-
----@param world_id string
----@param tiled_map_path string
----@return table<string, decore.world.instance>|nil
-function M.create_worlds_from_tiled_map(world_id, tiled_map_path)
-	local map = detiled_internal.load_json(tiled_map_path)
-	if not map then
-		detiled_internal.logger:error("Failed to load map", tiled_map_path)
-		return nil
-	end
-
-	return M.get_decore_worlds(world_id, map)
-end
-
-
----@param tiled_tileset_path string
----@return decore.entities_pack_data|nil
-function M.create_entities_from_tiled_tileset(tiled_tileset_path)
-	local tileset = detiled_internal.load_json(tiled_tileset_path)
-	if not tileset then
-		return nil
-	end
-
-	detiled_internal.load_tileset(tileset)
-	return M.get_decore_entities(tileset)
-end
-
-
 ---@param tiled_map detiled.map
 ---@return decore.world.instance
-function M.get_decore_world(tiled_map)
-	return {
-		entities = M.get_entities(tiled_map),
-	}
+function M.create_world_from_tiled_map(tiled_map)
+	return { entities = M.get_entities(tiled_map) }
 end
 
 
----Split each layer to separate world. Uses included_worlds to main world
----Layers with "exclude" tag will be ignored in included_worlds, but will be added to world data pack
+---Split each layer to separate world, return as map of worlds
+---@param world_id string
 ---@param tiled_map detiled.map
 ---@return table<string, decore.world.instance>
-function M.get_decore_worlds(world_id, tiled_map)
+function M.create_worlds_from_tiled_map(world_id, tiled_map)
 	local entities = M.get_entities(tiled_map)
 	local worlds = {}
 	local world_ids = {}
@@ -367,24 +423,43 @@ function M.get_decore_worlds(world_id, tiled_map)
 end
 
 
+---@param tiled_tileset_path string
+---@return table<string, entity>
+function M.create_entities_from_tiled_tileset(tiled_tileset_path)
+	local tileset = M.load_tileset(tiled_tileset_path)
+	return M.get_decore_entities(tileset)
+end
+
+
+---@param tileset_path string
+---@return detiled.tileset
+function M.load_tileset(tileset_path)
+	local tileset = detiled_internal.load_json(tileset_path)
+	if not tileset then
+		logger:error("Failed to load tileset", tileset_path)
+		return {}
+	end
+
+	logger:debug("Loaded tileset", tileset_path)
+	detiled_internal.load_tileset(tileset)
+
+	return tileset
+end
+
 ---@param tiled_tileset detiled.tileset
----@return decore.entities_pack_data
+---@return table<string, entity> entities Key is prefab_id
 function M.get_decore_entities(tiled_tileset)
-	---@type decore.entities_pack_data
-	local entities = {
-		pack_id = tiled_tileset.class,
-		entities = {}
-	}
+	---@type entity[]
+	local entities = {}
 
 	local tiles = tiled_tileset.tiles
 	for index = 1, #tiles do
 		local tile = tiles[index]
-		local prefab_id = tile.class
+		local prefab_id = tile.type
 		---@type entity
 		local entity = detiled_internal.get_components_property(tile.properties) or {}
-		entity.transform = decore.create_component("transform")
 		assert(prefab_id, "The class field in entity in tiled tileset should be set")
-		entities.entities[prefab_id] = entity
+		entities[prefab_id] = entity
 	end
 
 	return entities

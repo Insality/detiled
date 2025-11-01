@@ -2,26 +2,7 @@ local LOADED_TILESETS = {}
 
 local M = {}
 
-local EMPTY_FUNCTION = function(self, message, context) end
-
----@type detiled.logger
-M.empty_logger = {
-	trace = EMPTY_FUNCTION,
-	debug = EMPTY_FUNCTION,
-	info = EMPTY_FUNCTION,
-	warn = EMPTY_FUNCTION,
-	error = EMPTY_FUNCTION,
-}
-
----@type detiled.logger
-M.logger = {
-	trace = function(_, msg) print("TRACE: " .. msg) end,
-	debug = function(_, msg, data) pprint("DEBUG: " .. msg, data) end,
-	info = function(_, msg, data) pprint("INFO: " .. msg, data) end,
-	warn = function(_, msg, data) pprint("WARN: " .. msg, data) end,
-	error = function(_, msg, data) pprint("ERROR: " .. msg, data) end
-}
-
+local TYPE_TABLE = "table"
 
 ---Split string by separator
 ---@param s string
@@ -132,6 +113,7 @@ end
 
 
 ---@param tileset detiled.tileset
+---@return detiled.tileset
 function M.load_tileset(tileset)
 	if LOADED_TILESETS[tileset.name] then
 		return LOADED_TILESETS[tileset.name]
@@ -139,7 +121,7 @@ function M.load_tileset(tileset)
 
 	LOADED_TILESETS[tileset.name] = tileset
 
-	return true
+	return tileset
 end
 
 
@@ -147,7 +129,8 @@ end
 ---@param tile_global_id number
 ---@return detiled.tileset.tile|nil, detiled.tileset|nil
 function M.get_tile_by_gid(map, tile_global_id)
-	for tileset_index = 1, #map.tilesets do
+	-- TODO: is always tilesets goes in sorted order?
+	for tileset_index = #map.tilesets, 1, -1 do
 		local tileset = map.tilesets[tileset_index]
 		local first_gid = tileset.firstgid
 		if tile_global_id >= first_gid then
@@ -155,7 +138,6 @@ function M.get_tile_by_gid(map, tile_global_id)
 
 			local tileset_data = M.get_tileset_by_source(tileset.source)
 			if not tileset_data then
-				M.logger:error("Tileset not found", tileset.source)
 				return nil, nil
 			end
 
@@ -217,6 +199,34 @@ function M.get_components_property(components)
 	end
 
 	return parsed_components
+end
+
+
+--- Merge one table into another recursively
+---@param t1 table
+---@param t2 any
+function M.merge_tables(t1, t2)
+	for k, v in pairs(t2) do
+		if type(v) == "table" and type(t1[k]) == "table" then
+			M.merge_tables(t1[k], v)
+		else
+			t1[k] = v
+		end
+	end
+end
+
+
+---@param entity entity
+---@param components table<string, any>
+function M.apply_components(entity, components)
+	for component_id, component_data in pairs(components) do
+		if type(component_data) == TYPE_TABLE then
+			entity[component_id] = entity[component_id] or {}
+			M.merge_tables(entity[component_id], component_data)
+		else
+			entity[component_id] = component_data
+		end
+	end
 end
 
 

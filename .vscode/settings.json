@@ -32,6 +32,12 @@
 		"describe",
 		"before",
 		"after",
-		"it"
+		"it",
+		"zlib",
+		"bit"
+	],
+	"Lua.workspace.library": [
+		"~/Library/Application Support/Cursor/User/globalStorage/astronachos.defold",
+		"~/Library/Application Support/Cursor/User/workspaceStorage/410336ede88f148de99a90ffdc6e7eee/astronachos.defold"
 	]
 }
