@@ -26,7 +26,7 @@ Open your `game.project` file and add the following line to the dependencies fie
 **[Decore](https://github.com/Insality/decore)**
 
 ```
-https://github.com/Insality/decore/archive/refs/tags/2.zip
+https://github.com/Insality/decore/archive/refs/tags/3.zip
 ```
 
 **[Detiled](https://github.com/Insality/detiled/archive/refs/tags/2.zip)**
