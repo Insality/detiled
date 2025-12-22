@@ -7,10 +7,6 @@
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
 
 
-# Disclaimer
-
-The library in development stage. May be not fully tested and README may be not full. If you have any questions, please, create an issue.
-
 # Detiled
 
 **Detiled** - is a Defold library that converts [Tiled](https://www.mapeditor.org/) maps and tilesets into [Decore](https://github.com/Insality/decore) entities.
@@ -59,17 +55,17 @@ After that, select `Project ▸ Fetch Libraries` to update [library dependencies
    ```lua
    local detiled = require("detiled.detiled")
 
-   -- Load tilesets first
+   -- Load all used tilesets first before loading maps
    detiled.load_tileset("/resources/tilesets/my_tileset.json")
    ```
 
 2. Convert Tiled maps to Decore entities:
    ```lua
-   -- Get entity from map
-   local map_entity = detiled.get_entity_from_map("/resources/maps/my_map.json")
+   -- Get entity prefab from map
+   local map = detiled.get_entity_from_map("/resources/maps/my_map.json")
 
    -- Add to Decore world
-   world:addEntity(map_entity)
+   world:addEntity(decore.create(map))
    ```
 
 ### Prefab ID Resolution
@@ -115,7 +111,7 @@ Layers support special properties:
 
 ## Game Example
 
-Look at [Shooting Circles](https://github.com/Insality/shooting_circles) game example to see how to use the Detiled library in a real game project.
+Look at [Shooting Circles](https://github.com/Insality/shooting_circles) or [Cosmic Dash](https://github.com/Insality/cosmic-dash-jam-2025) game examples to see how to use the Detiled library in a real game project.
 
 
 ## API Reference
@@ -132,7 +128,6 @@ detiled.get_entity_from_map(map_path_or_data)
 
 Read the [API Reference](api/detiled_api.md) file to see the full API documentation for the module.
 
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -146,6 +141,19 @@ For any issues, questions, or suggestions, please [create an issue](https://gith
 <a href="https://github.com/Insality/detiled/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=insality/detiled"/>
 </a>
+
+
+## Changelog
+
+<details>
+
+### **V1**
+	- Initial release
+
+### **V2**
+	- Reworked API and documentation
+
+</details>
 
 ## ❤️ Support project ❤️
 
