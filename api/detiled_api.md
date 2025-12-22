@@ -1,13 +1,12 @@
 # detiled API
 
-> at detiled/detiled.lua
+> at /detiled/detiled.lua
 
 ## Functions
 
 - [set_logger](#set_logger)
 - [get_entity_from_map](#get_entity_from_map)
 - [load_tileset](#load_tileset)
-
 
 
 ### set_logger
@@ -50,3 +49,5 @@ Load a tileset
 - **Parameters:**
 	- `tileset_or_path` *(string|detiled.tileset)*:
 
+- **Returns:**
+	- `` *(detiled.tileset)*:
