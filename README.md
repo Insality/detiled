@@ -19,7 +19,7 @@
 - Support for custom properties and components from Tiled
 
 
-### [Dependency](https://www.defold.com/manuals/libraries/)
+### Setup
 
 Open your `game.project` file and add the following line to the dependencies field under the project section:
 
