@@ -2,7 +2,24 @@ local detiled_internal = require("detiled.internal.detiled_internal")
 local logger = require("detiled.internal.detiled_logger")
 local base64 = require("detiled.internal.base64")
 
+local grid = require("detiled.internal.grid")
+local isogrid = require("detiled.internal.isogrid")
+local hexgrid = require("detiled.internal.hexgrid")
+
 local M = {}
+
+
+---@param map detiled.map
+---@return table
+local function get_grid_module(map)
+	if map.orientation == "hexagonal" then
+		return hexgrid
+	elseif map.orientation == "staggered" then
+		return isogrid
+	else
+		return grid
+	end
+end
 
 
 ---@param layer detiled.map.layer
@@ -12,7 +29,11 @@ local function get_entities_from_tile_layer(layer, map)
 	---@type decore.entities_pack_data.instance[]
 	local entities = {}
 
-	local map_height = map.height * map.tileheight
+	local grid_module = get_grid_module(map)
+	local map_params = grid_module.get_map_params_from_tiled(map)
+
+	local map_width = map_params.scene.size_x
+	local map_height = map_params.scene.size_y
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
 	local layer_data = layer.data
@@ -38,21 +59,12 @@ local function get_entities_from_tile_layer(layer, map)
 		local tile_gid = layer_data[tile_index]
 		local tile, tileset = detiled_internal.get_tile_by_gid(map, tile_gid)
 		if tile and tileset then
-			-- TODO: This works only for grid based maps, for isometric or hex we need to use another approach
 			local tile_i = ((tile_index - 1) % map.width)
 			local tile_j = (math.floor((tile_index - 1) / map.width))
-			local pos_x = tile_i * map.tilewidth
-			local pos_y = tile_j * map.tileheight
+			local pos_x, pos_y = grid_module.cell_to_pos(tile_i, tile_j, map_params)
 
-			-- Center the tile position (tiles are positioned at their center, not top-left corner)
-			pos_x = pos_x + map.tilewidth / 2
-			pos_y = pos_y + map.tileheight / 2
-
-			-- Apply the same coordinate transformation as objects
-			local map_width = map.width * map.tilewidth
-			pos_y = map_height - pos_y  -- Flip Y axis
-			pos_x = pos_x - map_width / 2   -- Center X relative to map center
-			pos_y = pos_y - map_height / 2  -- Center Y relative to map center
+			pos_x = pos_x - map_width / 2
+			pos_y = pos_y - map_height / 2
 
 			local prefab_id = tile.class or tile.type
 			if not prefab_id or prefab_id == "" then
