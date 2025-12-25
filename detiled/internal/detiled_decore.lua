@@ -108,7 +108,7 @@ local function get_entities_from_object_layer(layer, map)
 
 	local map_width = map_params.scene.size_x
 	local map_height = map_params.scene.size_y
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or nil
+	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
 	for object_index = 1, #layer.objects do
 		local object = layer.objects[object_index]
