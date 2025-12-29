@@ -1,4 +1,4 @@
-local hexgrid_convert = require("detiled.internal.hexgrid.hexgrid_convertations")
+local hexgrid_convert = require("detiled.internal.grid.hexgrid_convertations")
 
 local M = {}
 

@@ -77,6 +77,8 @@
 ---@field type string
 ---@field version string
 ---@field width number
+---@field staggeraxis string
+---@field hexsidelength number
 
 ---@class detiled.map.layer
 ---@field data number[] Global tile id

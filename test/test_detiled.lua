@@ -1,5 +1,3 @@
-local decore = require("decore.decore")
-
 return function()
 	describe("Detiled", function()
 		---@type detiled

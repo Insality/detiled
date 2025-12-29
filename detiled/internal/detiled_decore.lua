@@ -2,9 +2,9 @@ local detiled_internal = require("detiled.internal.detiled_internal")
 local logger = require("detiled.internal.detiled_logger")
 local base64 = require("detiled.internal.base64")
 
-local grid = require("detiled.internal.grid")
-local isogrid = require("detiled.internal.isogrid")
-local hexgrid = require("detiled.internal.hexgrid")
+local grid = require("detiled.internal.grid.grid")
+local isogrid = require("detiled.internal.grid.isogrid")
+local hexgrid = require("detiled.internal.grid.hexgrid")
 
 local M = {}
 
