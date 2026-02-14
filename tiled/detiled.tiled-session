@@ -31,6 +31,14 @@
                 "y": 176.08265552868764
             }
         },
+        "maps/hexgrid.json": {
+            "scale": 0.6611,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2432.3097867191045,
+                "y": 2227.3483587959463
+            }
+        },
         "tilesets/grid_items.json": {
             "dynamicWrapping": true,
             "scaleInDock": 3.0191,
@@ -63,11 +71,11 @@
         }
     },
     "last.exportedFilePath": "/Users/insality/code/defold/detiled/tiled/export",
-    "last.imagePath": "/Users/insality/code/defold/detiled/tiled/assets/hexgrid",
+    "last.imagePath": "/Users/insality/code/defold/detiled/tiled/assets/isogrid",
     "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
     "map.lastUsedExportFilter": "Defold Collection (*.collection)",
     "map.lastUsedFormat": "json",
-    "map.orientation": "4",
+    "map.orientation": "2",
     "map.tileHeight": 182,
     "map.tileWidth": 192,
     "openFiles": [
