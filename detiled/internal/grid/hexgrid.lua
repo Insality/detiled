@@ -9,11 +9,16 @@ local HEXMAP_TYPE = {
 
 
 local function get_scene_size_pointytop(data)
-	local double_size = data.tile.height + data.tile.side
-	local part_size = data.tile.height - data.tile.side
+	local tile_width = data.tile.width
+	local tile_height = data.tile.height
+	local tile_side = data.tile.side
+	local tile_count_x = data.scene.tiles_x
+	local tile_count_y = data.scene.tiles_y
+	local tile_angle = tile_height - tile_side
+	local tile_angle_half = tile_angle / 2
 
-	local width = (data.scene.tiles_x + 0.5) * data.tile.width
-	local height = (data.scene.tiles_y / 2 * double_size) + 2 * part_size
+	local width = (tile_count_x + 0.5) * tile_width
+	local height = (tile_count_y * tile_side) + ((tile_count_y + 1) * tile_angle_half)
 	return width, height
 end
 

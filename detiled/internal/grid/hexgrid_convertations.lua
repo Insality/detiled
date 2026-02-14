@@ -46,7 +46,7 @@ end
 
 function M.cell_to_pos_pointytop(i, j, data)
 	local part_size = data.tile.height - data.tile.side
-	local two_hex_height = data.tile.height + data.tile.side
+	local two_hex_height = data.tile.side * 2 + part_size
 
 	local x = data.tile.width * (i + 0.5 * (bit.band(j, 1)))
 	local y = two_hex_height / 2 * j
@@ -66,7 +66,7 @@ function M.pos_to_cell_pointytop(x, y, map_params)
 	local data = map_params
 
 	local part_size = data.tile.height - data.tile.side
-	local two_hex_height = data.tile.height + data.tile.side
+	local two_hex_height = data.tile.side * 2 + part_size
 
 	x = x - data.tile.width/2
 	y = y - (data.scene.invert_y and -part_size or part_size)
