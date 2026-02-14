@@ -2,37 +2,24 @@ local detiled_internal = require("detiled.internal.detiled_internal")
 local logger = require("detiled.internal.detiled_logger")
 local base64 = require("detiled.internal.base64")
 
-local grid = require("detiled.internal.grid.grid")
-local isogrid = require("detiled.internal.grid.isogrid")
-local isometric = require("detiled.internal.grid.isometric")
-local hexgrid = require("detiled.internal.grid.hexgrid")
-
 local M = {}
 
-
----@param map detiled.map
----@return table
-local function get_grid_module(map)
-	if map.orientation == "hexagonal" then
-		return hexgrid
-	elseif map.orientation == "staggered" then
-		return isogrid
-	elseif map.orientation == "isometric" then
-		return isometric
-	else
-		return grid
-	end
-end
+local GRID_MODULES = {
+	["orthogonal"] = require("detiled.internal.grid.grid"), -- orthogonal
+	["isometric"] = require("detiled.internal.grid.isometric"), -- isometric
+	["staggered"] = require("detiled.internal.grid.isogrid"), -- isometric staggered
+	["hexagonal"] = require("detiled.internal.grid.hexgrid"), -- hexagonal
+}
 
 
 ---@param layer detiled.map.layer
 ---@param map detiled.map
----@return decore.entities_pack_data.instance[]
+---@return detiled.entity[]
 local function get_entities_from_tile_layer(layer, map)
-	---@type decore.entities_pack_data.instance[]
+	---@type detiled.entity[]
 	local entities = {}
 
-	local grid_module = get_grid_module(map)
+	local grid_module = GRID_MODULES[map.orientation]
 	local map_params = grid_module.get_map_params_from_tiled(map)
 
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
@@ -86,13 +73,14 @@ local function get_entities_from_tile_layer(layer, map)
 			if scale_y ~= 1 then transform.scale_y = scale_y end
 			if rotation ~= 0 then transform.rotation = rotation end
 
-			---@type decore.entities_pack_data.instance
-			local entity = {}
-			entity.prefab_id = prefab_id
-			entity.components = {
+			---@type detiled.entity
+			local entity = {
 				prefab_id = prefab_id,
-				tiled_layer_id = layer.name,
-				transform = transform,
+				components = {
+					prefab_id = prefab_id,
+					tiled_layer_id = layer.name,
+					transform = transform,
+				}
 			}
 
 			table.insert(entities, entity)
@@ -105,12 +93,12 @@ end
 
 ---@param layer detiled.map.layer
 ---@param map detiled.map
----@return decore.entities_pack_data.instance[]
+---@return detiled.entity[]
 local function get_entities_from_object_layer(layer, map)
-	---@type decore.entities_pack_data.instance[]
+	---@type detiled.entity[]
 	local entities = {}
 
-	local grid_module = get_grid_module(map)
+	local grid_module = GRID_MODULES[map.orientation]
 	local map_params = grid_module.get_map_params_from_tiled(map)
 
 	local map_width = map_params.scene.size_x
@@ -286,9 +274,9 @@ end
 
 
 ---@param tiled_map detiled.map
----@return decore.entities_pack_data.instance[]
+---@return detiled.entity[]
 function M.get_entities(tiled_map)
-	---@type decore.entities_pack_data.instance[]
+	---@type detiled.entity[]
 	local entities = {}
 
 	for layer_index = 1, #tiled_map.layers do
@@ -396,64 +384,6 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	end
 
 	return position_x, position_y, scale_x, scale_y
-end
-
-
-
----@param tiled_map detiled.map
----@return decore.world.instance
-function M.create_world_from_tiled_map(tiled_map)
-	return { entities = M.get_entities(tiled_map) }
-end
-
-
----Split each layer to separate world, return as map of worlds
----@param world_id string
----@param tiled_map detiled.map
----@return table<string, decore.world.instance>
-function M.create_worlds_from_tiled_map(world_id, tiled_map)
-	local entities = M.get_entities(tiled_map)
-	local worlds = {}
-	local world_ids = {}
-
-	for index = 1, #entities do
-		local entity = entities[index]
-		local layer_id = entity.components.layer_id
-		local subworld_id = world_id .. "." .. layer_id
-
-		local world = worlds[subworld_id] or {
-			entities = {},
-			included_worlds = {},
-		}
-		worlds[subworld_id] = world
-		table.insert(world.entities, entity)
-
-		if not M.is_layer_excluded(tiled_map, layer_id) then
-			world_ids[subworld_id] = true
-		end
-	end
-
-	local main_world = worlds[world_id] or {
-		entities = {},
-		included_worlds = {},
-	}
-	worlds[world_id] = main_world
-
-	for subworld_id in pairs(world_ids) do
-		table.insert(main_world.included_worlds, {
-			world_id = subworld_id,
-		})
-	end
-
-	return worlds
-end
-
-
----@param tiled_tileset_path string
----@return table<string, entity>
-function M.create_entities_from_tiled_tileset(tiled_tileset_path)
-	local tileset = M.load_tileset(tiled_tileset_path)
-	return M.get_decore_entities(tileset)
 end
 
 

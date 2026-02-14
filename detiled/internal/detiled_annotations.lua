@@ -123,3 +123,7 @@
 ---@class detiled.map.tileset
 ---@field firstgid number
 ---@field source string
+
+---@class detiled.entity
+---@field prefab_id string
+---@field components table<string, any>
