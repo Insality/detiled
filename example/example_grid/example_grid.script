@@ -5,17 +5,16 @@ local function spawn_entity(entity)
 	local prefab_id = entity.prefab_id
 	local components = entity.components
 	local transform = components.transform
-	local position_x = (transform.position_x + (30*16/2)) * 2
-	local position_y = (transform.position_y + (20*16/2)) * 2
+	local position_x = transform.position_x
+	local position_y = transform.position_y
 	local position_z = transform.position_z
-	local scale_x = transform.scale_x or 2
-	local scale_y = transform.scale_y or 2
+	local scale_x = transform.scale_x or 1
+	local scale_y = transform.scale_y or 1
 
 	local factory_url = "/entities#" .. prefab_id
 	local position = vmath.vector3(position_x, position_y, position_z)
 	local scale = vmath.vector3(scale_x, scale_y, 1)
 	factory.create(factory_url, position, nil, nil, scale)
-
 
 	print("Spawn entity: ", factory_url, position_x, position_y, position_z)
 end
@@ -24,6 +23,7 @@ end
 local function spawn_map(map)
 	local entities = map.child_instancies
 	for _, entity in ipairs(entities) do
+		print("Want to spawn entity: ", entity.prefab_id)
 		spawn_entity(entity)
 	end
 end
@@ -31,6 +31,7 @@ end
 
 function init(self)
 	detiled.load_tileset("/tiled/tilesets/grid_items.json")
+	detiled.load_tileset("/tiled/tilesets/grid_tileset.json")
 
 	local map = detiled.get_entity_from_map("/tiled/maps/grid.json")
 	spawn_map(map)

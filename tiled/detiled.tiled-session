@@ -7,6 +7,10 @@
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        ":/automap-tiles.tsx": {
+            "dynamicWrapping": false,
+            "scaleInEditor": 1
+        },
         "maps/grid.json.tmj": {
             "scale": 2.2745,
             "selectedLayer": 2,
@@ -51,8 +55,9 @@
     "openFiles": [
     ],
     "project": "detiled.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
+        ":/automap-tiles.tsx",
         "maps/grid.json.tmj",
         "tilesets/grid_items.json",
         "tilesets/grid_tileset.tsx",

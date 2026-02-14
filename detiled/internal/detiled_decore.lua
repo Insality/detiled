@@ -32,8 +32,6 @@ local function get_entities_from_tile_layer(layer, map)
 	local grid_module = get_grid_module(map)
 	local map_params = grid_module.get_map_params_from_tiled(map)
 
-	local map_width = map_params.scene.size_x
-	local map_height = map_params.scene.size_y
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 
 	local layer_data = layer.data
@@ -62,9 +60,6 @@ local function get_entities_from_tile_layer(layer, map)
 			local tile_i = ((tile_index - 1) % map.width)
 			local tile_j = (math.floor((tile_index - 1) / map.width))
 			local pos_x, pos_y = grid_module.cell_to_pos(tile_i, tile_j, map_params)
-
-			pos_x = pos_x - map_width / 2
-			pos_y = pos_y - map_height / 2
 
 			local prefab_id = tile.class or tile.type
 			if not prefab_id or prefab_id == "" then
@@ -325,9 +320,7 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	map_height = map_height or 0
 	map_width = map_width or 0
 
-	-- Get offset from object point in Tiled to Defold assets object
-	-- Tiled point in left bottom, Defold - in object center
-	-- And add sprite anchor.x for visual correct posing from tiled (In Tiled we pos the image)
+	-- Offset from object point in Tiled to sprite anchor (default center). Origin (0,0) at map left bottom.
 	local base_width = tile and tile.imagewidth or object.width
 	local base_height = tile and tile.imageheight or object.height
 	local scale_x = 1
@@ -384,10 +377,6 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	if map_params and map_params.scene.invert_y then
 		position_y = map_height - position_y
 	end
-
-	-- Transform center from left bottom to center
-	position_x = position_x - map_width / 2
-	position_y = position_y - map_height / 2
 
 	return position_x, position_y, scale_x, scale_y
 end

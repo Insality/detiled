@@ -9,10 +9,6 @@ collection_instances {
   position {
     z: -0.1
   }
-  scale3 {
-    x: 2.0
-    y: 2.0
-  }
 }
 scale_along_z: 0
 embedded_instances {
@@ -22,4 +18,24 @@ embedded_instances {
   "  component: \"/example/example_grid/example_grid.script\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "camera"
+  data: "embedded_components {\n"
+  "  id: \"camera\"\n"
+  "  type: \"camera\"\n"
+  "  data: \"aspect_ratio: 1.0\\n"
+  "fov: 0.7854\\n"
+  "near_z: -100.0\\n"
+  "far_z: 1000.0\\n"
+  "orthographic_projection: 1\\n"
+  "orthographic_zoom: 2.0\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 240.0
+    y: 160.0
+    z: -10.0
+  }
 }

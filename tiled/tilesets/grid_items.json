@@ -7,6 +7,12 @@
     },
  "margin":0,
  "name":"grid_items",
+ "properties":[
+        {
+         "name":"tilesource",
+         "type":"string",
+         "value":"\/example\/assets\/grid\/grid_ignore_export.tilesource"
+        }],
  "spacing":0,
  "tilecount":7,
  "tiledversion":"1.11.2",
