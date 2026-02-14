@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /test/test.collectionc
+main_collection = /example/example_grid/example_grid.collectionc
 
 [script]
 shared_state = 1
@@ -14,8 +14,8 @@ input_method = HiddenInputField
 [project]
 title = Detiled
 version = 2
-custom_resources = /resources
-dependencies#0 = https://github.com/Insality/decore/archive/refs/tags/2.zip
+custom_resources = /tiled/maps,/tiled/tilesets
+dependencies#0 = https://github.com/Insality/decore/archive/refs/tags/3.zip
 dependencies#1 = https://github.com/britzl/deftest/archive/master.zip
 dependencies#2 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
 

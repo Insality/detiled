@@ -1,0 +1,14 @@
+name: "example_grid"
+collection_instances {
+  id: "grid"
+  collection: "/tiled/export/grid.collection"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "go"
+  data: "components {\n"
+  "  id: \"example_grid\"\n"
+  "  component: \"/example/example_grid/example_grid.script\"\n"
+  "}\n"
+  ""
+}

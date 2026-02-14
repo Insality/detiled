@@ -1,0 +1,73 @@
+tile_set: "/tilesources/grid_items.tilesource"
+layers {
+  id: "tile_items"
+  z: 9.999999747378752e-05
+  is_visible: 1
+  cell {
+    x: 14
+    y: 11
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 14
+    y: 10
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 14
+    y: 9
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 15
+    y: 8
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 16
+    y: 11
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 16
+    y: 10
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 16
+    y: 9
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+  cell {
+    x: 16
+    y: 8
+    tile: 9
+    h_flip: 0
+    v_flip: 0
+    rotate90: 0
+  }
+}
+
+material: "/builtins/materials/tile_map.material"
+blend_mode: BLEND_MODE_ALPHA

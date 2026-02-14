@@ -1,0 +1,32 @@
+local detiled = require("detiled.detiled")
+
+
+local function spawn_entity(entity)
+	local prefab_id = entity.prefab_id
+	local components = entity.components
+	local transform = components.transform
+	local position_x = transform.position_x
+	local position_y = transform.position_y
+	local position_z = transform.position_z
+
+	local factory_url = "/entities#" .. prefab_id
+	factory.create(factory_url, vmath.vector3(position_x, position_y, position_z))
+
+	print("Spawn entity: ", factory_url)
+end
+
+
+local function spawn_map(map)
+	local entities = map.child_instancies
+	for _, entity in ipairs(entities) do
+		spawn_entity(entity)
+	end
+end
+
+
+function init(self)
+	detiled.load_tileset("/tiled/tilesets/grid_items.json")
+
+	local map = detiled.get_entity_from_map("/tiled/maps/grid.json")
+	spawn_map(map)
+end
