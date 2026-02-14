@@ -8,4 +8,7 @@ embedded_components {
   "  texture: \"/example/assets/isogrid/isogrid_tiles.atlas\"\n"
   "}\n"
   ""
+  position {
+    y: 16.0
+  }
 }
