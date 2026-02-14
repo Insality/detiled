@@ -15,15 +15,12 @@ local function spawn_entity(entity)
 	local position = vmath.vector3(position_x, position_y, position_z)
 	local scale = vmath.vector3(scale_x, scale_y, 1)
 	factory.create(factory_url, position, nil, nil, scale)
-
-	print("Spawn entity: ", factory_url, position_x, position_y, position_z)
 end
 
 
 local function spawn_map(map)
 	local entities = map.child_instancies
 	for _, entity in ipairs(entities) do
-		print("Want to spawn entity: ", entity.prefab_id)
 		spawn_entity(entity)
 	end
 end

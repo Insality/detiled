@@ -1,0 +1,48 @@
+go.property("movement_speed", 400)
+go.property("zoom_speed", 2)
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.move = vmath.vector3()
+	self.zoom_delta = 0
+	self.move_up = hash("key_w")
+	self.move_down = hash("key_s")
+	self.move_left = hash("key_a")
+	self.move_right = hash("key_d")
+	self.zoom_out = hash("key_q")
+	self.zoom_in = hash("key_e")
+end
+
+
+function update(self, dt)
+	local p = go.get_position()
+	p.x = p.x + self.move.x * self.movement_speed * dt
+	p.y = p.y + self.move.y * self.movement_speed * dt
+	go.set_position(p)
+
+	if self.zoom_delta ~= 0 then
+		local zoom = go.get("#camera", "orthographic_zoom")
+		zoom = zoom + self.zoom_delta * self.zoom_speed * dt
+		zoom = math.max(0.1, zoom)
+		go.set("#camera", "orthographic_zoom", zoom)
+	end
+end
+
+
+function on_input(self, action_id, action)
+	local v = action.pressed and 1 or (action.released and -1) or 0
+	if v == 0 then return end
+	if action_id == self.move_up then
+		self.move.y = self.move.y + v
+	elseif action_id == self.move_down then
+		self.move.y = self.move.y - v
+	elseif action_id == self.move_left then
+		self.move.x = self.move.x - v
+	elseif action_id == self.move_right then
+		self.move.x = self.move.x + v
+	elseif action_id == self.zoom_in then
+		self.zoom_delta = self.zoom_delta + v
+	elseif action_id == self.zoom_out then
+		self.zoom_delta = self.zoom_delta - v
+	end
+end
