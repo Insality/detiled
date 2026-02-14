@@ -16,11 +16,11 @@
             "scaleInEditor": 1
         },
         "maps/grid.json": {
-            "scale": 1.05,
-            "selectedLayer": 1,
+            "scale": 9.05,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 240.00000000000003,
-                "y": 159.52380952380958
+                "x": 453.09392265193367,
+                "y": 316.7403314917127
             }
         },
         "maps/grid.json.tmj": {
@@ -43,11 +43,11 @@
             }
         },
         "maps/isogrid.json": {
-            "scale": 2.7295,
-            "selectedLayer": 0,
+            "scale": 0.4068,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1114.1234658362337,
-                "y": 674.6656896867559
+                "x": 888.6430678466078,
+                "y": 669.8623402163225
             }
         },
         "tilesets/grid_items.json": {
