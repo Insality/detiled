@@ -125,6 +125,23 @@ function M.load_tileset(tileset)
 end
 
 
+local GID_FLIP_H = 0x80000000
+local GID_FLIP_V = 0x40000000
+local GID_FLIP_D = 0x20000000
+local GID_MASK = 0x0FFFFFFF
+
+---Parse Tiled global tile ID into cleared id and flip flags (see https://doc.mapeditor.org/en/stable/reference/global-tile-ids/)
+---@param gid number
+---@return number cleared_gid, boolean flip_h, boolean flip_v, boolean flip_d
+function M.parse_gid_flags(gid)
+	local flip_h = (bit.band(gid, GID_FLIP_H) ~= 0)
+	local flip_v = (bit.band(gid, GID_FLIP_V) ~= 0)
+	local flip_d = (bit.band(gid, GID_FLIP_D) ~= 0)
+	local cleared = bit.band(gid, GID_MASK)
+	return cleared, flip_h, flip_v, flip_d
+end
+
+
 ---@param map detiled.map
 ---@param tile_global_id number
 ---@return detiled.tileset.tile|nil, detiled.tileset|nil
