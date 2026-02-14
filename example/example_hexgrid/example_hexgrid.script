@@ -1,12 +1,16 @@
 local detiled = require("detiled.detiled")
 
+local function get_z_position(position_x, position_y)
+	return -position_y / 10000 + position_x / 100000
+end
+
 local function spawn_entity(entity)
 	local prefab_id = entity.prefab_id
 	local components = entity.components
 	local transform = components.transform
 	local position_x = transform.position_x
 	local position_y = transform.position_y
-	local position_z = transform.position_z
+	local position_z = transform.position_z + get_z_position(position_x, position_y)
 	local scale_x = transform.scale_x or 1
 	local scale_y = transform.scale_y or 1
 
