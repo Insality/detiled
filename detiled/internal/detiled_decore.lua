@@ -4,6 +4,7 @@ local base64 = require("detiled.internal.base64")
 
 local grid = require("detiled.internal.grid.grid")
 local isogrid = require("detiled.internal.grid.isogrid")
+local isometric = require("detiled.internal.grid.isometric")
 local hexgrid = require("detiled.internal.grid.hexgrid")
 
 local M = {}
@@ -16,6 +17,8 @@ local function get_grid_module(map)
 		return hexgrid
 	elseif map.orientation == "staggered" then
 		return isogrid
+	elseif map.orientation == "isometric" then
+		return isometric
 	else
 		return grid
 	end
