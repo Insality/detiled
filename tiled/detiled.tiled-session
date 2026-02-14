@@ -9,6 +9,7 @@
         ".",
         "maps"
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         ":/automap-tiles.tsx": {
             "dynamicWrapping": false,
@@ -35,11 +36,19 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.2213,
+            "scale": 1.78,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2169.001355625847,
-                "y": 1477.6321735201086
+                "x": 162.92134831460675,
+                "y": 86.51685393258427
+            }
+        },
+        "maps/hexgrid_pointy.json": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 826,
+                "y": 820
             }
         },
         "maps/isogrid.json": {
@@ -97,7 +106,7 @@
         }
     },
     "last.exportedFilePath": "/Users/insality/code/defold/detiled/tiled/export",
-    "last.imagePath": "/Users/insality/code/defold/detiled/tiled/assets/isogrid",
+    "last.imagePath": "/Users/insality/code/defold/detiled/tiled/assets/hexgrid_pointy",
     "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
     "map.lastUsedExportFilter": "Defold Collection (*.collection)",
     "map.lastUsedFormat": "json",

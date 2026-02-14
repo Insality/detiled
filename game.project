@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/example_hexgrid/example_hexgrid.collectionc
+main_collection = /example/example_hexgrid_pointy/example_hexgrid_pointy.collectionc
 
 [script]
 shared_state = 1
