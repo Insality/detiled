@@ -3,6 +3,7 @@ go.property("zoom_speed", 2)
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+
 	self.move = vmath.vector3()
 	self.zoom_delta = 0
 	self.move_up = hash("key_w")

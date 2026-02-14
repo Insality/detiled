@@ -1,0 +1,37 @@
+images {
+  image: "/tiled/assets/hexgrid/tile_dirt.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_dirt_2.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_dirt_3.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_grass.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_grass_2.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_grass_3.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_sand.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_sand_2.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_sand_3.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_stone.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_stone_2.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/tile_stone_3.png"
+}
+extrude_borders: 2

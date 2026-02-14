@@ -3,13 +3,25 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "maps/grid.json",
     "expandedProjectPaths": [
+        "tilesets",
+        ".",
+        "maps"
     ],
     "fileStates": {
         ":/automap-tiles.tsx": {
             "dynamicWrapping": false,
+            "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "maps/grid.json": {
+            "scale": 1.05,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 251.42857142857142,
+                "y": 288.09523809523813
+            }
         },
         "maps/grid.json.tmj": {
             "scale": 2.2745,
@@ -21,8 +33,8 @@
         },
         "tilesets/grid_items.json": {
             "dynamicWrapping": true,
-            "scaleInDock": 1,
-            "scaleInEditor": 6.0716
+            "scaleInDock": 3.0191,
+            "scaleInEditor": 1
         },
         "tilesets/grid_items.tsj": {
             "dynamicWrapping": true,
@@ -33,7 +45,9 @@
             "dynamicWrapping": true
         },
         "tilesets/grid_tileset.json": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 2.4562,
+            "scaleInEditor": 5.2012
         },
         "tilesets/grid_tileset.json.tsj": {
             "scaleInDock": 1,
@@ -43,23 +57,32 @@
             "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "tilesets/hexgrid_tiles.json": {
+            "dynamicWrapping": true
         }
     },
     "last.exportedFilePath": "/Users/insality/code/defold/detiled/tiled/export",
-    "last.imagePath": "/Users/insality/code/defold/detiled/tiled/assets/grid",
+    "last.imagePath": "/Users/insality/code/defold/detiled/tiled/assets/hexgrid",
     "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
     "map.lastUsedExportFilter": "Defold Collection (*.collection)",
     "map.lastUsedFormat": "json",
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
+    "map.orientation": "4",
+    "map.tileHeight": 182,
+    "map.tileWidth": 192,
     "openFiles": [
+        "tilesets/grid_tileset.json",
+        "tilesets/grid_items.json",
+        "maps/grid.json"
     ],
     "project": "detiled.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "tilesets/grid_tileset.json",
+        "tilesets/grid_items.json",
+        "maps/grid.json",
         ":/automap-tiles.tsx",
         "maps/grid.json.tmj",
-        "tilesets/grid_items.json",
         "tilesets/grid_tileset.tsx",
         "tilesets/grid_tileset.json.tsj",
         "tilesets/grid_items.tsj"
