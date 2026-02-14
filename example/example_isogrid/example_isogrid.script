@@ -27,8 +27,7 @@ local function spawn_entity(entity)
 end
 
 
-local function spawn_map(map)
-	local entities = map.child_instancies
+local function spawn_map(entities)
 	for _, entity in ipairs(entities) do
 		spawn_entity(entity)
 	end

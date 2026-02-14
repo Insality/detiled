@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "maps/isogrid.json",
+    "activeFile": "maps/hexgrid.json",
     "expandedProjectPaths": [
         "tilesets",
-        "maps",
-        "."
+        ".",
+        "maps"
     ],
     "fileStates": {
         ":/automap-tiles.tsx": {
@@ -35,14 +35,17 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.6611,
+            "scale": 0.2213,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2169.1120859174102,
-                "y": 1475.5710180003025
+                "x": 702.66606416629,
+                "y": 1854.9480343425216
             }
         },
         "maps/isogrid.json": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 0.4068,
             "selectedLayer": 1,
             "viewCenter": {
@@ -53,7 +56,7 @@
         "tilesets/grid_items.json": {
             "dynamicWrapping": true,
             "scaleInDock": 3.0191,
-            "scaleInEditor": 0.73
+            "scaleInEditor": 0.21
         },
         "tilesets/grid_items.tsj": {
             "dynamicWrapping": true,
@@ -66,7 +69,7 @@
         "tilesets/grid_tileset.json": {
             "dynamicWrapping": false,
             "scaleInDock": 2.4562,
-            "scaleInEditor": 0.73
+            "scaleInEditor": 0.21
         },
         "tilesets/grid_tileset.json.tsj": {
             "scaleInDock": 1,
@@ -80,17 +83,17 @@
         "tilesets/hexgrid_objects.json": {
             "dynamicWrapping": true,
             "scaleInDock": 1,
-            "scaleInEditor": 0.73
+            "scaleInEditor": 0.21
         },
         "tilesets/hexgrid_tiles.json": {
             "dynamicWrapping": true,
             "scaleInDock": 0.3806,
-            "scaleInEditor": 0.73
+            "scaleInEditor": 0.21
         },
         "tilesets/isogrid_tileset.json": {
             "dynamicWrapping": true,
             "scaleInDock": 0.5024,
-            "scaleInEditor": 0.73
+            "scaleInEditor": 0.21
         }
     },
     "last.exportedFilePath": "/Users/insality/code/defold/detiled/tiled/export",
@@ -117,11 +120,11 @@
         "tilesets/grid_tileset.json",
         "tilesets/grid_items.json",
         "maps/grid.json",
-        "maps/hexgrid.json",
-        "tilesets/hexgrid_tiles.json",
-        "tilesets/hexgrid_objects.json",
         "tilesets/isogrid_tileset.json",
         "maps/isogrid.json",
+        "tilesets/hexgrid_objects.json",
+        "tilesets/hexgrid_tiles.json",
+        "maps/hexgrid.json",
         ":/automap-tiles.tsx",
         "maps/grid.json.tmj",
         "tilesets/grid_tileset.tsx",

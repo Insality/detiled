@@ -34,3 +34,6 @@ default_texture_mag_filter = nearest
 [sprite]
 max_count = 1024
 
+[native_extension]
+app_manifest = /example/assets/appmanifest.appmanifest
+

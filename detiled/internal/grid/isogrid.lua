@@ -1,11 +1,6 @@
 local M = {}
 
 
-local function round(x)
-	return math.floor(x + 0.5)
-end
-
-
 local function get_scene_size(map_params)
 	local data = map_params
 

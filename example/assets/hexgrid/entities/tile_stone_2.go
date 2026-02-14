@@ -8,4 +8,7 @@ embedded_components {
   "  texture: \"/example/assets/hexgrid/hexgrid_tiles.atlas\"\n"
   "}\n"
   ""
+  position {
+    y: 22.0
+  }
 }

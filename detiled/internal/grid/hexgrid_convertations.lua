@@ -7,8 +7,8 @@ end
 
 
 function M.cell_to_pos_flattop(i, j, data)
-	local part_size = data.tile.width - data.tile.side
-	local two_hex_width = data.tile.width + data.tile.side
+	local part_size = data.tile.width - data.tile.side - 1
+	local two_hex_width = data.tile.side * 2 + part_size
 
 	local x = two_hex_width / 2 * i
 	local y = data.tile.height * (j + 0.5 * (bit.band(i, 1)))
@@ -21,6 +21,26 @@ function M.cell_to_pos_flattop(i, j, data)
 	y = y + (data.scene.invert_y and -data.tile.height/2 or data.tile.height/2)
 
 	return x, y
+end
+
+
+function M.pos_to_cell_flattop(x, y, map_params)
+	local data = map_params
+
+	local part_size = data.tile.width - data.tile.side - 1
+	local two_hex_width = data.tile.side * 2 + part_size
+
+	x = x - part_size
+	y = y - (data.scene.invert_y and -data.tile.height/2 or data.tile.height/2)
+
+	if data.scene.invert_y then
+		y = data.scene.size_y - y
+	end
+
+	local i = round(2 * x / two_hex_width)
+	local j = round(y / data.tile.height - 0.5 * bit.band(i, 1))
+
+	return i, j
 end
 
 
@@ -39,26 +59,6 @@ function M.cell_to_pos_pointytop(i, j, data)
 	y = y + (data.scene.invert_y and -part_size or part_size)
 
 	return x, y
-end
-
-
-function M.pos_to_cell_flattop(x, y, map_params)
-	local data = map_params
-
-	local part_size = data.tile.width - data.tile.side
-	local two_hex_width = data.tile.width + data.tile.side
-
-	x = x - part_size
-	y = y - (data.scene.invert_y and -data.tile.height/2 or data.tile.height/2)
-
-	if data.scene.invert_y then
-		y = data.scene.size_y - y
-	end
-
-	local i = round(2 * x / two_hex_width)
-	local j = round(y / data.tile.height - 0.5 * bit.band(i, 1))
-
-	return i, j
 end
 
 
