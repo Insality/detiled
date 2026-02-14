@@ -1,0 +1,47 @@
+name: "examle_hexgrid"
+instances {
+  id: "entities"
+  prototype: "/example/assets/hexgrid/entities.go"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "go"
+  data: "components {\n"
+  "  id: \"example_hexgrid\"\n"
+  "  component: \"/example/example_hexgrid/example_hexgrid.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "camera"
+  data: "components {\n"
+  "  id: \"camera_wasd_control\"\n"
+  "  component: \"/example/assets/camera_wasd_control.script\"\n"
+  "  properties {\n"
+  "    id: \"movement_speed\"\n"
+  "    value: \"600.0\"\n"
+  "    type: PROPERTY_TYPE_NUMBER\n"
+  "  }\n"
+  "  properties {\n"
+  "    id: \"zoom_speed\"\n"
+  "    value: \"2.0\"\n"
+  "    type: PROPERTY_TYPE_NUMBER\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"camera\"\n"
+  "  type: \"camera\"\n"
+  "  data: \"aspect_ratio: 1.0\\n"
+  "fov: 0.7854\\n"
+  "near_z: -100.0\\n"
+  "far_z: 1000.0\\n"
+  "orthographic_projection: 1\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 480.0
+    y: 320.0
+    z: -10.0
+  }
+}

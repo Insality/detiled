@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/example_grid/example_grid.collectionc
+main_collection = /example/example_hexgrid/example_hexgrid.collectionc
 
 [script]
 shared_state = 1
@@ -28,4 +28,7 @@ game_binding = /builtins/input/all.input_bindingc
 [graphics]
 default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
+
+[sprite]
+max_count = 1024
 

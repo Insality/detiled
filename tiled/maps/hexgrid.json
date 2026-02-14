@@ -28,6 +28,12 @@
          "id":1,
          "name":"tiles",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"position_z",
+                 "type":"float",
+                 "value":-1
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":30,

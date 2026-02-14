@@ -16,13 +16,61 @@
          "id":0,
          "image":"..\/assets\/hexgrid\/r_tree_round_2.png",
          "imageheight":264,
-         "imagewidth":235
+         "imagewidth":235,
+         "objectgroup":
+            {
+             "draworder":"index",
+             "id":2,
+             "name":"",
+             "objects":[
+                    {
+                     "height":0,
+                     "id":1,
+                     "name":"",
+                     "point":true,
+                     "rotation":0,
+                     "type":"",
+                     "visible":true,
+                     "width":0,
+                     "x":124.286120901539,
+                     "y":239.072880659739
+                    }],
+             "opacity":1,
+             "type":"objectgroup",
+             "visible":true,
+             "x":0,
+             "y":0
+            }
         }, 
         {
          "id":1,
          "image":"..\/assets\/hexgrid\/r_tree_round.png",
          "imageheight":221,
-         "imagewidth":169
+         "imagewidth":169,
+         "objectgroup":
+            {
+             "draworder":"index",
+             "id":2,
+             "name":"",
+             "objects":[
+                    {
+                     "height":0,
+                     "id":1,
+                     "name":"",
+                     "point":true,
+                     "rotation":0,
+                     "type":"",
+                     "visible":true,
+                     "width":0,
+                     "x":79.245027430971,
+                     "y":199.128530467568
+                    }],
+             "opacity":1,
+             "type":"objectgroup",
+             "visible":true,
+             "x":0,
+             "y":0
+            }
         }],
  "tilewidth":235,
  "type":"tileset",

@@ -76,7 +76,7 @@
         "maps/grid.json"
     ],
     "project": "detiled.tiled-project",
-    "property.type": "string",
+    "property.type": "float",
     "recentFiles": [
         "tilesets/grid_tileset.json",
         "tilesets/grid_items.json",
