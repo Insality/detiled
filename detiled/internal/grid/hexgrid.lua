@@ -22,7 +22,7 @@ local function get_scene_size_flattop(data)
 	local tile_width = data.tile.width
 	local tile_height = data.tile.height
 	local tile_side = data.tile.side
-	local tile_angle = tile_width - tile_side - 1
+	local tile_angle = tile_width - tile_side
 	local tile_angle_half = tile_angle / 2
 
 	local tile_count_x = data.scene.tiles_x
@@ -56,8 +56,8 @@ function M.get_map_params_from_tiled(tiled_data)
 
 	local map_params = {}
 	map_params.tile = {
-		width = tiled_data.tilewidth,
-		height = tiled_data.tileheight,
+		width = tiled_data.tilewidth - 1,
+		height = tiled_data.tileheight - 1,
 		side = tiled_data.hexsidelength or 0,
 	}
 	map_params.scene = {

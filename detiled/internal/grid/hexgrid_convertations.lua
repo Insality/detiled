@@ -7,7 +7,7 @@ end
 
 
 function M.cell_to_pos_flattop(i, j, data)
-	local part_size = data.tile.width - data.tile.side - 1
+	local part_size = data.tile.width - data.tile.side
 	local two_hex_width = data.tile.side * 2 + part_size
 
 	local x = two_hex_width / 2 * i
@@ -27,7 +27,7 @@ end
 function M.pos_to_cell_flattop(x, y, map_params)
 	local data = map_params
 
-	local part_size = data.tile.width - data.tile.side - 1
+	local part_size = data.tile.width - data.tile.side
 	local two_hex_width = data.tile.side * 2 + part_size
 
 	x = x - part_size
