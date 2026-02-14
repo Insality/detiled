@@ -36,6 +36,7 @@ end
 
 
 function init(self)
+	detiled.load_tileset("/tiled/tilesets/hexgrid_objects.json")
 	detiled.load_tileset("/tiled/tilesets/isogrid_tileset.json")
 	local map = detiled.get_entity_from_map("/tiled/maps/isogrid.json")
 	spawn_map(map)
