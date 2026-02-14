@@ -19,18 +19,6 @@ end
 
 
 local function get_scene_size_flattop(data)
-	--[[
-	width - 192
-	height - 145
-	side - 95
-
-	so two angles - 192 - 95 = 97
-	one angle - 97 / 2 = 48.5
-	width = (tile count * side) + (tile count * one angle) + one_angle
-	tile_count - 30
-	width = (30 * 95) + (31 * 48.5)
-	(30 * 95) + (31 * 48.5)  = 4353.5
-	--]]
 	local tile_width = data.tile.width
 	local tile_height = data.tile.height
 	local tile_side = data.tile.side
@@ -42,9 +30,6 @@ local function get_scene_size_flattop(data)
 
 	local width = (tile_count_x * tile_side) + ((tile_count_x + 1) * tile_angle_half)
 	local height = (tile_count_y * tile_height) + tile_height/2
-
-	pprint(data)
-	pprint("get_scene_size_flattop", width, height)
 
 	return width, height
 end
