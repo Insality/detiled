@@ -1,6 +1,6 @@
 local logger = require("detiled.internal.detiled_logger")
 local detiled_internal = require("detiled.internal.detiled_internal")
-local detiled_decore = require("detiled.internal.detiled_decore")
+local detiled_parser = require("detiled.internal.detiled_parser")
 
 ---@class detiled
 local M = {}
@@ -28,7 +28,7 @@ function M.get_entity_from_map(map_or_path)
 	end
 	---@cast map detiled.map
 
-	local entities = detiled_decore.get_entities(map)
+	local entities = detiled_parser.get_entities(map)
 	return {
 		child_instancies = entities,
 	}
