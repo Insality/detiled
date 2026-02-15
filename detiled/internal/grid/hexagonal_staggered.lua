@@ -52,7 +52,7 @@ end
 
 
 ---@param tiled_data detiled.map
----@return table
+---@return detiled.map_params
 function M.get_map_params_from_tiled(tiled_data)
 	local hexmap_type = HEXMAP_TYPE.POINTYTOP
 	if tiled_data.staggeraxis == "x" then
@@ -60,6 +60,7 @@ function M.get_map_params_from_tiled(tiled_data)
 	end
 
 	local map_params = {}
+	map_params.orientation = "hexagonal"
 	map_params.tile = {
 		width = tiled_data.tilewidth - 1,
 		height = tiled_data.tileheight - 1,
@@ -84,7 +85,7 @@ end
 
 ---@param i number
 ---@param j number
----@param map_params table
+---@param map_params detiled.map_params
 ---@return number, number
 function M.cell_to_pos(i, j, map_params)
 	if map_params.scene.hexmap_type == HEXMAP_TYPE.POINTYTOP then
@@ -98,10 +99,26 @@ function M.cell_to_pos(i, j, map_params)
 end
 
 
+---@param x number
+---@param y number
+---@param map_params detiled.map_params
+---@return number, number
+function M.pos_to_cell(x, y, map_params)
+	if map_params.scene.hexmap_type == HEXMAP_TYPE.POINTYTOP then
+		return hexgrid_convert.pos_to_cell_pointytop(x, y, map_params)
+	end
+	if map_params.scene.hexmap_type == HEXMAP_TYPE.FLATTOP then
+		return hexgrid_convert.pos_to_cell_flattop(x, y, map_params)
+	end
+
+	return 0, 0
+end
+
+
 ---@param i number
 ---@param j number
 ---@param z_layer number|nil
----@param map_params table
+---@param map_params detiled.map_params
 ---@return number, number, number
 function M.get_tile_pos(i, j, z_layer, map_params)
 	z_layer = z_layer or 0
@@ -116,4 +133,3 @@ end
 
 
 return M
-

@@ -127,3 +127,25 @@
 ---@class detiled.entity
 ---@field prefab_id string
 ---@field components table<string, any>
+
+---@class detiled.map_params.tile
+---@field width number
+---@field height number
+---@field side number|nil
+
+---@class detiled.map_params.scene
+---@field invert_y boolean
+---@field tiles_x number
+---@field tiles_y number
+---@field size_x number
+---@field size_y number
+---@field hexmap_type string|nil
+
+---@class detiled.map_params
+---@field orientation string
+---@field tile detiled.map_params.tile
+---@field scene detiled.map_params.scene
+
+---@class detiled.get_entity_from_map_result
+---@field map_params detiled.map_params|nil
+---@field entities detiled.entity[]

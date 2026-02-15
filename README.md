@@ -61,11 +61,15 @@ After that, select `Project ▸ Fetch Libraries` to update [library dependencies
 
 2. Convert Tiled maps to Decore entities:
    ```lua
-   -- Get entity prefab from map
-   local map = detiled.get_entity_from_map("/resources/maps/my_map.json")
+   -- Get map params and entities from map
+   local result = detiled.get_entity_from_map("/resources/maps/my_map.json")
 
-   -- Add to Decore world
-   world:addEntity(decore.create(map))
+   -- Add entities to Decore world
+   for _, entity in ipairs(result.entities) do
+     world:addEntity(decore.create(entity))
+   end
+
+   -- Use result.map_params for coordinate conversion (cell_to_pos, pos_to_cell)
    ```
 
 ### Prefab ID Resolution
@@ -121,7 +125,9 @@ Look at [Shooting Circles](https://github.com/Insality/shooting_circles) or [Cos
 ```lua
 detiled.set_logger(logger_instance)
 detiled.load_tileset(tileset_path_or_data)
-detiled.get_entity_from_map(map_path_or_data)
+detiled.get_entity_from_map(map_path_or_data)  -- returns { map_params, entities }
+detiled.cell_to_pos(map_params, i, j)           -- returns x, y
+detiled.pos_to_cell(map_params, x, y)           -- returns i, j
 ```
 
 ### API Reference

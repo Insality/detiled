@@ -5,10 +5,10 @@ local base64 = require("detiled.internal.base64")
 local M = {}
 
 local GRID_MODULES = {
-	["orthogonal"] = require("detiled.internal.grid.grid"), -- orthogonal
-	["isometric"] = require("detiled.internal.grid.isometric"), -- isometric
-	["staggered"] = require("detiled.internal.grid.isogrid"), -- isometric staggered
-	["hexagonal"] = require("detiled.internal.grid.hexgrid"), -- hexagonal
+	["orthogonal"] = require("detiled.internal.grid.orthogonal"),
+	["isometric"] = require("detiled.internal.grid.isometric"),
+	["staggered"] = require("detiled.internal.grid.isometric_staggered"),
+	["hexagonal"] = require("detiled.internal.grid.hexagonal_staggered"),
 }
 
 
@@ -274,10 +274,13 @@ end
 
 
 ---@param tiled_map detiled.map
----@return detiled.entity[]
+---@return detiled.get_entity_from_map_result
 function M.get_entities(tiled_map)
 	---@type detiled.entity[]
 	local entities = {}
+
+	local grid_module = GRID_MODULES[tiled_map.orientation]
+	local map_params = grid_module and grid_module.get_map_params_from_tiled(tiled_map) or nil
 
 	for layer_index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[layer_index]
@@ -297,7 +300,27 @@ function M.get_entities(tiled_map)
 		end
 	end
 
-	return entities
+	return { map_params = map_params, entities = entities }
+end
+
+
+---@param map_params detiled.map_params
+---@param i number
+---@param j number
+---@return number, number
+function M.cell_to_pos(map_params, i, j)
+	local grid = GRID_MODULES[map_params.orientation]
+	return grid.cell_to_pos(i, j, map_params)
+end
+
+
+---@param map_params detiled.map_params
+---@param x number
+---@param y number
+---@return number, number
+function M.pos_to_cell(map_params, x, y)
+	local grid = GRID_MODULES[map_params.orientation]
+	return grid.pos_to_cell(x, y, map_params)
 end
 
 
@@ -319,7 +342,7 @@ end
 ---@param tile detiled.tileset.tile|nil
 ---@param map_width number|nil
 ---@param map_height number|nil
----@param map_params table|nil
+---@param map_params detiled.map_params|nil
 ---@return number, number, number, number
 function M.get_defold_position_from_tiled_object(object, tile, map_width, map_height, map_params)
 	map_height = map_height or 0

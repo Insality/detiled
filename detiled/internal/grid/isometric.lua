@@ -15,9 +15,10 @@ end
 
 
 ---@param tiled_data detiled.map
----@return table
+---@return detiled.map_params
 function M.get_map_params_from_tiled(tiled_data)
 	local map_params = {}
+	map_params.orientation = "isometric"
 	map_params.tile = {
 		width = tiled_data.tilewidth,
 		height = tiled_data.tileheight,
@@ -40,7 +41,7 @@ end
 
 ---@param i number
 ---@param j number
----@param map_params table
+---@param map_params detiled.map_params
 ---@return number, number
 function M.cell_to_pos(i, j, map_params)
 	local data = map_params
@@ -61,10 +62,36 @@ function M.cell_to_pos(i, j, map_params)
 end
 
 
+---@param x number
+---@param y number
+---@param map_params detiled.map_params
+---@return number, number
+function M.pos_to_cell(x, y, map_params)
+	local data = map_params
+	local h = data.scene.tiles_y
+	local tw = data.tile.width
+	local th = data.tile.height
+
+	local sum_ij
+	if data.scene.invert_y then
+		sum_ij = 2 * (data.scene.size_y - th / 2 - y) / th
+	else
+		y = y - th / 2
+		sum_ij = 2 * y / th
+	end
+
+	local diff_ij = 2 * x / tw - h
+	local i = (sum_ij + diff_ij) / 2
+	local j = (sum_ij - diff_ij) / 2
+
+	return math.floor(i + 0.5), math.floor(j + 0.5)
+end
+
+
 ---@param i number
 ---@param j number
 ---@param z_layer number|nil
----@param map_params table
+---@param map_params detiled.map_params
 ---@return number, number, number
 function M.get_tile_pos(i, j, z_layer, map_params)
 	z_layer = z_layer or 0

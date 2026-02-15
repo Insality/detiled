@@ -4,16 +4,17 @@ local M = {}
 local function get_scene_size(map_params)
 	local data = map_params
 
-	local width = data.scene.tiles_x * data.tile.width
-	local height = data.scene.tiles_y * data.tile.height
+	local width = data.scene.tiles_x * data.tile.width + data.tile.width / 2
+	local height = data.tile.height + ((data.scene.tiles_y - 1) * data.tile.height/2)
 	return width, height
 end
 
 
 ---@param tiled_data detiled.map
----@return table
+---@return detiled.map_params
 function M.get_map_params_from_tiled(tiled_data)
 	local map_params = {}
+	map_params.orientation = "staggered"
 	map_params.tile = {
 		width = tiled_data.tilewidth,
 		height = tiled_data.tileheight,
@@ -36,13 +37,13 @@ end
 
 ---@param i number
 ---@param j number
----@param map_params table
+---@param map_params detiled.map_params
 ---@return number, number
 function M.cell_to_pos(i, j, map_params)
 	local data = map_params
 
-	local x = data.tile.width * i
-	local y = data.tile.height * j
+	local x = data.tile.width * (i + 0.5 * (bit.band(j, 1)))
+	local y = data.tile.height/2 * j
 
 	if data.scene.invert_y then
 		y = data.scene.size_y - y
@@ -55,10 +56,31 @@ function M.cell_to_pos(i, j, map_params)
 end
 
 
+---@param x number
+---@param y number
+---@param map_params detiled.map_params
+---@return number, number
+function M.pos_to_cell(x, y, map_params)
+	local data = map_params
+
+	x = x - data.tile.width / 2
+	y = y - (data.scene.invert_y and -data.tile.height/2 or data.tile.height/2)
+
+	if data.scene.invert_y then
+		y = data.scene.size_y - y
+	end
+
+	local j = math.floor(y / (data.tile.height / 2) + 0.5)
+	local i = math.floor((x / data.tile.width) - 0.5 * (bit.band(j, 1)) + 0.5)
+
+	return i, j
+end
+
+
 ---@param i number
 ---@param j number
 ---@param z_layer number|nil
----@param map_params table
+---@param map_params detiled.map_params
 ---@return number, number, number
 function M.get_tile_pos(i, j, z_layer, map_params)
 	z_layer = z_layer or 0
@@ -73,4 +95,3 @@ end
 
 
 return M
-
