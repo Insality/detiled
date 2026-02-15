@@ -23,8 +23,8 @@ local function get_scene_size(map_params)
 	local axis = data.scene.stagger_axis or STAGGER_AXIS.Y
 
 	if axis == STAGGER_AXIS.X then
-		local width = nx * tw
-		local height = ny * (th / 2) + th / 2
+		local width = nx * (tw / 2) + tw / 2
+		local height = ny * th + th / 2
 		return width, height
 	end
 
@@ -75,8 +75,8 @@ function M.cell_to_pos(i, j, map_params)
 	local x, y
 
 	if axis == STAGGER_AXIS.X then
-		x = data.tile.width * i
-		y = data.tile.height / 2 * (j + stagger_offset(i, stagger_index))
+		x = data.tile.width / 2 * i
+		y = data.tile.height * (j + stagger_offset(i, stagger_index))
 	else
 		x = data.tile.width * (i + stagger_offset(j, stagger_index))
 		y = data.tile.height / 2 * j
@@ -111,8 +111,8 @@ function M.pos_to_cell(x, y, map_params)
 
 	local i, j
 	if axis == STAGGER_AXIS.X then
-		i = math.floor(x / data.tile.width + 0.5)
-		j = math.floor(2 * y / data.tile.height - stagger_offset(i, stagger_index) + 0.5)
+		i = math.floor(2 * x / data.tile.width + 0.5)
+		j = math.floor(y / data.tile.height - stagger_offset(i, stagger_index) + 0.5)
 	else
 		j = math.floor(2 * y / data.tile.height + 0.5)
 		i = math.floor(x / data.tile.width - stagger_offset(j, stagger_index) + 0.5)
