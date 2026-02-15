@@ -17,11 +17,11 @@
             "scaleInEditor": 1
         },
         "maps/grid.json": {
-            "scale": 9.05,
-            "selectedLayer": 3,
+            "scale": 2.2515,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 240,
-                "y": 160
+                "x": 306.90650677326227,
+                "y": 201.19920053297804
             }
         },
         "maps/grid.json.tmj": {
@@ -30,6 +30,14 @@
             "viewCenter": {
                 "x": 171.02659925258297,
                 "y": 176.08265552868764
+            }
+        },
+        "maps/grid_game_objects.json": {
+            "scale": 1.72,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 240.11627906976744,
+                "y": 159.88372093023258
             }
         },
         "maps/hexgrid.json": {
@@ -44,11 +52,11 @@
             }
         },
         "maps/hexgrid_pointy.json": {
-            "scale": 0.5,
-            "selectedLayer": 0,
+            "scale": 0.4687,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 826,
-                "y": 820
+                "x": 738.2120759547685,
+                "y": 823.5545124813312
             }
         },
         "maps/isogrid.json": {
@@ -126,6 +134,7 @@
     "project": "detiled.tiled-project",
     "property.type": "float",
     "recentFiles": [
+        "maps/grid_game_objects.json",
         "tilesets/grid_tileset.json",
         "tilesets/grid_items.json",
         "maps/grid.json",
@@ -136,8 +145,7 @@
         "maps/hexgrid.json",
         ":/automap-tiles.tsx",
         "maps/grid.json.tmj",
-        "tilesets/grid_tileset.tsx",
-        "tilesets/grid_tileset.json.tsj"
+        "tilesets/grid_tileset.tsx"
     ],
     "tileset.lastUsedFormat": "json",
     "tileset.tileSize": {

@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/example_hexgrid_pointy/example_hexgrid_pointy.collectionc
+main_collection = /example/example_grid_game_objects/example_grid_game_objects.collectionc
 
 [script]
 shared_state = 1
