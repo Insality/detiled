@@ -45,18 +45,18 @@ end
 ---@return number, number
 function M.cell_to_pos(i, j, map_params)
 	local data = map_params
-	local h = data.scene.tiles_y
-	local tw = data.tile.width
-	local th = data.tile.height
+	local tile_count_y = data.scene.tiles_y
+	local tile_width = data.tile.width
+	local tile_height = data.tile.height
 
-	local x = (i - j + h) * (tw / 2)
-	local y = (i + j) * (th / 2)
+	local x = (i - j + tile_count_y) * (tile_width / 2) + 1
+	local y = (i + j) * (tile_height / 2)
 
 	if data.scene.invert_y then
 		y = data.scene.size_y - y
 	end
 
-	y = y + (data.scene.invert_y and -th / 2 or th / 2)
+	y = y + (data.scene.invert_y and -tile_height / 2 or tile_height / 2)
 
 	return x, y
 end
@@ -68,23 +68,45 @@ end
 ---@return number, number
 function M.pos_to_cell(x, y, map_params)
 	local data = map_params
-	local h = data.scene.tiles_y
-	local tw = data.tile.width
-	local th = data.tile.height
+	local tile_count_y = data.scene.tiles_y
+	local tile_width = data.tile.width
+	local tile_height = data.tile.height
 
 	local sum_ij
 	if data.scene.invert_y then
-		sum_ij = 2 * (data.scene.size_y - th / 2 - y) / th
+		sum_ij = 2 * (data.scene.size_y - tile_height / 2 - y) / tile_height
 	else
-		y = y - th / 2
-		sum_ij = 2 * y / th
+		y = y - tile_height / 2
+		sum_ij = 2 * y / tile_height
 	end
 
-	local diff_ij = 2 * x / tw - h
+	local diff_ij = 2 * x / tile_width - tile_count_y
 	local i = (sum_ij + diff_ij) / 2
 	local j = (sum_ij - diff_ij) / 2
 
 	return math.floor(i + 0.5), math.floor(j + 0.5)
+end
+
+
+--- Get object position from Tiled, convert to defold map position
+--- @param x number
+--- @param y number
+--- @param map_params detiled.map_params
+--- @return number, number
+function M.convert_object_position(x, y, map_params)
+	local tile_count_y = map_params.scene.tiles_y
+	local tw = map_params.tile.width
+	local th = map_params.tile.height
+
+	local origin_x = (tile_count_y) * (tw / 2) + 1
+	local origin_y = map_params.scene.size_y - th / 2
+
+	local offset_x = x - y
+	local offset_y = (th - x - y)/2
+
+	local out_x = origin_x + offset_x
+	local out_y = origin_y + offset_y
+	return out_x, out_y
 end
 
 

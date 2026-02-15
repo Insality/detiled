@@ -402,8 +402,19 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 	local position_x = object.x + rotated_offset_x
 	local position_y = object.y - rotated_offset_y
 
-	if map_params and map_params.scene.invert_y then
-		position_y = map_height - position_y
+	if map_params then
+		local grid = GRID_MODULES[map_params.orientation]
+		if grid and grid.convert_object_position then
+			position_x, position_y = grid.convert_object_position(object.x, object.y, map_params)
+			local bottom_center_x = base_width / 2
+			local bottom_center_y = 0
+			local offset_x = (anchor_x - bottom_center_x) * cos + (anchor_y - bottom_center_y) * sin
+			local offset_y = -(anchor_x - bottom_center_x) * sin + (anchor_y - bottom_center_y) * cos
+			position_x = position_x + offset_x * scale_x
+			position_y = position_y + offset_y * scale_y
+		elseif map_params.scene.invert_y then
+			position_y = map_height - position_y
+		end
 	end
 
 	return position_x, position_y, scale_x, scale_y

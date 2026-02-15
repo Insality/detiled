@@ -19,6 +19,7 @@ function update(self, dt)
 	local p = go.get_position()
 	p.x = p.x + self.move.x * self.movement_speed * dt
 	p.y = p.y + self.move.y * self.movement_speed * dt
+
 	go.set_position(p)
 
 	if self.zoom_delta ~= 0 then

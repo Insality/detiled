@@ -17,7 +17,8 @@ local function spawn_entity(entity)
 	local factory_url = "/entities#" .. prefab_id
 	local position = vmath.vector3(position_x, position_y, position_z)
 	local scale = vmath.vector3(scale_x, scale_y, 1)
-	factory.create(factory_url, position, nil, nil, scale)
+	local rot = vmath.quat_rotation_z(math.rad(transform.rotation or 0))
+	factory.create(factory_url, position, rot, nil, scale)
 end
 
 

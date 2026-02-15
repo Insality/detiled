@@ -102,7 +102,7 @@
  "nextobjectid":29,
  "orientation":"staggered",
  "renderorder":"right-down",
- "staggeraxis":"x",
+ "staggeraxis":"y",
  "staggerindex":"odd",
  "tiledversion":"1.11.2",
  "tileheight":48,

@@ -26,7 +26,7 @@ embedded_instances {
   "  component: \"/example/assets/camera_wasd_control.script\"\n"
   "  properties {\n"
   "    id: \"movement_speed\"\n"
-  "    value: \"100.0\"\n"
+  "    value: \"250.0\"\n"
   "    type: PROPERTY_TYPE_NUMBER\n"
   "  }\n"
   "  properties {\n"
