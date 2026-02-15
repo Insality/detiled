@@ -22,8 +22,6 @@ local function spawn_entity(entity)
 	local scale = vmath.vector3(scale_x, scale_y, 1)
 	local rot = vmath.quat_rotation_z(math.rad(rotation))
 	factory.create(factory_url, position, rot, nil, scale)
-
-	print("Spawn entity: ", factory_url, position_x, position_y, position_z)
 end
 
 

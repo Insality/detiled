@@ -8,7 +8,8 @@ local function get_scene_size(map_params)
 	local tw = data.tile.width
 	local th = data.tile.height
 	local size_x = (w + h) * (tw / 2)
-	local size_y = (w + h - 1) * (th / 2)
+	local size_y = (w + h) * (th / 2)
+
 	return size_x, size_y
 end
 
@@ -54,7 +55,6 @@ function M.cell_to_pos(i, j, map_params)
 		y = data.scene.size_y - y
 	end
 
-	x = x + tw / 2
 	y = y + (data.scene.invert_y and -th / 2 or th / 2)
 
 	return x, y
