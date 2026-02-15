@@ -1,11 +1,35 @@
 local M = {}
 
+local STAGGER_AXIS = {
+	X = "x",
+	Y = "y",
+}
+
+
+local function stagger_offset(idx, stagger_index)
+	if stagger_index == "even" then
+		return 0.5 * (1 - bit.band(idx, 1))
+	end
+	return 0.5 * bit.band(idx, 1)
+end
+
 
 local function get_scene_size(map_params)
 	local data = map_params
+	local tw = data.tile.width
+	local th = data.tile.height
+	local nx = data.scene.tiles_x
+	local ny = data.scene.tiles_y
+	local axis = data.scene.stagger_axis or STAGGER_AXIS.Y
 
-	local width = data.scene.tiles_x * data.tile.width + data.tile.width / 2
-	local height = data.tile.height + ((data.scene.tiles_y - 1) * data.tile.height/2)
+	if axis == STAGGER_AXIS.X then
+		local width = nx * tw
+		local height = ny * (th / 2) + th / 2
+		return width, height
+	end
+
+	local width = nx * tw + tw / 2
+	local height = th + (ny - 1) * (th / 2)
 	return width, height
 end
 
@@ -13,6 +37,9 @@ end
 ---@param tiled_data detiled.map
 ---@return detiled.map_params
 function M.get_map_params_from_tiled(tiled_data)
+	local stagger_axis = tiled_data.staggeraxis or "y"
+	local stagger_index = tiled_data.staggerindex or "odd"
+
 	local map_params = {}
 	map_params.orientation = "staggered"
 	map_params.tile = {
@@ -25,6 +52,8 @@ function M.get_map_params_from_tiled(tiled_data)
 		tiles_y = tiled_data.height,
 		size_x = 0,
 		size_y = 0,
+		stagger_axis = stagger_axis,
+		stagger_index = stagger_index,
 	}
 
 	local size_x, size_y = get_scene_size(map_params)
@@ -41,16 +70,24 @@ end
 ---@return number, number
 function M.cell_to_pos(i, j, map_params)
 	local data = map_params
+	local axis = data.scene.stagger_axis or STAGGER_AXIS.Y
+	local stagger_index = data.scene.stagger_index or "odd"
+	local x, y
 
-	local x = data.tile.width * (i + 0.5 * (bit.band(j, 1)))
-	local y = data.tile.height/2 * j
+	if axis == STAGGER_AXIS.X then
+		x = data.tile.width * i
+		y = data.tile.height / 2 * (j + stagger_offset(i, stagger_index))
+	else
+		x = data.tile.width * (i + stagger_offset(j, stagger_index))
+		y = data.tile.height / 2 * j
+	end
 
 	if data.scene.invert_y then
 		y = data.scene.size_y - y
 	end
 
-	x = x + data.tile.width/2
-	y = y + (data.scene.invert_y and -data.tile.height/2 or data.tile.height/2)
+	x = x + data.tile.width / 2
+	y = y + (data.scene.invert_y and -data.tile.height / 2 or data.tile.height / 2)
 
 	return x, y
 end
@@ -62,16 +99,24 @@ end
 ---@return number, number
 function M.pos_to_cell(x, y, map_params)
 	local data = map_params
+	local axis = data.scene.stagger_axis or STAGGER_AXIS.Y
+	local stagger_index = data.scene.stagger_index or "odd"
 
 	x = x - data.tile.width / 2
-	y = y - (data.scene.invert_y and -data.tile.height/2 or data.tile.height/2)
+	y = y - (data.scene.invert_y and -data.tile.height / 2 or data.tile.height / 2)
 
 	if data.scene.invert_y then
 		y = data.scene.size_y - y
 	end
 
-	local j = math.floor(y / (data.tile.height / 2) + 0.5)
-	local i = math.floor((x / data.tile.width) - 0.5 * (bit.band(j, 1)) + 0.5)
+	local i, j
+	if axis == STAGGER_AXIS.X then
+		i = math.floor(x / data.tile.width + 0.5)
+		j = math.floor(2 * y / data.tile.height - stagger_offset(i, stagger_index) + 0.5)
+	else
+		j = math.floor(2 * y / data.tile.height + 0.5)
+		i = math.floor(x / data.tile.width - stagger_offset(j, stagger_index) + 0.5)
+	end
 
 	return i, j
 end

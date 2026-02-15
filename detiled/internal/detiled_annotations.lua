@@ -142,6 +142,7 @@
 ---@field size_y number
 ---@field hexmap_type string|nil
 ---@field stagger_index string|nil "odd" or "even"
+---@field stagger_axis string|nil "x" or "y", used for staggered orientation
 
 ---@class detiled.map_params
 ---@field orientation string

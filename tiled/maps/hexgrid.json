@@ -477,7 +477,7 @@
  "orientation":"hexagonal",
  "renderorder":"right-down",
  "staggeraxis":"x",
- "staggerindex":"even",
+ "staggerindex":"odd",
  "tiledversion":"1.11.2",
  "tileheight":145,
  "tilesets":[
