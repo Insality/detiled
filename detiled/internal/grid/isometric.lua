@@ -98,8 +98,8 @@ function M.convert_object_position(x, y, map_params)
 	local tw = map_params.tile.width
 	local th = map_params.tile.height
 
-	local origin_x = (tile_count_y) * (tw / 2) + 1
-	local origin_y = map_params.scene.size_y - th / 2
+	local origin_x = (tile_count_y) * (tw / 2)
+	local origin_y = map_params.scene.size_y - (th / 2)
 
 	local offset_x = x - y
 	local offset_y = (th - x - y)/2
