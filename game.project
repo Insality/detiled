@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/example_grid_game_objects/example_grid_game_objects.collectionc
+main_collection = /example/example_isogrid/example_isogrid.collectionc
 
 [script]
 shared_state = 1

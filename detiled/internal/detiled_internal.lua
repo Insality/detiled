@@ -146,7 +146,6 @@ end
 ---@param tile_global_id number
 ---@return detiled.tileset.tile|nil, detiled.tileset|nil
 function M.get_tile_by_gid(map, tile_global_id)
-	-- TODO: is always tilesets goes in sorted order?
 	for tileset_index = #map.tilesets, 1, -1 do
 		local tileset = map.tilesets[tileset_index]
 		local first_gid = tileset.firstgid
