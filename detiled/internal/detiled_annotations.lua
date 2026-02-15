@@ -78,6 +78,7 @@
 ---@field version string
 ---@field width number
 ---@field staggeraxis string
+---@field staggerindex string
 ---@field hexsidelength number
 
 ---@class detiled.map.layer
@@ -140,6 +141,7 @@
 ---@field size_x number
 ---@field size_y number
 ---@field hexmap_type string|nil
+---@field stagger_index string|nil "odd" or "even"
 
 ---@class detiled.map_params
 ---@field orientation string

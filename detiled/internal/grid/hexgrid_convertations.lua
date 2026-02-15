@@ -6,12 +6,21 @@ local function round(x)
 end
 
 
+local function stagger_offset(idx, stagger_index)
+	if stagger_index == "even" then
+		return 0.5 * (1 - bit.band(idx, 1))
+	end
+	return 0.5 * bit.band(idx, 1)
+end
+
+
 function M.cell_to_pos_flattop(i, j, data)
 	local part_size = data.tile.width - data.tile.side
 	local two_hex_width = data.tile.side * 2 + part_size
+	local stagger_index = data.scene.stagger_index or "odd"
 
 	local x = two_hex_width / 2 * i
-	local y = data.tile.height * (j + 0.5 * (bit.band(i, 1)))
+	local y = data.tile.height * (j + stagger_offset(i, stagger_index))
 
 	if data.scene.invert_y then
 		y = data.scene.size_y - y
@@ -26,6 +35,7 @@ end
 
 function M.pos_to_cell_flattop(x, y, map_params)
 	local data = map_params
+	local stagger_index = data.scene.stagger_index or "odd"
 
 	local part_size = data.tile.width - data.tile.side
 	local two_hex_width = data.tile.side * 2 + part_size
@@ -38,7 +48,7 @@ function M.pos_to_cell_flattop(x, y, map_params)
 	end
 
 	local i = round(2 * x / two_hex_width)
-	local j = round(y / data.tile.height - 0.5 * bit.band(i, 1))
+	local j = round(y / data.tile.height - stagger_offset(i, stagger_index))
 
 	return i, j
 end
@@ -47,8 +57,9 @@ end
 function M.cell_to_pos_pointytop(i, j, data)
 	local part_size = data.tile.height - data.tile.side
 	local two_hex_height = data.tile.side * 2 + part_size
+	local stagger_index = data.scene.stagger_index or "odd"
 
-	local x = data.tile.width * (i + 0.5 * (bit.band(j, 1)))
+	local x = data.tile.width * (i + stagger_offset(j, stagger_index))
 	local y = two_hex_height / 2 * j
 
 	if data.scene.invert_y then
@@ -64,6 +75,7 @@ end
 
 function M.pos_to_cell_pointytop(x, y, map_params)
 	local data = map_params
+	local stagger_index = data.scene.stagger_index or "odd"
 
 	local part_size = data.tile.height - data.tile.side
 	local two_hex_height = data.tile.side * 2 + part_size
@@ -76,7 +88,7 @@ function M.pos_to_cell_pointytop(x, y, map_params)
 	end
 
 	local j = round(2 * y / two_hex_height)
-	local i = round(x / data.tile.width - 0.5 * bit.band(j, 1))
+	local i = round(x / data.tile.width - stagger_offset(j, stagger_index))
 
 	return i, j
 end

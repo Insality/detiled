@@ -59,6 +59,8 @@ function M.get_map_params_from_tiled(tiled_data)
 		hexmap_type = HEXMAP_TYPE.FLATTOP
 	end
 
+	local stagger_index = tiled_data.staggerindex or "odd"
+
 	local map_params = {}
 	map_params.orientation = "hexagonal"
 	map_params.tile = {
@@ -73,6 +75,7 @@ function M.get_map_params_from_tiled(tiled_data)
 		size_x = 0,
 		size_y = 0,
 		hexmap_type = hexmap_type,
+		stagger_index = stagger_index,
 	}
 
 	local size_x, size_y = get_scene_size(map_params)
