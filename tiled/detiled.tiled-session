@@ -63,11 +63,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.4068,
+            "scale": 0.2972,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1199.60668633235,
-                "y": 599.803343166175
+                "x": 918.5733512786002,
+                "y": 1202.8936742934047
             }
         },
         "tilesets/grid_items.json": {

@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/example_isogrid/example_isogrid.collectionc
+main_collection = /example/example_isogrid_staggered/example_isogrid_staggered.collectionc
 
 [script]
 shared_state = 1
