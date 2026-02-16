@@ -134,7 +134,7 @@
 ---@field scale_y number|nil
 ---@field rotation number|nil
 ---@field name string|nil
----@field tiled_id string|nil
+---@field tiled_id number|nil
 ---@field tiled_layer_id string|nil
 ---@field size_x number|nil
 ---@field size_y number|nil
