@@ -6,13 +6,11 @@ end
 
 local function spawn_entity(entity)
 	local prefab_id = entity.prefab_id
-	local components = entity.components
-	local transform = components.transform
-	local position_x = transform.position_x
-	local position_y = transform.position_y
-	local position_z = transform.position_z + get_z_position(position_x, position_y)
-	local scale_x = transform.scale_x or 1
-	local scale_y = transform.scale_y or 1
+	local position_x = entity.position_x
+	local position_y = entity.position_y
+	local position_z = entity.position_z + get_z_position(position_x, position_y)
+	local scale_x = entity.scale_x or 1
+	local scale_y = entity.scale_y or 1
 
 	local factory_url = "/entities#" .. prefab_id
 	local position = vmath.vector3(position_x, position_y, position_z)

@@ -72,6 +72,8 @@ After that, select `Project ▸ Fetch Libraries` to update [library dependencies
    -- Use result.map_params for coordinate conversion (cell_to_pos, pos_to_cell)
    ```
 
+   Each entity is a flat table: `prefab_id`, `position_x`, `position_y`, `position_z`, and optionally `scale_x`, `scale_y`, `rotation` (omitted when default), plus `name`, `tiled_id`, `tiled_layer_id`, and any custom properties from Tiled.
+
 ### Prefab ID Resolution
 
 Prefab IDs are determined in this order:

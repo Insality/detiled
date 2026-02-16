@@ -18,6 +18,7 @@ end
 ---@param map_or_path detiled.map|string
 ---@return detiled.get_entity_from_map_result
 function M.get_entity_from_map(map_or_path)
+	collectgarbage("stop")
 	local memory = collectgarbage("count")
 
 	local map = map_or_path
@@ -36,7 +37,8 @@ function M.get_entity_from_map(map_or_path)
 
 	local result = detiled_parser.get_entities(map)
 
-	print("Memory after get entities", collectgarbage("count") - memory)
+	print("Memory after get entities", #result.entities, collectgarbage("count") - memory)
+	collectgarbage("restart")
 
 	return result
 end

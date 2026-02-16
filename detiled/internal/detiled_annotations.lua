@@ -126,8 +126,18 @@
 ---@field source string
 
 ---@class detiled.entity
----@field prefab_id string
----@field components table<string, any>
+---@field prefab_id string|nil
+---@field position_x number
+---@field position_y number
+---@field position_z number
+---@field scale_x number|nil
+---@field scale_y number|nil
+---@field rotation number|nil
+---@field name string|nil
+---@field tiled_id string|nil
+---@field tiled_layer_id string|nil
+---@field size_x number|nil
+---@field size_y number|nil
 
 ---@class detiled.map_params.tile
 ---@field width number

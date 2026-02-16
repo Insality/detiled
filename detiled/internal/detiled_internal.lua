@@ -232,7 +232,7 @@ function M.merge_tables(t1, t2)
 end
 
 
----@param entity entity
+---@param entity table<string, any>
 ---@param components table<string, any>
 function M.apply_components(entity, components)
 	for component_id, component_data in pairs(components) do
