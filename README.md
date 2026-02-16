@@ -51,29 +51,6 @@ After that, select `Project ▸ Fetch Libraries` to update [library dependencies
 
 ### Workflow
 
-1. Load all tilesets before loading maps:
-   ```lua
-   local detiled = require("detiled.detiled")
-
-   -- Load all used tilesets first before loading maps
-   detiled.load_tileset("/resources/tilesets/my_tileset.json")
-   ```
-
-2. Convert Tiled maps to Decore entities:
-   ```lua
-   -- Get entities and map params from map
-   local entities, map_params = detiled.get_entity_from_map("/resources/maps/my_map.json")
-
-   -- Add entities to Decore world
-   for _, entity in ipairs(entities) do
-     world:addEntity(decore.create(entity))
-   end
-
-   -- Use map_params for coordinate conversion (cell_to_pos, pos_to_cell)
-   ```
-
-   Each entity is a flat table: `prefab_id`, `position_x`, `position_y`, `position_z`, and optionally `scale_x`, `scale_y`, `rotation` (omitted when default), plus `name`, `tiled_id`, `tiled_layer_id`, and any custom properties from Tiled.
-
 ### Prefab ID Resolution
 
 Prefab IDs are determined in this order:

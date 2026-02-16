@@ -1,4 +1,4 @@
-name: "examle_hexgrid"
+name: "example_hexgrid"
 instances {
   id: "entities"
   prototype: "/example/assets/hexgrid/entities.go"
