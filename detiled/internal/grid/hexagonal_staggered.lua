@@ -1,4 +1,5 @@
-local hexgrid_convert = require("detiled.internal.grid.hexgrid_convertations")
+local hexagonal_pointytop = require("detiled.internal.grid.hexagonal_pointytop")
+local hexagonal_flattop = require("detiled.internal.grid.hexagonal_flattop")
 
 local M = {}
 
@@ -92,10 +93,10 @@ end
 ---@return number, number
 function M.cell_to_pos(i, j, map_params)
 	if map_params.scene.hexmap_type == HEXMAP_TYPE.POINTYTOP then
-		return hexgrid_convert.cell_to_pos_pointytop(i, j, map_params)
+		return hexagonal_pointytop.cell_to_pos(i, j, map_params)
 	end
 	if map_params.scene.hexmap_type == HEXMAP_TYPE.FLATTOP then
-		return hexgrid_convert.cell_to_pos_flattop(i, j, map_params)
+		return hexagonal_flattop.cell_to_pos(i, j, map_params)
 	end
 
 	return 0, 0
@@ -108,10 +109,10 @@ end
 ---@return number, number
 function M.pos_to_cell(x, y, map_params)
 	if map_params.scene.hexmap_type == HEXMAP_TYPE.POINTYTOP then
-		return hexgrid_convert.pos_to_cell_pointytop(x, y, map_params)
+		return hexagonal_pointytop.pos_to_cell(x, y, map_params)
 	end
 	if map_params.scene.hexmap_type == HEXMAP_TYPE.FLATTOP then
-		return hexgrid_convert.pos_to_cell_flattop(x, y, map_params)
+		return hexagonal_flattop.pos_to_cell(x, y, map_params)
 	end
 
 	return 0, 0
