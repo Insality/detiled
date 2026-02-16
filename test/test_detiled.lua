@@ -9,10 +9,9 @@ return function()
 
 		it("Should init correclty", function()
 			detiled.load_tileset("/resources/tilesets/shooting_circle.json")
-			local result = detiled.get_entity_from_map("/resources/maps/game.json")
-			assert(result)
-			assert(result.entities)
-			assert(result.map_params)
+			local entities, map_params = detiled.get_entity_from_map("/resources/maps/game.json")
+			assert(entities)
+			assert(map_params)
 		end)
 	end)
 end

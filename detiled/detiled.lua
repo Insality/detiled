@@ -16,7 +16,7 @@ end
 ---Load a tiled map as a Decore entity
 ---You can add this entity with `world:addEntity(entity)`
 ---@param map_or_path detiled.map|string
----@return detiled.get_entity_from_map_result
+---@return detiled.entity[], detiled.map_params|nil
 function M.get_entity_from_map(map_or_path)
 	collectgarbage("stop")
 	local memory = collectgarbage("count")
@@ -26,7 +26,7 @@ function M.get_entity_from_map(map_or_path)
 		map = detiled_internal.load_json(map_or_path) --[[@as detiled.map]]
 		if not map then
 			logger:error("Failed to load map", map_or_path)
-			return { map_params = nil, entities = {} }
+			return {}, nil
 		end
 	end
 
@@ -34,13 +34,12 @@ function M.get_entity_from_map(map_or_path)
 	memory = collectgarbage("count")
 
 	---@cast map detiled.map
+	local entities, map_params = detiled_parser.get_entities(map)
 
-	local result = detiled_parser.get_entities(map)
-
-	print("Memory after get entities", #result.entities, collectgarbage("count") - memory)
+	print("Memory after get entities", #entities, collectgarbage("count") - memory)
 	collectgarbage("restart")
 
-	return result
+	return entities, map_params
 end
 
 
@@ -72,8 +71,8 @@ function M.load_tileset(tileset_or_path)
 	if type(tileset_or_path) == "string" then
 		tileset = detiled_internal.load_json(tileset_or_path) --[[@as detiled.tileset]]
 	end
-	---@cast tileset detiled.tileset
 
+	---@cast tileset detiled.tileset
 	return detiled_internal.load_tileset(tileset)
 end
 

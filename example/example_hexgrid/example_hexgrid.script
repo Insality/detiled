@@ -29,9 +29,9 @@ end
 function init(self)
 	detiled.load_tileset("/tiled/tilesets/hexgrid_tiles.json")
 	detiled.load_tileset("/tiled/tilesets/hexgrid_objects.json")
-	local result = detiled.get_entity_from_map("/tiled/maps/hexgrid.json")
-	spawn_map(result.entities)
-	self.map_params = result.map_params
+	local entities, map_params = detiled.get_entity_from_map("/tiled/maps/hexgrid.json")
+	spawn_map(entities)
+	self.map_params = map_params
 
 	msg.post(".", "acquire_input_focus")
 end
