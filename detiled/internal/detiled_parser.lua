@@ -188,18 +188,19 @@ function M.get_entities(tiled_map)
 
 	for layer_index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[layer_index]
-
-		if layer.type == "tilelayer" then
-			local layer_entities = get_entities_from_tile_layer(layer, tiled_map, grid_module, map_params)
-			for index = 1, #layer_entities do
-				table_insert(entities, layer_entities[index])
+		if not detiled_internal.is_layer_excluded(tiled_map, layer.name) then
+			if layer.type == "tilelayer" then
+				local layer_entities = get_entities_from_tile_layer(layer, tiled_map, grid_module, map_params)
+				for index = 1, #layer_entities do
+					table_insert(entities, layer_entities[index])
+				end
 			end
-		end
 
-		if layer.type == "objectgroup" then
-			local layer_entities = get_entities_from_object_layer(layer, tiled_map, grid_module, map_params)
-			for index = 1, #layer_entities do
-				table_insert(entities, layer_entities[index])
+			if layer.type == "objectgroup" then
+				local layer_entities = get_entities_from_object_layer(layer, tiled_map, grid_module, map_params)
+				for index = 1, #layer_entities do
+					table_insert(entities, layer_entities[index])
+				end
 			end
 		end
 	end
@@ -225,13 +226,6 @@ end
 function M.pos_to_cell(map_params, x, y)
 	local grid = GRID_MODULES[map_params.orientation]
 	return grid.pos_to_cell(x, y, map_params)
-end
-
-
----@param tiled_map detiled.map
----@param layer_name string
-function M.is_layer_excluded(tiled_map, layer_name)
-	return detiled_internal.is_layer_excluded(tiled_map, layer_name)
 end
 
 
