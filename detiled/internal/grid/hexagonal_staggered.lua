@@ -1,6 +1,7 @@
 local hexagonal_pointytop = require("detiled.internal.grid.hexagonal_pointytop")
 local hexagonal_flattop = require("detiled.internal.grid.hexagonal_flattop")
 
+---@class detiled.grid.hexagonal: detiled.grid
 local M = {}
 
 local HEXMAP_TYPE = {
@@ -9,6 +10,8 @@ local HEXMAP_TYPE = {
 }
 
 
+---@param data detiled.map_params
+---@return number, number
 local function get_scene_size_pointytop(data)
 	local tile_width = data.tile.width
 	local tile_height = data.tile.height
@@ -24,6 +27,8 @@ local function get_scene_size_pointytop(data)
 end
 
 
+---@param data detiled.map_params
+---@return number, number
 local function get_scene_size_flattop(data)
 	local tile_width = data.tile.width
 	local tile_height = data.tile.height
@@ -41,6 +46,8 @@ local function get_scene_size_flattop(data)
 end
 
 
+---@param map_params detiled.map_params
+---@return number, number
 local function get_scene_size(map_params)
 	local data = map_params
 

@@ -166,6 +166,9 @@
 ---@field tile detiled.map_params.tile
 ---@field scene detiled.map_params.scene
 
----@class detiled.get_entity_from_map_result
----@field map_params detiled.map_params|nil
----@field entities detiled.entity[]
+---@class detiled.grid
+---@field get_map_params_from_tiled fun(tiled_data: detiled.map): detiled.map_params
+---@field cell_to_pos fun(i: number, j: number, map_params: detiled.map_params): number, number
+---@field pos_to_cell fun(x: number, y: number, map_params: detiled.map_params): number, number
+---@field get_tile_pos fun(i: number, j: number, z_layer: number|nil, map_params: detiled.map_params): number, number, number
+---@field convert_object_position? fun(x: number, y: number, map_params: detiled.map_params): number, number

@@ -1,6 +1,8 @@
+---@class detiled.grid.orthogonal: detiled.grid
 local M = {}
 
-
+---@param map_params detiled.map_params
+---@return number, number
 local function get_scene_size(map_params)
 	local data = map_params
 

@@ -1,11 +1,16 @@
+---@class detiled.grid.hexagonal_pointytop: detiled.grid
 local M = {}
 
-
+---@param x number
+---@return number
 local function round(x)
 	return math.floor(x + 0.5)
 end
 
 
+---@param idx number
+---@param stagger_index string
+---@return number
 local function stagger_offset(idx, stagger_index)
 	if stagger_index == "even" then
 		return 0.5 * (1 - bit.band(idx, 1))
@@ -14,6 +19,10 @@ local function stagger_offset(idx, stagger_index)
 end
 
 
+---@param i number
+---@param j number
+---@param data detiled.map_params
+---@return number, number
 function M.cell_to_pos(i, j, data)
 	local part_size = data.tile.height - data.tile.side
 	local two_hex_height = data.tile.side * 2 + part_size
@@ -33,6 +42,10 @@ function M.cell_to_pos(i, j, data)
 end
 
 
+---@param x number
+---@param y number
+---@param map_params detiled.map_params
+---@return number, number
 function M.pos_to_cell(x, y, map_params)
 	local data = map_params
 	local stagger_index = data.scene.stagger_index or "odd"
@@ -54,23 +67,41 @@ function M.pos_to_cell(x, y, map_params)
 end
 
 
+---@param i number
+---@param j number
+---@param k number
+---@param map_params detiled.map_params
+---@return number, number
 function M.cell_cube_to_pos(i, j, k, map_params)
 	local offset_i, offset_j = M.cube_to_offset(i, j, k, map_params)
 	return M.cell_to_pos(offset_i, offset_j, map_params)
 end
 
 
+---@param x number
+---@param y number
+---@param map_params detiled.map_params
+---@return number, number, number
 function M.pos_to_cell_cube(x, y, map_params)
 	local offset_i, offset_j = M.pos_to_cell(x, y, map_params)
 	return M.offset_to_cube(offset_i, offset_j, map_params)
 end
 
 
+---@param i number
+---@param j number
+---@param k number
+---@param map_params detiled.map_params
+---@return number, number
 function M.cube_to_offset(i, j, k, map_params)
 	return i + (k - bit.band(k, 1)) / 2, k
 end
 
 
+---@param i number
+---@param j number
+---@param map_params detiled.map_params
+---@return number, number, number
 function M.offset_to_cube(i, j, map_params)
 	local x = i - (j - bit.band(j, 1)) / 2
 	return x, -x - j, j

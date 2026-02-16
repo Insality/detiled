@@ -1,3 +1,4 @@
+---@class detiled.grid.staggered: detiled.grid
 local M = {}
 
 local STAGGER_AXIS = {
@@ -6,6 +7,9 @@ local STAGGER_AXIS = {
 }
 
 
+---@param idx number
+---@param stagger_index string
+---@return number
 local function stagger_offset(idx, stagger_index)
 	if stagger_index == "even" then
 		return 0.5 * (1 - bit.band(idx, 1))
@@ -14,6 +18,8 @@ local function stagger_offset(idx, stagger_index)
 end
 
 
+---@param map_params detiled.map_params
+---@return number, number
 local function get_scene_size(map_params)
 	local data = map_params
 	local tw = data.tile.width

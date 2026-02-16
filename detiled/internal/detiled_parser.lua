@@ -9,7 +9,7 @@ local table_insert = table.insert
 
 local M = {}
 
-
+---@type table<string, detiled.grid>
 local GRID_MODULES = {
 	["orthogonal"] = require("detiled.internal.grid.orthogonal"),
 	["isometric"] = require("detiled.internal.grid.isometric"),

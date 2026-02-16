@@ -1,6 +1,8 @@
+---@class detiled.grid.isometric: detiled.grid
 local M = {}
 
-
+---@param map_params detiled.map_params
+---@return number, number
 local function get_scene_size(map_params)
 	local data = map_params
 	local w = data.scene.tiles_x
@@ -88,11 +90,10 @@ function M.pos_to_cell(x, y, map_params)
 end
 
 
---- Get object position from Tiled, convert to defold map position
---- @param x number
---- @param y number
---- @param map_params detiled.map_params
---- @return number, number
+---@param x number
+---@param y number
+---@param map_params detiled.map_params
+---@return number, number
 function M.convert_object_position(x, y, map_params)
 	local tile_count_y = map_params.scene.tiles_y
 	local tile_width = map_params.tile.width
