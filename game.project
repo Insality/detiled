@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /example/example_hexgrid/example_hexgrid.collectionc
+main_collection = /example/example.collectionc
 
 [script]
 shared_state = 1
@@ -15,11 +15,10 @@ input_method = HiddenInputField
 title = Detiled
 version = 2
 custom_resources = /tiled/maps,/tiled/tilesets
-dependencies#0 = https://github.com/Insality/decore/archive/refs/tags/3.zip
-dependencies#1 = https://github.com/britzl/deftest/archive/master.zip
-dependencies#2 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
-dependencies#3 = https://github.com/Insality/asset-store/archive/refs/heads/main.zip
-dependencies#4 = https://github.com/Insality/druid/archive/refs/tags/1.1.6.zip
+dependencies#0 = https://github.com/britzl/deftest/archive/master.zip
+dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/14.zip
+dependencies#2 = https://github.com/Insality/asset-store/archive/refs/heads/main.zip
+dependencies#3 = https://github.com/Insality/druid/archive/refs/heads/develop.zip
 
 [library]
 include_dirs = detiled

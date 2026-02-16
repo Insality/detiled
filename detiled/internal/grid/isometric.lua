@@ -95,14 +95,14 @@ end
 --- @return number, number
 function M.convert_object_position(x, y, map_params)
 	local tile_count_y = map_params.scene.tiles_y
-	local tw = map_params.tile.width
-	local th = map_params.tile.height
+	local tile_width = map_params.tile.width
+	local tile_height = map_params.tile.height
 
-	local origin_x = (tile_count_y) * (tw / 2)
-	local origin_y = map_params.scene.size_y - (th / 2)
+	local origin_x = (tile_count_y) * (tile_width / 2)
+	local origin_y = map_params.scene.size_y - (tile_height / 2)
 
 	local offset_x = x - y
-	local offset_y = (th - x - y)/2
+	local offset_y = (tile_height - x - y)/2
 
 	local out_x = origin_x + offset_x
 	local out_y = origin_y + offset_y

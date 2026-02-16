@@ -18,6 +18,8 @@ end
 ---@param map_or_path detiled.map|string
 ---@return detiled.get_entity_from_map_result
 function M.get_entity_from_map(map_or_path)
+	local memory = collectgarbage("count")
+
 	local map = map_or_path
 	if type(map_or_path) == "string" then
 		map = detiled_internal.load_json(map_or_path) --[[@as detiled.map]]
@@ -26,9 +28,17 @@ function M.get_entity_from_map(map_or_path)
 			return { map_params = nil, entities = {} }
 		end
 	end
+
+	print("Memory after load map", collectgarbage("count") - memory)
+	memory = collectgarbage("count")
+
 	---@cast map detiled.map
 
-	return detiled_parser.get_entities(map)
+	local result = detiled_parser.get_entities(map)
+
+	print("Memory after get entities", collectgarbage("count") - memory)
+
+	return result
 end
 
 
