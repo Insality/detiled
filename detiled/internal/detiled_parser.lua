@@ -9,6 +9,17 @@ local table_insert = table.insert
 
 local M = {}
 
+
+local GRID_MODULES = {
+	["orthogonal"] = require("detiled.internal.grid.orthogonal"),
+	["isometric"] = require("detiled.internal.grid.isometric"),
+	["staggered"] = require("detiled.internal.grid.isometric_staggered"),
+	["hexagonal"] = require("detiled.internal.grid.hexagonal_staggered"),
+}
+
+
+---@param object detiled.map.object
+---@return "point"|"ellipse"|"polyline"|"polygon"|"rectangle"|nil
 local function get_object_type(object)
 	if object.point then
 		return "point"
@@ -27,14 +38,6 @@ local function get_object_type(object)
 	end
 	return nil
 end
-
-
-local GRID_MODULES = {
-	["orthogonal"] = require("detiled.internal.grid.orthogonal"),
-	["isometric"] = require("detiled.internal.grid.isometric"),
-	["staggered"] = require("detiled.internal.grid.isometric_staggered"),
-	["hexagonal"] = require("detiled.internal.grid.hexagonal_staggered"),
-}
 
 
 ---@param layer detiled.map.layer
@@ -88,6 +91,8 @@ local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
 	local entities = {}
 
 	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
+	local offset_x = layer.offsetx or 0
+	local offset_y = layer.offsety or 0
 	local layer_data = detiled_internal.unpack_tile_layer_data(layer)
 
 	for tile_index = 1, #layer_data do
@@ -98,6 +103,8 @@ local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
 			local tile_i = ((tile_index - 1) % map.width)
 			local tile_j = (floor((tile_index - 1) / map.width))
 			local pos_x, pos_y = grid_module.cell_to_pos(tile_i, tile_j, map_params)
+			pos_x = pos_x + offset_x
+			pos_y = pos_y - offset_y
 			local prefab_id = detiled_internal.get_prefab_id_from_tile(tile)
 
 			local scale_x = flip_h and -1 or 1
