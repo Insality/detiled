@@ -7,6 +7,10 @@ end
 
 
 local function spawn_entity(entity)
+	if not entity.prefab_id then
+		return
+	end
+
 	local prefab_id = entity.prefab_id
 	local position_x = entity.position_x
 	local position_y = entity.position_y

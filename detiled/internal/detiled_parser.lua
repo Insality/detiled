@@ -1,7 +1,33 @@
 local detiled_internal = require("detiled.internal.detiled_internal")
 local logger = require("detiled.internal.detiled_logger")
 
+local floor = math.floor
+local math_rad = math.rad
+local math_cos = math.cos
+local math_sin = math.sin
+local table_insert = table.insert
+
 local M = {}
+
+local function get_object_type(object)
+	if object.point then
+		return "point"
+	end
+	if object.ellipse then
+		return "ellipse"
+	end
+	if object.polyline and #object.polyline > 0 then
+		return "polyline"
+	end
+	if object.polygon and #object.polygon > 0 then
+		return "polygon"
+	end
+	if not object.gid and (object.width and object.width > 0 or object.height and object.height > 0) then
+		return "rectangle"
+	end
+	return nil
+end
+
 
 local GRID_MODULES = {
 	["orthogonal"] = require("detiled.internal.grid.orthogonal"),
@@ -39,6 +65,13 @@ local function make_entity(layer, position_z, prefab_id, position_x, position_y,
 		entity.tiled_id = tonumber(object.id)
 		entity.size_x = object.width
 		entity.size_y = object.height
+		entity.object_type = get_object_type(object)
+		if object.polyline then
+			entity.polyline = object.polyline
+		end
+		if object.polygon then
+			entity.polygon = object.polygon
+		end
 	end
 
 	return entity
@@ -63,7 +96,7 @@ local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
 		local tile, tileset = detiled_internal.get_tile_by_gid(map, cleared_gid)
 		if tile and tileset then
 			local tile_i = ((tile_index - 1) % map.width)
-			local tile_j = (math.floor((tile_index - 1) / map.width))
+			local tile_j = (floor((tile_index - 1) / map.width))
 			local pos_x, pos_y = grid_module.cell_to_pos(tile_i, tile_j, map_params)
 			local prefab_id = detiled_internal.get_prefab_id_from_tile(tile)
 
@@ -73,32 +106,11 @@ local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
 			local entity = make_entity(layer, position_z, prefab_id, pos_x, pos_y, scale_x, scale_y, rotation, nil)
 			detiled_internal.apply_tile_properties_to_entity(entity, tile)
 
-			table.insert(entities, entity)
+			table_insert(entities, entity)
 		end
 	end
 
 	return entities
-end
-
-
----@param entity detiled.entity
----@param object detiled.map.object
-local function apply_object_properties_to_entity(entity, object)
-	if not object.properties then
-		return
-	end
-
-	local tiled_components = detiled_internal.get_components_property(object.properties)
-	if not tiled_components then
-		return
-	end
-
-	if tiled_components.position_z then
-		entity.position_z = entity.position_z + tiled_components.position_z
-		tiled_components.position_z = nil
-	end
-
-	detiled_internal.apply_components(entity, tiled_components)
 end
 
 
@@ -143,8 +155,8 @@ local function get_entities_from_object_layer(layer, map, grid_module, map_param
 
 				local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object)
 				detiled_internal.apply_tile_properties_to_entity(entity, tile)
-				apply_object_properties_to_entity(entity, object)
-				table.insert(entities, entity)
+				detiled_internal.apply_object_properties_to_entity(entity, object)
+				table_insert(entities, entity)
 			end
 		else
 			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_width, map_height, map_params)
@@ -156,8 +168,8 @@ local function get_entities_from_object_layer(layer, map, grid_module, map_param
 			local entity_scale_x = use_scale and scale_x or 1
 			local entity_scale_y = use_scale and scale_y or 1
 			local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, entity_scale_x, entity_scale_y, rotation, object)
-			apply_object_properties_to_entity(entity, object)
-			table.insert(entities, entity)
+			detiled_internal.apply_object_properties_to_entity(entity, object)
+			table_insert(entities, entity)
 		end
 	end
 
@@ -180,14 +192,14 @@ function M.get_entities(tiled_map)
 		if layer.type == "tilelayer" then
 			local layer_entities = get_entities_from_tile_layer(layer, tiled_map, grid_module, map_params)
 			for index = 1, #layer_entities do
-				table.insert(entities, layer_entities[index])
+				table_insert(entities, layer_entities[index])
 			end
 		end
 
 		if layer.type == "objectgroup" then
 			local layer_entities = get_entities_from_object_layer(layer, tiled_map, grid_module, map_params)
 			for index = 1, #layer_entities do
-				table.insert(entities, layer_entities[index])
+				table_insert(entities, layer_entities[index])
 			end
 		end
 	end
@@ -219,14 +231,7 @@ end
 ---@param tiled_map detiled.map
 ---@param layer_name string
 function M.is_layer_excluded(tiled_map, layer_name)
-	for index = 1, #tiled_map.layers do
-		local layer = tiled_map.layers[index]
-		if layer.name == layer_name then
-			return detiled_internal.get_property_value(layer.properties, "exclude") or false
-		end
-	end
-
-	return false
+	return detiled_internal.is_layer_excluded(tiled_map, layer_name)
 end
 
 
@@ -239,6 +244,19 @@ end
 function M.get_defold_position_from_tiled_object(object, tile, map_width, map_height, map_params)
 	map_height = map_height or 0
 	map_width = map_width or 0
+
+	if not tile and (not object.width or object.width == 0 or not object.height or object.height == 0) then
+		local grid = map_params and GRID_MODULES[map_params.orientation]
+		if grid and grid.convert_object_position and map_params then
+			local position_x, position_y = grid.convert_object_position(object.x, object.y, map_params)
+			return position_x, position_y, 1, 1
+		end
+		local position_y = object.y
+		if map_params and map_params.scene.invert_y then
+			position_y = map_height - position_y
+		end
+		return object.x, position_y, 1, 1
+	end
 
 	-- Offset from object point in Tiled to sprite anchor (default center). Origin (0,0) at map left bottom.
 	local base_width = tile and tile.imagewidth or object.width
@@ -278,9 +296,9 @@ function M.get_defold_position_from_tiled_object(object, tile, map_width, map_he
 		end
 	end
 
-	local rotation_rad = math.rad(object.rotation)
-	local cos = math.cos(rotation_rad)
-	local sin = math.sin(rotation_rad)
+	local rotation_rad = math_rad(object.rotation)
+	local cos = math_cos(rotation_rad)
+	local sin = math_sin(rotation_rad)
 
 	local position_x, position_y
 	local grid = map_params and GRID_MODULES[map_params.orientation]

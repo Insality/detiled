@@ -21,7 +21,9 @@ end
 
 local function spawn_map(entities)
 	for _, entity in ipairs(entities) do
-		spawn_entity(entity)
+		if entity.prefab_id then
+			spawn_entity(entity)
+		end
 	end
 end
 

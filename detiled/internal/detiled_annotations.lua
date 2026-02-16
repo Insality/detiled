@@ -108,16 +108,20 @@
 
 ---@class detiled.map.object
 ---@field class string
+---@field ellipse boolean|nil
 ---@field gid number
 ---@field height number
 ---@field id number
 ---@field name string
----@field type string?
----@field rotation number
----@field visible boolean
----@field width number
+---@field point boolean|nil
+---@field polygon table|nil
+---@field polyline table|nil
 ---@field properties detiled.map.property[]
 ---@field objectgroup any
+---@field rotation number
+---@field type string?
+---@field visible boolean
+---@field width number
 ---@field x number
 ---@field y number
 
@@ -134,6 +138,9 @@
 ---@field scale_y number|nil
 ---@field rotation number|nil
 ---@field name string|nil
+---@field object_type "point"|"ellipse"|"polyline"|"polygon"|"rectangle"|nil
+---@field polygon table|nil
+---@field polyline table|nil
 ---@field tiled_id number|nil
 ---@field tiled_layer_id string|nil
 ---@field size_x number|nil

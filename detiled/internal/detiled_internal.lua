@@ -259,6 +259,34 @@ function M.apply_tile_properties_to_entity(entity, tile)
 end
 
 
+---@param entity detiled.entity
+---@param object detiled.map.object
+function M.apply_object_properties_to_entity(entity, object)
+	if not object.properties then return end
+	local tiled_components = M.get_components_property(object.properties)
+	if not tiled_components then return end
+	if tiled_components.position_z then
+		entity.position_z = entity.position_z + tiled_components.position_z
+		tiled_components.position_z = nil
+	end
+	M.apply_components(entity, tiled_components)
+end
+
+
+---@param tiled_map detiled.map
+---@param layer_name string
+---@return boolean
+function M.is_layer_excluded(tiled_map, layer_name)
+	for index = 1, #tiled_map.layers do
+		local layer = tiled_map.layers[index]
+		if layer.name == layer_name then
+			return M.get_property_value(layer.properties, "exclude") or false
+		end
+	end
+	return false
+end
+
+
 ---@param tile detiled.tileset.tile
 ---@return string|nil
 function M.get_prefab_id_from_tile(tile)
