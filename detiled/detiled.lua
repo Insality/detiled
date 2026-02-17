@@ -34,22 +34,22 @@ end
 
 
 ---Convert cell indices to world position
----@param map_params detiled.map_params
 ---@param i number
 ---@param j number
+---@param map_params detiled.map_params
 ---@return number, number
-function M.cell_to_pos(map_params, i, j)
-	return detiled_parser.cell_to_pos(map_params, i, j)
+function M.cell_to_pos(i, j, map_params)
+	return detiled_parser.cell_to_pos(i, j, map_params)
 end
 
 
 ---Convert world position to cell indices
----@param map_params detiled.map_params
 ---@param x number
 ---@param y number
+---@param map_params detiled.map_params
 ---@return number, number
-function M.pos_to_cell(map_params, x, y)
-	return detiled_parser.pos_to_cell(map_params, x, y)
+function M.pos_to_cell(x, y, map_params)
+	return detiled_parser.pos_to_cell(x, y, map_params)
 end
 
 
