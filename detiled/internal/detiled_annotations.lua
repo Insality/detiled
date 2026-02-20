@@ -1,6 +1,7 @@
 ---@class detiled.tileset
 ---@field class string
 ---@field columns number
+---@field image string|nil
 ---@field fillmode string
 ---@field grid detiled.tileset.grid
 ---@field margin number
@@ -131,6 +132,7 @@
 
 ---@class detiled.entity
 ---@field prefab_id string|nil
+---@field image string|nil
 ---@field position_x number
 ---@field position_y number
 ---@field position_z number

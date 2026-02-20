@@ -301,6 +301,18 @@ function M.get_prefab_id_from_tile(tile)
 end
 
 
+---@param tile detiled.tileset.tile
+---@param tileset detiled.tileset
+---@return string|nil
+function M.get_image_name_from_tile(tile, tileset)
+	local image_path = tile.image or (tileset and tileset["image"])
+	if not image_path or image_path == "" then
+		return nil
+	end
+	return M.get_filename(image_path)
+end
+
+
 ---@param layer detiled.map.layer
 ---@return number[]|string layer data as array of GIDs or raw data
 function M.unpack_tile_layer_data(layer)

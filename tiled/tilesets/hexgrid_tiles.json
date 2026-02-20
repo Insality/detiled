@@ -16,73 +16,85 @@
          "id":0,
          "image":"..\/assets\/hexgrid\/tile_dirt_2.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":1,
          "image":"..\/assets\/hexgrid\/tile_dirt_3.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":2,
          "image":"..\/assets\/hexgrid\/tile_dirt.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":3,
          "image":"..\/assets\/hexgrid\/tile_grass_2.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":4,
          "image":"..\/assets\/hexgrid\/tile_grass_3.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":5,
          "image":"..\/assets\/hexgrid\/tile_grass.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":6,
          "image":"..\/assets\/hexgrid\/tile_sand_2.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":7,
          "image":"..\/assets\/hexgrid\/tile_sand_3.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":8,
          "image":"..\/assets\/hexgrid\/tile_sand.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":9,
          "image":"..\/assets\/hexgrid\/tile_stone_2.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":10,
          "image":"..\/assets\/hexgrid\/tile_stone_3.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }, 
         {
          "id":11,
          "image":"..\/assets\/hexgrid\/tile_stone.png",
          "imageheight":189,
-         "imagewidth":192
+         "imagewidth":192,
+         "type":"tile"
         }],
  "tilewidth":192,
  "type":"tileset",

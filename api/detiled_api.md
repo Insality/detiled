@@ -32,7 +32,7 @@ local entities, map_params = detiled.get_entity_from_map(map_or_path)
 
 Load a tiled map and return entities and map params. Use `entities` to spawn and `map_params` for coordinate conversion.
 
-Each entity is a flat table: `prefab_id`, `position_x`, `position_y`, `position_z`; optional `scale_x`, `scale_y`, `rotation` (only set when non-default); optional `name`, `tiled_id`, `tiled_layer_id`, `size_x`, `size_y`; plus any custom properties from Tiled.
+Each entity is a flat table: `prefab_id`, `position_x`, `position_y`, `position_z`; optional `image`; optional `scale_x`, `scale_y`, `rotation` (only set when non-default); optional `name`, `tiled_id`, `tiled_layer_id`, `size_x`, `size_y`; plus any custom properties from Tiled.
 
 - **Parameters:**
 	- `map_or_path` *(string|detiled.map)*:

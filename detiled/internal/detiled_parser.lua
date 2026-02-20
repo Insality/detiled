@@ -49,11 +49,13 @@ end
 ---@param scale_y number
 ---@param rotation number
 ---@param object detiled.map.object|nil
+---@param image string|nil
 ---@return detiled.entity
-local function make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object)
+local function make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
 	---@type detiled.entity
 	local entity = {
 		prefab_id = prefab_id,
+		image = image,
 		position_x = position_x,
 		position_y = position_y,
 		position_z = position_z,
@@ -106,11 +108,11 @@ local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
 			pos_x = pos_x + offset_x
 			pos_y = pos_y - offset_y
 			local prefab_id = detiled_internal.get_prefab_id_from_tile(tile)
-
+			local image = detiled_internal.get_image_name_from_tile(tile, tileset)
 			local scale_x = flip_h and -1 or 1
 			local scale_y = flip_v and -1 or 1
 			local rotation = flip_d and -90 or 0
-			local entity = make_entity(layer, position_z, prefab_id, pos_x, pos_y, scale_x, scale_y, rotation, nil)
+			local entity = make_entity(layer, position_z, prefab_id, pos_x, pos_y, scale_x, scale_y, rotation, nil, image)
 			detiled_internal.apply_tile_properties_to_entity(entity, tile)
 
 			table_insert(entities, entity)
@@ -159,8 +161,8 @@ local function get_entities_from_object_layer(layer, map, grid_module, map_param
 				if flip_v then scale_y = -scale_y end
 				if flip_d then rotation = rotation - 90 end
 				local prefab_id = detiled_internal.get_prefab_id_from_tile(tile)
-
-				local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object)
+				local image = detiled_internal.get_image_name_from_tile(tile, tileset)
+				local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
 				detiled_internal.apply_tile_properties_to_entity(entity, tile)
 				detiled_internal.apply_object_properties_to_entity(entity, object)
 				table_insert(entities, entity)
@@ -174,7 +176,7 @@ local function get_entities_from_object_layer(layer, map, grid_module, map_param
 			local use_scale = object.class and object.class ~= ""
 			local entity_scale_x = use_scale and scale_x or 1
 			local entity_scale_y = use_scale and scale_y or 1
-			local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, entity_scale_x, entity_scale_y, rotation, object)
+			local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, entity_scale_x, entity_scale_y, rotation, object, nil)
 			detiled_internal.apply_object_properties_to_entity(entity, object)
 			table_insert(entities, entity)
 		end
