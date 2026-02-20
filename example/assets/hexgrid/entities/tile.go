@@ -1,3 +1,7 @@
+components {
+  id: "set_sprite"
+  component: "/example/assets/hexgrid/set_sprite.script"
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
