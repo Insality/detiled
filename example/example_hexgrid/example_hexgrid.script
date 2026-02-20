@@ -42,8 +42,8 @@ end
 function on_input(self, action_id, action)
 	if action_id == hash("touch") and action.pressed then
 		local world_pos = camera.screen_xy_to_world(action.screen_x, action.screen_y)
-		local cell_i, cell_j = detiled.pos_to_cell(self.map_params, world_pos.x, world_pos.y)
-		local position_x, position_y = detiled.cell_to_pos(self.map_params, cell_i, cell_j)
+		local cell_i, cell_j = detiled.pos_to_cell(world_pos.x, world_pos.y, self.map_params)
+		local position_x, position_y = detiled.cell_to_pos(cell_i, cell_j, self.map_params)
 		print("touch cell", cell_i, cell_j, "pos", position_x, position_y)
 	end
 end
