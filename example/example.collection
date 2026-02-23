@@ -36,5 +36,11 @@ embedded_instances {
   "  data: \"collection: \\\"/example/example_hexgrid_pointy/example_hexgrid_pointy.collection\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"grid_game_objects\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/example/example_grid_game_objects/example_grid_game_objects.collection\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
 }

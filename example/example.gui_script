@@ -24,6 +24,7 @@ function init(self)
 	self.properties_panel:add_left_right_selector(function(selector)
 		selector:set_array_type({
 			"grid",
+			"grid_game_objects",
 			"hex",
 			"hex_pointy",
 			"iso",

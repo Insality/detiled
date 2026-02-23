@@ -13,7 +13,9 @@ local function spawn_entity(entity)
 	local position = vmath.vector3(position_x, position_y, position_z)
 	local scale = vmath.vector3(scale_x, scale_y, 1)
 	print("Spawn entity: ", factory_url, position_x, position_y, position_z)
-	factory.create(factory_url, position, nil, nil, scale)
+	factory.create(factory_url, position, nil, {
+		sprite_animation = hash(entity.image)
+	}, scale)
 end
 
 
@@ -26,7 +28,7 @@ end
 
 function init(self)
 	detiled.load_tileset("/tiled/tilesets/grid_items.json")
-	detiled.load_tileset("/tiled/tilesets/grid_tileset.json")
+	detiled.load_tileset("/tiled/tilesets/grid_game_objects.json")
 
 	local entities, map_params = detiled.get_entity_from_map("/tiled/maps/grid_game_objects.json")
 	spawn_map(entities)
