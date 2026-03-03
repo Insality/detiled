@@ -149,7 +149,9 @@
 ---@field properties detiled.map.property[]
 ---@field layer_id string
 ---@field visible boolean
----@field position vector3
+---@field position_x number
+---@field position_y number
+---@field position_z number
 
 ---@class detiled.map_params.tile
 ---@field width number

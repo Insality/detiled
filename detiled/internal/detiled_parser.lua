@@ -56,8 +56,11 @@ local function make_entity(layer, prefab_id, position_x, position_y, scale_x, sc
 	local entity = {
 		prefab_id = prefab_id,
 		image = image,
-		position = vmath.vector3(position_x, position_y, position_z),
-		scale = vmath.vector3(scale_x, scale_y, 1),
+		position_x = position_x,
+		position_y = position_y,
+		position_z = position_z,
+		scale_x = scale_x,
+		scale_y = scale_y,
 		rotation = rotation ~= 0 and rotation or nil,
 	}
 
@@ -187,7 +190,9 @@ function M.get_entities(tiled_map)
 				properties = layer.properties or {},
 				layer_id = layer.name,
 				visible = layer.visible ~= false,
-				position = vmath.vector3(offset_x, offset_y, position_z),
+				position_x = offset_x,
+				position_y = offset_y,
+				position_z = position_z,
 			}
 
 			if layer.type == "tilelayer" then
