@@ -266,7 +266,7 @@ function M.apply_object_properties_to_entity(entity, object)
 	local tiled_components = M.get_components_property(object.properties)
 	if not tiled_components then return end
 	if tiled_components.position_z then
-		entity.position_z = entity.position_z + tiled_components.position_z
+		entity.position.z = entity.position.z + tiled_components.position_z
 		tiled_components.position_z = nil
 	end
 	M.apply_components(entity, tiled_components)

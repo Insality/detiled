@@ -104,7 +104,7 @@ Look at [Shooting Circles](https://github.com/Insality/shooting_circles) or [Cos
 ```lua
 detiled.set_logger(logger_instance)
 detiled.load_tileset(tileset_path_or_data)
-detiled.get_entity_from_map(map_path_or_data)  -- returns entities, map_params
+detiled.get_entity_from_map(map_path_or_data)  -- returns layers, map_params
 detiled.cell_to_pos(map_params, i, j)           -- returns x, y
 detiled.pos_to_cell(map_params, x, y)           -- returns i, j
 ```

@@ -13,9 +13,9 @@ function M.set_logger(logger_instance)
 end
 
 
----Get entities and map params from a map
+---Get layers and map params from a map. Each layer has entities, properties, layer_id, visible, position (offset).
 ---@param map_or_path detiled.map|string
----@return detiled.entity[], detiled.map_params|nil
+---@return table<string, detiled.layer_data>, detiled.map_params|nil
 function M.get_entity_from_map(map_or_path)
 	local map = map_or_path
 	if type(map_or_path) == "string" then
@@ -27,9 +27,9 @@ function M.get_entity_from_map(map_or_path)
 	end
 
 	---@cast map detiled.map
-	local entities, map_params = detiled_parser.get_entities(map)
+	local layers, map_params = detiled_parser.get_entities(map)
 
-	return entities, map_params
+	return layers, map_params
 end
 
 

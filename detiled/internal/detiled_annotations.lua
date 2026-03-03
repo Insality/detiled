@@ -133,20 +133,23 @@
 ---@class detiled.entity
 ---@field prefab_id string|nil
 ---@field image string|nil
----@field position_x number
----@field position_y number
----@field position_z number
+---@field position_x number|nil
+---@field position_y number|nil
+---@field position_z number|nil
+---@field size_x number|nil
+---@field size_y number|nil
 ---@field scale_x number|nil
 ---@field scale_y number|nil
 ---@field rotation number|nil
----@field name string|nil
----@field object_type "point"|"ellipse"|"polyline"|"polygon"|"rectangle"|nil
----@field polygon table|nil
----@field polyline table|nil
 ---@field tiled_id number|nil
 ---@field tiled_layer_id string|nil
----@field size_x number|nil
----@field size_y number|nil
+
+---@class detiled.layer_data
+---@field entities detiled.entity[]
+---@field properties detiled.map.property[]
+---@field layer_id string
+---@field visible boolean
+---@field position vector3
 
 ---@class detiled.map_params.tile
 ---@field width number

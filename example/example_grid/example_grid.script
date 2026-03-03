@@ -1,24 +1,21 @@
 local detiled = require("detiled.detiled")
 
 
-local function spawn_entity(entity)
-	local prefab_id = entity.prefab_id
-	local position_x = entity.position_x
-	local position_y = entity.position_y
-	local position_z = entity.position_z
-	local scale_x = entity.scale_x or 1
-	local scale_y = entity.scale_y or 1
-
-	local factory_url = "/entities#" .. prefab_id
-	local position = vmath.vector3(position_x, position_y, position_z)
-	local scale = vmath.vector3(scale_x, scale_y, 1)
-	factory.create(factory_url, position, nil, nil, scale)
+local function spawn_entity(entity, layer_data)
+	local position = entity.position
+	if layer_data then
+		position = position + layer_data.position
+	end
+	local factory_url = "/entities#" .. entity.prefab_id
+	factory.create(factory_url, position, nil, nil, entity.scale)
 end
 
 
-local function spawn_map(entities)
-	for _, entity in ipairs(entities) do
-		spawn_entity(entity)
+local function spawn_map(layers)
+	for _, layer_data in pairs(layers) do
+		for _, entity in ipairs(layer_data.entities) do
+			spawn_entity(entity, layer_data)
+		end
 	end
 end
 
@@ -27,8 +24,8 @@ function init(self)
 	detiled.load_tileset("/tiled/tilesets/grid_items.json")
 	detiled.load_tileset("/tiled/tilesets/grid_tileset.json")
 
-	local entities, map_params = detiled.get_entity_from_map("/tiled/maps/grid.json")
-	spawn_map(entities)
+	local layers, map_params = detiled.get_entity_from_map("/tiled/maps/grid.json")
+	spawn_map(layers)
 	self.map_params = map_params
 
 	msg.post(".", "acquire_input_focus")

@@ -27,18 +27,20 @@ Set a logger instance
 
 ---
 ```lua
-local entities, map_params = detiled.get_entity_from_map(map_or_path)
+local layers, map_params = detiled.get_entity_from_map(map_or_path)
 ```
 
-Load a tiled map and return entities and map params. Use `entities` to spawn and `map_params` for coordinate conversion.
+Load a tiled map and return layers (keyed by layer id) and map params. Entity positions do not include layer offset; add `layer_data.position` when spawning if needed.
 
-Each entity is a flat table: `prefab_id`, `position_x`, `position_y`, `position_z`; optional `image`; optional `scale_x`, `scale_y`, `rotation` (only set when non-default); optional `name`, `tiled_id`, `tiled_layer_id`, `size_x`, `size_y`; plus any custom properties from Tiled.
+Each key in `layers` is a layer id (string). Each value is `detiled.layer_data`: `entities` (array), `properties`, `layer_id`, `visible`, `position` (vmath.vector3: offset_x, offset_y, position_z from layer).
+
+Each entity: `prefab_id`, `position` (vmath.vector3), `scale` (vmath.vector3); optional `image`, `rotation`; optional `name`, `tiled_id`, `size_x`, `size_y`; plus any custom properties from Tiled.
 
 - **Parameters:**
 	- `map_or_path` *(string|detiled.map)*:
 
 - **Returns:**
-	- *(detiled.entity[])* entities
+	- *(table<string, detiled.layer_data>)* layers
 	- *(detiled.map_params|nil)* map_params
 
 ### load_tileset

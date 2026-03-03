@@ -41,7 +41,6 @@ end
 
 
 ---@param layer detiled.map.layer
----@param position_z number
 ---@param prefab_id string|nil
 ---@param position_x number
 ---@param position_y number
@@ -51,17 +50,14 @@ end
 ---@param object detiled.map.object|nil
 ---@param image string|nil
 ---@return detiled.entity
-local function make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
+local function make_entity(layer, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
+	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
 	---@type detiled.entity
 	local entity = {
 		prefab_id = prefab_id,
 		image = image,
-		position_x = position_x,
-		position_y = position_y,
-		position_z = position_z,
-		tiled_layer_id = layer.name,
-		scale_x = scale_x ~= 1 and scale_x or nil,
-		scale_y = scale_y ~= 1 and scale_y or nil,
+		position = vmath.vector3(position_x, position_y, position_z),
+		scale = vmath.vector3(scale_x, scale_y, 1),
 		rotation = rotation ~= 0 and rotation or nil,
 	}
 
@@ -89,12 +85,8 @@ end
 ---@param map_params detiled.map_params
 ---@return detiled.entity[]
 local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
-	---@type detiled.entity[]
 	local entities = {}
 
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
-	local offset_x = layer.offsetx or 0
-	local offset_y = layer.offsety or 0
 	local layer_data = detiled_internal.unpack_tile_layer_data(layer)
 
 	for tile_index = 1, #layer_data do
@@ -105,14 +97,12 @@ local function get_entities_from_tile_layer(layer, map, grid_module, map_params)
 			local tile_i = ((tile_index - 1) % map.width)
 			local tile_j = (floor((tile_index - 1) / map.width))
 			local pos_x, pos_y = grid_module.cell_to_pos(tile_i, tile_j, map_params)
-			pos_x = pos_x + offset_x
-			pos_y = pos_y - offset_y
 			local prefab_id = detiled_internal.get_prefab_id_from_tile(tile)
 			local image = detiled_internal.get_image_name_from_tile(tile, tileset)
 			local scale_x = flip_h and -1 or 1
 			local scale_y = flip_v and -1 or 1
 			local rotation = flip_d and -90 or 0
-			local entity = make_entity(layer, position_z, prefab_id, pos_x, pos_y, scale_x, scale_y, rotation, nil, image)
+			local entity = make_entity(layer, prefab_id, pos_x, pos_y, scale_x, scale_y, rotation, nil, image)
 			detiled_internal.apply_tile_properties_to_entity(entity, tile)
 
 			table_insert(entities, entity)
@@ -129,14 +119,10 @@ end
 ---@param map_params detiled.map_params
 ---@return detiled.entity[]
 local function get_entities_from_object_layer(layer, map, grid_module, map_params)
-	---@type detiled.entity[]
 	local entities = {}
 
 	local map_width = map_params.scene.size_x
 	local map_height = map_params.scene.size_y
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
-	local offset_x = layer.offsetx or 0
-	local offset_y = layer.offsety or 0
 
 	for object_index = 1, #layer.objects do
 		local object = layer.objects[object_index]
@@ -155,28 +141,25 @@ local function get_entities_from_object_layer(layer, map, grid_module, map_param
 				})
 			else
 				local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, tile, map_width, map_height, map_params)
-				position_x = position_x + offset_x
-				position_y = position_y - offset_y
 				if flip_h then scale_x = -scale_x end
 				if flip_v then scale_y = -scale_y end
 				if flip_d then rotation = rotation - 90 end
 				local prefab_id = detiled_internal.get_prefab_id_from_tile(tile)
 				local image = detiled_internal.get_image_name_from_tile(tile, tileset)
-				local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
+				local entity = make_entity(layer, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
 				detiled_internal.apply_tile_properties_to_entity(entity, tile)
 				detiled_internal.apply_object_properties_to_entity(entity, object)
 				table_insert(entities, entity)
 			end
 		else
 			local position_x, position_y, scale_x, scale_y = M.get_defold_position_from_tiled_object(object, nil, map_width, map_height, map_params)
-			position_x = position_x + offset_x
-			position_y = position_y - offset_y - object.height
+			position_y = position_y - object.height
 
 			local prefab_id = (object.class and object.class ~= "") and object.class or (object.type ~= "" and object.type or nil)
 			local use_scale = object.class and object.class ~= ""
 			local entity_scale_x = use_scale and scale_x or 1
 			local entity_scale_y = use_scale and scale_y or 1
-			local entity = make_entity(layer, position_z, prefab_id, position_x, position_y, entity_scale_x, entity_scale_y, rotation, object, nil)
+			local entity = make_entity(layer, prefab_id, position_x, position_y, entity_scale_x, entity_scale_y, rotation, object, nil)
 			detiled_internal.apply_object_properties_to_entity(entity, object)
 			table_insert(entities, entity)
 		end
@@ -187,34 +170,41 @@ end
 
 
 ---@param tiled_map detiled.map
----@return detiled.entity[], detiled.map_params|nil
+---@return table<string, detiled.layer_data>, detiled.map_params|nil
 function M.get_entities(tiled_map)
-	---@type detiled.entity[]
-	local entities = {}
-
+	local layers = {}
 	local grid_module = GRID_MODULES[tiled_map.orientation]
 	local map_params = grid_module and grid_module.get_map_params_from_tiled(tiled_map) or nil
 
 	for layer_index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[layer_index]
 		if not detiled_internal.is_layer_excluded(tiled_map, layer.name) then
+			local offset_x = layer.offsetx or 0
+			local offset_y = layer.offsety or 0
+			local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
+			local layer_data = {
+				entities = {},
+				properties = layer.properties or {},
+				layer_id = layer.name,
+				visible = layer.visible ~= false,
+				position = vmath.vector3(offset_x, offset_y, position_z),
+			}
+
 			if layer.type == "tilelayer" then
-				local layer_entities = get_entities_from_tile_layer(layer, tiled_map, grid_module, map_params)
-				for index = 1, #layer_entities do
-					table_insert(entities, layer_entities[index])
-				end
+				layer_data.entities = get_entities_from_tile_layer(layer, tiled_map, grid_module, map_params)
 			end
 
 			if layer.type == "objectgroup" then
-				local layer_entities = get_entities_from_object_layer(layer, tiled_map, grid_module, map_params)
-				for index = 1, #layer_entities do
-					table_insert(entities, layer_entities[index])
-				end
+				layer_data.entities = get_entities_from_object_layer(layer, tiled_map, grid_module, map_params)
+			end
+
+			if #layer_data.entities > 0 or layer.type == "tilelayer" or layer.type == "objectgroup" then
+				layers[layer.name] = layer_data
 			end
 		end
 	end
 
-	return entities, map_params
+	return layers, map_params
 end
 
 

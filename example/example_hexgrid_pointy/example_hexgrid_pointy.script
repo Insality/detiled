@@ -1,28 +1,26 @@
 local detiled = require("detiled.detiled")
 
-local function get_z_position(position_x, position_y)
-	return -position_y / 10000 + position_x / 100000
+local function get_z_position(x, y)
+	return -y / 10000 + x / 100000
 end
 
-local function spawn_entity(entity)
-	local prefab_id = entity.prefab_id
-	local position_x = entity.position_x
-	local position_y = entity.position_y
-	local position_z = entity.position_z + get_z_position(position_x, position_y)
-	local scale_x = entity.scale_x or 1
-	local scale_y = entity.scale_y or 1
-
-	local factory_url = "/entities#" .. prefab_id
-	local position = vmath.vector3(position_x, position_y, position_z)
-	local scale = vmath.vector3(scale_x, scale_y, 1)
+local function spawn_entity(entity, layer_data)
+	local position = entity.position
+	if layer_data then
+		position = position + layer_data.position
+	end
+	position.z = position.z + get_z_position(position.x, position.y)
+	local factory_url = "/entities#" .. entity.prefab_id
 	local rot = vmath.quat_rotation_z(math.rad(entity.rotation or 0))
-	factory.create(factory_url, position, rot, nil, scale)
+	factory.create(factory_url, position, rot, nil, entity.scale)
 end
 
 
-local function spawn_map(entities)
-	for _, entity in ipairs(entities) do
-		spawn_entity(entity)
+local function spawn_map(layers)
+	for _, layer_data in pairs(layers) do
+		for _, entity in ipairs(layer_data.entities) do
+			spawn_entity(entity, layer_data)
+		end
 	end
 end
 
@@ -31,8 +29,8 @@ function init(self)
 	detiled.load_tileset("/tiled/tilesets/hexgrid_tiles.json")
 	detiled.load_tileset("/tiled/tilesets/hexgrid_objects.json")
 	detiled.load_tileset("/tiled/tilesets/hexgrid_pointy.json")
-	local entities, map_params = detiled.get_entity_from_map("/tiled/maps/hexgrid_pointy.json")
-	spawn_map(entities)
+	local layers, map_params = detiled.get_entity_from_map("/tiled/maps/hexgrid_pointy.json")
+	spawn_map(layers)
 	self.map_params = map_params
 
 	msg.post(".", "acquire_input_focus")
