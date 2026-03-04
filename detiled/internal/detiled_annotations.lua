@@ -143,6 +143,10 @@
 ---@field rotation number|nil
 ---@field tiled_id number|nil
 ---@field tiled_layer_id string|nil
+---@field name string|nil
+---@field object_type string|nil
+---@field polyline table|nil
+---@field polygon table|nil
 
 ---@class detiled.layer_data
 ---@field entities detiled.entity[]
