@@ -56,19 +56,21 @@ local function make_entity(layer, prefab_id, position_x, position_y, scale_x, sc
 	local entity = {
 		prefab_id = prefab_id,
 		image = image,
-		position_x = position_x,
-		position_y = position_y,
-		position_z = position_z,
-		scale_x = scale_x,
-		scale_y = scale_y,
-		rotation = rotation ~= 0 and rotation or nil,
+		transform = {
+			position_x = position_x,
+			position_y = position_y,
+			position_z = position_z,
+			scale_x = scale_x,
+			scale_y = scale_y,
+			rotation = rotation ~= 0 and rotation or nil,
+		},
 	}
 
 	if object then
 		entity.name = object.name ~= "" and object.name or nil
 		entity.tiled_id = tonumber(object.id)
-		entity.size_x = object.width
-		entity.size_y = object.height
+		entity.transform.size_x = object.width
+		entity.transform.size_y = object.height
 		entity.object_type = get_object_type(object)
 		if object.polyline then
 			entity.polyline = object.polyline

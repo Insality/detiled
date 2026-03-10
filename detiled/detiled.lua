@@ -19,7 +19,9 @@ end
 function M.get_entity_from_map(map_or_path)
 	local map = map_or_path
 	if type(map_or_path) == "string" then
+		logger:debug("Loading map", map_or_path)
 		map = detiled_internal.load_json(map_or_path) --[[@as detiled.map]]
+		logger:debug("Map loaded", map)
 		if not map then
 			logger:error("Failed to load map", map_or_path)
 			return {}, nil
