@@ -7,6 +7,11 @@
 [![Github-sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/insality) [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/insality) [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/insality)
 
 
+# Disclaimer
+
+This library is still in development and the API is subject to change.
+
+
 # Detiled
 
 **Detiled** - is a Defold library that converts [Tiled](https://www.mapeditor.org/) maps and tilesets into [Decore](https://github.com/Insality/decore) entities.
