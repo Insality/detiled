@@ -130,17 +130,21 @@
 ---@field firstgid number
 ---@field source string
 
+
+---@class detiled.entity.transform
+---@field position_x number
+---@field position_y number
+---@field position_z number
+---@field scale_x number
+---@field scale_y number
+---@field size_x number?
+---@field size_y number?
+---@field rotation number?
+
 ---@class detiled.entity
 ---@field prefab_id string|nil
 ---@field image string|nil
----@field position_x number|nil
----@field position_y number|nil
----@field position_z number|nil
----@field size_x number|nil
----@field size_y number|nil
----@field scale_x number|nil
----@field scale_y number|nil
----@field rotation number|nil
+---@field transform detiled.entity.transform
 ---@field tiled_id number|nil
 ---@field tiled_layer_id string|nil
 ---@field name string|nil

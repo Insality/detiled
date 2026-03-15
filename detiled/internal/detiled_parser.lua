@@ -69,8 +69,10 @@ local function make_entity(layer, prefab_id, position_x, position_y, scale_x, sc
 	if object then
 		entity.name = object.name ~= "" and object.name or nil
 		entity.tiled_id = tonumber(object.id)
-		entity.transform.size_x = object.width
-		entity.transform.size_y = object.height
+		if not entity.prefab_id then
+			entity.transform.size_x = object.width
+			entity.transform.size_y = object.height
+		end
 		entity.object_type = get_object_type(object)
 		if object.polyline then
 			entity.polyline = object.polyline
