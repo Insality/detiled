@@ -1,0 +1,22 @@
+images {
+  image: "/tiled/assets/grid/cactus.png"
+}
+images {
+  image: "/tiled/assets/grid/icon_barrel.png"
+}
+images {
+  image: "/tiled/assets/grid/icon_chest.png"
+}
+images {
+  image: "/tiled/assets/grid/icon_key.png"
+}
+images {
+  image: "/tiled/assets/grid/icon_stop.png"
+}
+images {
+  image: "/tiled/assets/grid/icon_table.png"
+}
+images {
+  image: "/tiled/assets/grid/tree.png"
+}
+extrude_borders: 2

@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /test/test.collectionc
+main_collection = /example/example.collectionc
 
 [script]
 shared_state = 1
@@ -14,11 +14,25 @@ input_method = HiddenInputField
 [project]
 title = Detiled
 version = 2
-custom_resources = /resources
-dependencies#0 = https://github.com/Insality/decore/archive/refs/tags/2.zip
-dependencies#1 = https://github.com/britzl/deftest/archive/master.zip
-dependencies#2 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
+custom_resources = /tiled/maps,/tiled/tilesets
+dependencies#0 = https://github.com/britzl/deftest/archive/refs/tags/2.8.0.zip
+dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/14.zip
+dependencies#2 = https://github.com/Insality/asset-store/archive/refs/tags/2.zip
+dependencies#3 = https://github.com/Insality/druid/archive/refs/tags/1.2.0.zip
 
 [library]
 include_dirs = detiled
+
+[input]
+game_binding = /builtins/input/all.input_bindingc
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
+
+[sprite]
+max_count = 1024
+
+[native_extension]
+app_manifest = /example/assets/appmanifest.appmanifest
 

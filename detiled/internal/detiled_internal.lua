@@ -1,3 +1,5 @@
+local base64 = require("detiled.internal.base64")
+
 local LOADED_TILESETS = {}
 
 local M = {}
@@ -125,11 +127,27 @@ function M.load_tileset(tileset)
 end
 
 
+local GID_FLIP_H = 0x80000000
+local GID_FLIP_V = 0x40000000
+local GID_FLIP_D = 0x20000000
+local GID_MASK = 0x0FFFFFFF
+
+---Parse Tiled global tile ID into cleared id and flip flags (see https://doc.mapeditor.org/en/stable/reference/global-tile-ids/)
+---@param gid number
+---@return number cleared_gid, boolean flip_h, boolean flip_v, boolean flip_d
+function M.parse_gid_flags(gid)
+	local flip_h = (bit.band(gid, GID_FLIP_H) ~= 0)
+	local flip_v = (bit.band(gid, GID_FLIP_V) ~= 0)
+	local flip_d = (bit.band(gid, GID_FLIP_D) ~= 0)
+	local cleared = bit.band(gid, GID_MASK)
+	return cleared, flip_h, flip_v, flip_d
+end
+
+
 ---@param map detiled.map
 ---@param tile_global_id number
 ---@return detiled.tileset.tile|nil, detiled.tileset|nil
 function M.get_tile_by_gid(map, tile_global_id)
-	-- TODO: is always tilesets goes in sorted order?
 	for tileset_index = #map.tilesets, 1, -1 do
 		local tileset = map.tilesets[tileset_index]
 		local first_gid = tileset.firstgid
@@ -216,7 +234,7 @@ function M.merge_tables(t1, t2)
 end
 
 
----@param entity entity
+---@param entity table<string, any>
 ---@param components table<string, any>
 function M.apply_components(entity, components)
 	for component_id, component_data in pairs(components) do
@@ -227,6 +245,107 @@ function M.apply_components(entity, components)
 			entity[component_id] = component_data
 		end
 	end
+end
+
+
+---@param entity detiled.entity
+---@param tile detiled.tileset.tile|nil
+function M.apply_tile_properties_to_entity(entity, tile)
+	if not tile or not tile.properties then return end
+	local tiled_components = M.get_components_property(tile.properties)
+	if tiled_components then
+		M.apply_components(entity, tiled_components)
+	end
+end
+
+
+---@param entity detiled.entity
+---@param object detiled.map.object
+function M.apply_object_properties_to_entity(entity, object)
+	if not object.properties then return end
+	local tiled_components = M.get_components_property(object.properties)
+	if not tiled_components then return end
+	if tiled_components.position_z then
+		entity.transform.position_z = (entity.transform.position_z or 0) + tiled_components.position_z
+		tiled_components.position_z = nil
+	end
+	M.apply_components(entity, tiled_components)
+end
+
+
+---@param tiled_map detiled.map
+---@param layer_name string
+---@return boolean
+function M.is_layer_excluded(tiled_map, layer_name)
+	for index = 1, #tiled_map.layers do
+		local layer = tiled_map.layers[index]
+		if layer.name == layer_name then
+			return M.get_property_value(layer.properties, "exclude") or false
+		end
+	end
+	return false
+end
+
+
+---@param tile detiled.tileset.tile
+---@return string|nil
+function M.get_prefab_id_from_tile(tile)
+	local prefab_id = tile.class or tile.type
+	if not prefab_id or prefab_id == "" then
+		local image_path = tile.image
+		if image_path and image_path ~= "" then
+			prefab_id = M.get_filename(image_path)
+		end
+	end
+	return prefab_id
+end
+
+
+---@param tile detiled.tileset.tile
+---@param tileset detiled.tileset
+---@return string|nil
+function M.get_image_name_from_tile(tile, tileset)
+	local image_path = tile.image or (tileset and tileset["image"])
+	if not image_path or image_path == "" then
+		return nil
+	end
+	return M.get_filename(image_path)
+end
+
+
+---@param layer detiled.map.layer
+---@return number[]|string layer data as array of GIDs or raw data
+function M.unpack_tile_layer_data(layer)
+	local layer_data = layer.data
+	if layer.encoding == "base64" then
+		local decoded_data = base64.decode(layer_data) --[[ @as string ]]
+		if layer.compression == "zlib" then
+			local inflated_data = zlib.inflate(decoded_data)
+			local tiles = {}
+			for i = 1, #inflated_data, 4 do
+				local b1, b2, b3, b4 = inflated_data:byte(i, i + 3)
+				local gid = b1 + b2 * 256 + b3 * 65536 + b4 * 16777216
+				table.insert(tiles, gid)
+			end
+			layer_data = tiles
+		end
+	end
+	return layer_data
+end
+
+
+---Rotated and scaled 2D offset (anchor or anchor relative to origin).
+---@param ax number
+---@param ay number
+---@param scale_x number
+---@param scale_y number
+---@param cos number
+---@param sin number
+---@return number, number
+function M.rotated_anchor_offset(ax, ay, scale_x, scale_y, cos, sin)
+	local rx = ax * cos + ay * sin
+	local ry = -ax * sin + ay * cos
+	return rx * scale_x, ry * scale_y
 end
 
 

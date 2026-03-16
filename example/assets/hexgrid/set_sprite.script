@@ -1,0 +1,11 @@
+go.property("sprite_url", hash("sprite"))
+go.property("sprite_animation", hash(""))
+
+local HASH_EMPTY = hash("")
+
+function init(self)
+	if self.sprite_url ~= HASH_EMPTY then
+		local sprite_url = msg.url(nil, nil, self.sprite_url)
+		sprite.play_flipbook(sprite_url, self.sprite_animation)
+	end
+end

@@ -1,0 +1,7 @@
+images {
+  image: "/tiled/assets/hexgrid/r_tree_round.png"
+}
+images {
+  image: "/tiled/assets/hexgrid/r_tree_round_2.png"
+}
+extrude_borders: 2

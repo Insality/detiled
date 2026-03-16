@@ -1,5 +1,3 @@
-local decore = require("decore.decore")
-
 return function()
 	describe("Detiled", function()
 		---@type detiled
@@ -11,9 +9,9 @@ return function()
 
 		it("Should init correclty", function()
 			detiled.load_tileset("/resources/tilesets/shooting_circle.json")
-			local entity = detiled.get_entity_from_map("/resources/maps/game.json")
-			assert(entity)
-			assert(entity.child_instancies)
+			local layers, map_params = detiled.get_entity_from_map("/resources/maps/game.json")
+			assert(layers)
+			assert(map_params)
 		end)
 	end)
 end

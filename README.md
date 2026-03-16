@@ -56,23 +56,6 @@ After that, select `Project ▸ Fetch Libraries` to update [library dependencies
 
 ### Workflow
 
-1. Load all tilesets before loading maps:
-   ```lua
-   local detiled = require("detiled.detiled")
-
-   -- Load all used tilesets first before loading maps
-   detiled.load_tileset("/resources/tilesets/my_tileset.json")
-   ```
-
-2. Convert Tiled maps to Decore entities:
-   ```lua
-   -- Get entity prefab from map
-   local map = detiled.get_entity_from_map("/resources/maps/my_map.json")
-
-   -- Add to Decore world
-   world:addEntity(decore.create(map))
-   ```
-
 ### Prefab ID Resolution
 
 Prefab IDs are determined in this order:
@@ -126,7 +109,9 @@ Look at [Shooting Circles](https://github.com/Insality/shooting_circles) or [Cos
 ```lua
 detiled.set_logger(logger_instance)
 detiled.load_tileset(tileset_path_or_data)
-detiled.get_entity_from_map(map_path_or_data)
+detiled.get_entity_from_map(map_path_or_data)  -- returns layers, map_params
+detiled.cell_to_pos(map_params, i, j)           -- returns x, y
+detiled.pos_to_cell(map_params, x, y)           -- returns i, j
 ```
 
 ### API Reference

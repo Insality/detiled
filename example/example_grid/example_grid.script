@@ -1,0 +1,42 @@
+local detiled = require("detiled.detiled")
+
+
+local function spawn_entity(entity, layer_data)
+	local position = entity.position
+	if layer_data then
+		position = position + layer_data.position
+	end
+	local factory_url = "/entities#" .. entity.prefab_id
+	factory.create(factory_url, position, nil, nil, entity.scale)
+end
+
+
+local function spawn_map(layers)
+	for _, layer_data in pairs(layers) do
+		for _, entity in ipairs(layer_data.entities) do
+			spawn_entity(entity, layer_data)
+		end
+	end
+end
+
+
+function init(self)
+	detiled.load_tileset("/tiled/tilesets/grid_items.json")
+	detiled.load_tileset("/tiled/tilesets/grid_tileset.json")
+
+	local layers, map_params = detiled.get_entity_from_map("/tiled/maps/grid.json")
+	spawn_map(layers)
+	self.map_params = map_params
+
+	msg.post(".", "acquire_input_focus")
+end
+
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") and action.pressed then
+		local world_pos = camera.screen_xy_to_world(action.screen_x, action.screen_y)
+		local cell_i, cell_j = detiled.pos_to_cell(world_pos.x, world_pos.y, self.map_params)
+		local position_x, position_y = detiled.cell_to_pos(cell_i, cell_j, self.map_params)
+		print("touch cell", cell_i, cell_j, "pos", position_x, position_y)
+	end
+end
