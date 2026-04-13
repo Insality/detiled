@@ -10,3 +10,8 @@ Thumbs.db
 builtins
 /.editor_settings
 *.tiled-session
+/dist
+manifest.*.der
+bob*.jar
+
+deployer_version_settings.ini
