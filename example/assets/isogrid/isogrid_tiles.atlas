@@ -1,0 +1,265 @@
+images {
+  image: "/tiled/assets/isogrid/beachNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/bridgeEW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/bridgeNS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/crossroad.png"
+}
+images {
+  image: "/tiled/assets/isogrid/crossroadESW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/crossroadNES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/crossroadNEW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/crossroadNSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/dirt.png"
+}
+images {
+  image: "/tiled/assets/isogrid/dirtDouble.png"
+}
+images {
+  image: "/tiled/assets/isogrid/endE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/endN.png"
+}
+images {
+  image: "/tiled/assets/isogrid/endS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/endW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/exitE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/exitN.png"
+}
+images {
+  image: "/tiled/assets/isogrid/exitS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/exitW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/grass.png"
+}
+images {
+  image: "/tiled/assets/isogrid/grassWhole.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillN.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/hillW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotN.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/lotW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverBankedES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverBankedEW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverBankedNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverBankedNS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverBankedNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverBankedSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverEW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverNS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/riverSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/road.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadEW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHill2E.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHill2N.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHill2S.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHill2W.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHillE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHillN.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHillS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadHillW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadNS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/roadSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/water.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterCornerES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterCornerNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterCornerNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterCornerSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterN.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterS.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/waterW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beach.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachCornerES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachCornerNE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachCornerNW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachCornerSW.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachE.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachES.png"
+}
+images {
+  image: "/tiled/assets/isogrid/beachN.png"
+}
+extrude_borders: 2

@@ -1,0 +1,62 @@
+local druid = require("druid.druid")
+local properties_panel = require("widget.properties_panel.properties_panel")
+
+local function update_example(self, example_name)
+	local example_url = "#" .. example_name
+	msg.post(example_url, "disable")
+	msg.post(example_url, "final")
+	msg.post(example_url, "unload")
+end
+
+
+local function load_example(self, example_name)
+	if self._example_name then
+		update_example(self, self._example_name)
+	end
+
+	self._example_name = example_name
+	msg.post("#" .. example_name, "load")
+end
+
+function init(self)
+    self.druid = druid.new(self)
+	self.properties_panel = self.druid:new_widget(properties_panel, "properties_panel")
+	self.properties_panel:add_left_right_selector(function(selector)
+		selector:set_array_type({
+			"grid",
+			"grid_game_objects",
+			"hex",
+			"hex_pointy",
+			"iso",
+			"iso_staggered",
+		}, true)
+		selector:set_value("grid")
+		selector:set_text("Example")
+		selector.on_change_value:subscribe(function(value)
+			load_example(self, value)
+		end)
+	end)
+
+	load_example(self, "grid")
+end
+
+function final(self)
+    self.druid:final()
+end
+
+function update(self, dt)
+    self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+
+	if message_id == hash("proxy_loaded") then
+        msg.post(sender, "init")
+        msg.post(sender, "enable")
+    end
+end
+
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+end

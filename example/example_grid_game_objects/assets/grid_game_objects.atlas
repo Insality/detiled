@@ -1,0 +1,703 @@
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0000.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0001.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0002.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0003.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0004.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0005.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0006.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0007.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0008.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0009.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0010.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0011.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0012.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0013.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0014.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0015.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0016.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0017.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0018.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0019.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0020.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0021.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0022.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0023.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0024.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0025.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0026.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0027.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0028.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0029.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0030.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0031.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0032.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0033.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0034.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0035.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0036.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0037.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0038.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0039.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0040.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0041.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0042.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0043.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0044.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0045.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0046.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0047.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0048.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0049.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0050.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0051.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0052.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0053.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0054.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0055.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0056.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0057.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0058.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0059.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0060.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0061.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0062.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0063.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0064.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0065.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0066.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0067.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0068.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0069.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0070.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0071.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0072.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0073.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0074.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0075.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0076.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0077.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0078.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0079.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0080.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0081.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0082.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0083.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0084.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0085.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0086.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0087.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0088.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0089.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0090.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0091.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0092.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0093.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0094.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0095.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0096.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0097.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0098.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0099.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0100.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0101.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0102.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0103.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0104.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0105.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0106.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0107.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0108.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0109.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0110.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0111.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0112.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0113.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0114.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0115.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0116.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0117.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0118.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0119.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0120.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0121.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0122.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0123.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0124.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0125.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0126.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0127.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0128.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0129.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0130.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0131.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0132.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0133.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0134.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0135.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0136.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0137.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0138.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0139.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0140.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0141.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0142.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0143.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0144.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0145.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0146.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0147.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0148.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0149.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0150.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0151.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0152.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0153.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0154.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0155.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0156.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0157.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0158.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0159.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0160.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0161.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0162.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0163.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0164.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0165.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0166.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0167.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0168.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0169.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0170.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0171.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0172.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0173.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0174.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0175.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0176.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0177.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0178.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0179.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0180.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0181.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0182.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0183.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0184.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0185.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0186.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0187.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0188.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0189.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0190.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0191.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0192.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0193.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0194.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0195.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0196.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0197.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0198.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0199.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0200.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0201.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0202.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0203.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0204.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0205.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0206.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0207.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0208.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0209.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0210.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0211.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0212.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0213.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0214.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0215.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0216.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0217.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0218.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0219.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0220.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0221.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0222.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0223.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0224.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0225.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0226.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0227.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0228.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0229.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0230.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0231.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0232.png"
+}
+images {
+  image: "/tiled/assets/grid_game_objects/tile_0233.png"
+}
+extrude_borders: 2

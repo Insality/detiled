@@ -1,0 +1,61 @@
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileAutumn_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileAutumn.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileDirt_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileDirt.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileGrass_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileGrass.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileLava_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileLava.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileMagic_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileMagic.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileRock_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileRock.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileSand_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileSand.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileSnow.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileStone_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileStone.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileWater_full.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileWater_shadow.png"
+}
+images {
+  image: "/tiled/assets/hexgrid_pointy/tileWater.png"
+}
+extrude_borders: 2

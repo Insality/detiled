@@ -1,0 +1,4 @@
+image: "/example/assets/empty.png"
+tile_width: 1
+tile_height: 1
+extrude_borders: 2
