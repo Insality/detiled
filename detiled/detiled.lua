@@ -15,7 +15,7 @@ end
 
 ---Get layers and map params from a map. Each layer has entities, properties, layer_id, visible, position (offset).
 ---@param map_or_path detiled.map|string
----@return table<string, detiled.layer_data>, detiled.map_params|nil
+---@return detiled.layers, detiled.map_params|nil
 function M.parse(map_or_path)
 	local map = map_or_path
 	if type(map_or_path) == "string" then
@@ -30,7 +30,7 @@ function M.parse(map_or_path)
 	end
 
 	---@cast map -string
-	local layers, map_params = detiled_parser.get_entities(map)
+	local layers, map_params = detiled_parser.parse(map)
 
 	return layers, map_params
 end

@@ -178,7 +178,7 @@ end
 
 ---@param tiled_map detiled.map
 ---@return table<string, detiled.layer_data>, detiled.map_params|nil
-function M.get_entities(tiled_map)
+function M.parse(tiled_map)
 	local layers = {}
 	local grid_module = GRID_MODULES[tiled_map.orientation]
 	local map_params = grid_module and grid_module.get_map_params_from_tiled(tiled_map) or nil

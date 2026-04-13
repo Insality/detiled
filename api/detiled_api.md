@@ -6,9 +6,9 @@
 
 - [set_logger](#set_logger)
 - [parse](#parse)
-- [load_tileset](#load_tileset)
 - [cell_to_pos](#cell_to_pos)
 - [pos_to_cell](#pos_to_cell)
+- [load_tileset](#load_tileset)
 
 
 ### set_logger
@@ -27,36 +27,17 @@ Set a logger instance
 
 ---
 ```lua
-local layers, map_params = detiled.parse(map_or_path)
+detiled.parse(map_or_path)
 ```
 
-Load a tiled map and return layers (keyed by layer id) and map params. Entity positions do not include layer offset; add `layer_data.position` when spawning if needed.
-
-Each key in `layers` is a layer id (string). Each value is `detiled.layer_data`: `entities` (array), `properties`, `layer_id`, `visible`, `position` (vmath.vector3: offset_x, offset_y, position_z from layer).
-
-Each entity: `prefab_id`, `position` (vmath.vector3), `scale` (vmath.vector3); optional `image`, `rotation`; optional `name`, `tiled_id`, `size_x`, `size_y`; plus any custom properties from Tiled.
+Get layers and map params from a map. Each layer has entities, properties, layer_id, visible, position (offset).
 
 - **Parameters:**
 	- `map_or_path` *(string|detiled.map)*:
 
 - **Returns:**
-	- *(table<string, detiled.layer_data>)* layers
-	- *(detiled.map_params|nil)* map_params
-
-### load_tileset
-
----
-```lua
-detiled.load_tileset(tileset_or_path)
-```
-
-Load a tileset
-
-- **Parameters:**
-	- `tileset_or_path` *(string|detiled.tileset)*:
-
-- **Returns:**
-	- `` *(detiled.tileset)*:
+	- `` *(table<string, detiled.layer_data>)*:
+	- `` *(detiled.map_params|nil)*:
 
 ### cell_to_pos
 
@@ -65,15 +46,16 @@ Load a tileset
 detiled.cell_to_pos(i, j, map_params)
 ```
 
-Convert cell indices to world position. Requires `map_params` from `parse` (same orientation as the map).
+Convert cell indices to world position
 
 - **Parameters:**
-	- `i` *(number)*: column index
-	- `j` *(number)*: row index
+	- `i` *(number)*:
+	- `j` *(number)*:
 	- `map_params` *(detiled.map_params)*:
 
 - **Returns:**
-	- *(number, number)*: x, y
+	- `` *(number)*:
+	- `` *(number)*:
 
 ### pos_to_cell
 
@@ -82,12 +64,29 @@ Convert cell indices to world position. Requires `map_params` from `parse` (same
 detiled.pos_to_cell(x, y, map_params)
 ```
 
-Convert world position to cell indices. Requires `map_params` from `parse`.
+Convert world position to cell indices
 
 - **Parameters:**
-	- `x` *(number)*: world x
-	- `y` *(number)*: world y
+	- `x` *(number)*:
+	- `y` *(number)*:
 	- `map_params` *(detiled.map_params)*:
 
 - **Returns:**
-	- *(number, number)*: i, j
+	- `` *(number)*:
+	- `` *(number)*:
+
+### load_tileset
+
+---
+```lua
+detiled.load_tileset(tileset_or_path)
+```
+
+Load a tileset to internal cache, so maps can reference it by name while parsing
+
+- **Parameters:**
+	- `tileset_or_path` *(string|detiled.tileset)*: Path to tileset JSON file or tileset table
+
+- **Returns:**
+	- `` *(detiled.tileset)*:
+

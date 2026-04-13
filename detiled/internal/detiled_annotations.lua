@@ -152,6 +152,8 @@
 ---@field polyline table|nil
 ---@field polygon table|nil
 
+---@alias detiled.layers table<string, detiled.layer_data>
+
 ---@class detiled.layer_data
 ---@field entities detiled.entity[]
 ---@field properties detiled.map.property[]
