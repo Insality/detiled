@@ -9,12 +9,12 @@
 
 # Detiled
 
-**Detiled** - is a Defold library that converts [Tiled](https://www.mapeditor.org/) maps and tilesets into [Decore](https://github.com/Insality/decore) entities.
+**Detiled** - is a Defold library that converts [Tiled](https://www.mapeditor.org/) maps and tilesets into easy to use entities.
 
 ## Features
 
 - Load tilesets with prefab definitions and component properties
-- Convert Tiled maps to Decore entities
+- Convert Tiled maps to easy to use entities
 - Use class names as prefab IDs, with fallback to image names
 - Support for custom properties and components from Tiled
 
@@ -23,16 +23,10 @@
 
 Open your `game.project` file and add the following line to the dependencies field under the project section:
 
-**[Decore](https://github.com/Insality/decore)**
+**[Detiled](https://github.com/Insality/detiled/archive/refs/tags/3.zip)**
 
 ```
-https://github.com/Insality/decore/archive/refs/tags/3.zip
-```
-
-**[Detiled](https://github.com/Insality/detiled/archive/refs/tags/2.zip)**
-
-```
-https://github.com/Insality/detiled/archive/refs/tags/2.zip
+https://github.com/Insality/detiled/archive/refs/tags/3.zip
 ```
 
 After that, select `Project ▸ Fetch Libraries` to update [library dependencies]((https://defold.com/manuals/libraries/#setting-up-library-dependencies)). This happens automatically whenever you open a project so you will only need to do this if the dependencies change without re-opening the project.
@@ -103,10 +97,10 @@ Look at [Shooting Circles](https://github.com/Insality/shooting_circles) or [Cos
 
 ```lua
 detiled.set_logger(logger_instance)
-detiled.load_tileset(tileset_path_or_data)
-detiled.get_entity_from_map(map_path_or_data) -- returns layers, map_params
-detiled.cell_to_pos(map_params, i, j) -- returns x, y
-detiled.pos_to_cell(map_params, x, y) -- returns i, j
+detiled.load_tileset(tileset_path_or_data) -- required before parsing a map
+detiled.parse(map_path_or_data) -- returns layers, map_params
+detiled.cell_to_pos(i, j, map_params) -- returns x, y
+detiled.pos_to_cell(x, y, map_params) -- returns i, j
 ```
 
 ### API Reference
@@ -137,6 +131,13 @@ For any issues, questions, or suggestions, please [create an issue](https://gith
 
 ### **V2**
 	- Reworked API and documentation
+
+### **V3**
+	- Unbind from Decore library
+	- Rename `detiled.get_entity_from_map` to `detiled.parse`
+	- Add `detiled.cell_to_pos` and `detiled.pos_to_cell` API
+	- Rework map parse return params, now it's a layers table with entities and properties with map_params as second return value
+	- Add all grid types support, not only orthogonal. All hexagonal and isometric grids are supported.
 
 </details>
 

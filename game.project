@@ -13,7 +13,7 @@ input_method = HiddenInputField
 
 [project]
 title = Detiled
-version = 2
+version = 3
 custom_resources = /tiled/maps,/tiled/tilesets
 dependencies#0 = https://github.com/britzl/deftest/archive/refs/tags/2.8.0.zip
 dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/14.zip

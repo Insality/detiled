@@ -5,7 +5,7 @@
 ## Functions
 
 - [set_logger](#set_logger)
-- [get_entity_from_map](#get_entity_from_map)
+- [parse](#parse)
 - [load_tileset](#load_tileset)
 - [cell_to_pos](#cell_to_pos)
 - [pos_to_cell](#pos_to_cell)
@@ -23,11 +23,11 @@ Set a logger instance
 - **Parameters:**
 	- `[logger_instance]` *(table|detiled.logger|nil)*:
 
-### get_entity_from_map
+### parse
 
 ---
 ```lua
-local layers, map_params = detiled.get_entity_from_map(map_or_path)
+local layers, map_params = detiled.parse(map_or_path)
 ```
 
 Load a tiled map and return layers (keyed by layer id) and map params. Entity positions do not include layer offset; add `layer_data.position` when spawning if needed.
@@ -62,15 +62,15 @@ Load a tileset
 
 ---
 ```lua
-detiled.cell_to_pos(map_params, i, j)
+detiled.cell_to_pos(i, j, map_params)
 ```
 
-Convert cell indices to world position. Requires `map_params` from `get_entity_from_map` (same orientation as the map).
+Convert cell indices to world position. Requires `map_params` from `parse` (same orientation as the map).
 
 - **Parameters:**
-	- `map_params` *(table)*:
 	- `i` *(number)*: column index
 	- `j` *(number)*: row index
+	- `map_params` *(detiled.map_params)*:
 
 - **Returns:**
 	- *(number, number)*: x, y
@@ -79,15 +79,15 @@ Convert cell indices to world position. Requires `map_params` from `get_entity_f
 
 ---
 ```lua
-detiled.pos_to_cell(map_params, x, y)
+detiled.pos_to_cell(x, y, map_params)
 ```
 
-Convert world position to cell indices. Requires `map_params` from `get_entity_from_map`.
+Convert world position to cell indices. Requires `map_params` from `parse`.
 
 - **Parameters:**
-	- `map_params` *(table)*:
 	- `x` *(number)*: world x
 	- `y` *(number)*: world y
+	- `map_params` *(detiled.map_params)*:
 
 - **Returns:**
 	- *(number, number)*: i, j
