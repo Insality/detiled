@@ -51,7 +51,7 @@ end
 ---@param image string|nil
 ---@return detiled.entity
 local function make_entity(layer, prefab_id, position_x, position_y, scale_x, scale_y, rotation, object, image)
-	local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
+	local position_z = detiled_internal.get_property_value(layer.properties, "position_z", 0)
 	---@type detiled.entity
 	local entity = {
 		prefab_id = prefab_id,
@@ -186,17 +186,16 @@ function M.get_entities(tiled_map)
 	for layer_index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[layer_index]
 		if not detiled_internal.is_layer_excluded(tiled_map, layer.name) then
-			local offset_x = layer.offsetx or 0
-			local offset_y = layer.offsety or 0
-			local position_z = detiled_internal.get_property_value(layer.properties, "position_z") or 0
+
+			---@type detiled.layer_data
 			local layer_data = {
 				entities = {},
 				properties = layer.properties or {},
 				layer_id = layer.name,
 				visible = layer.visible ~= false,
-				position_x = offset_x,
-				position_y = offset_y,
-				position_z = position_z,
+				position_x = layer.offsetx or 0,
+				position_y = layer.offsety or 0,
+				position_z = detiled_internal.get_property_value(layer.properties, "position_z", 0),
 			}
 
 			if layer.type == "tilelayer" then

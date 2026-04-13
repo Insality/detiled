@@ -7,14 +7,18 @@ end
 
 
 local function spawn_entity(entity, layer_data)
-	local position = entity.position
+	local transform = entity.transform
+	local position = vmath.vector3(transform.position_x, transform.position_y, transform.position_z)
 	if layer_data then
-		position = position + layer_data.position
+		position.x = position.x + layer_data.position_x
+		position.y = position.y + layer_data.position_y
+		position.z = position.z + layer_data.position_z
 	end
 	position.z = position.z + get_z_position(position.x, position.y)
 	local factory_url = "/entities#" .. entity.prefab_id
-	local rot = vmath.quat_rotation_z(math.rad(entity.rotation or 0))
-	factory.create(factory_url, position, rot, nil, entity.scale)
+	local rot = vmath.quat_rotation_z(math.rad(transform.rotation or 0))
+	local scale = vmath.vector3(transform.scale_x, transform.scale_y, 1)
+	factory.create(factory_url, position, rot, nil, scale)
 end
 
 
@@ -30,7 +34,7 @@ end
 function init(self)
 	detiled.load_tileset("/tiled/tilesets/hexgrid_objects.json")
 	detiled.load_tileset("/tiled/tilesets/isogrid_tileset.json")
-	local layers, map_params = detiled.get_entity_from_map("/tiled/maps/isogrid_staggered.json")
+	local layers, map_params = detiled.parse("/tiled/maps/isogrid_staggered.json")
 	spawn_map(layers)
 	self.map_params = map_params
 

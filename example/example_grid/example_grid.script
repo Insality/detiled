@@ -2,12 +2,16 @@ local detiled = require("detiled.detiled")
 
 
 local function spawn_entity(entity, layer_data)
-	local position = entity.position
+	local transform = entity.transform
+	local position = vmath.vector3(transform.position_x, transform.position_y, transform.position_z)
 	if layer_data then
-		position = position + layer_data.position
+		position.x = position.x + layer_data.position_x
+		position.y = position.y + layer_data.position_y
+		position.z = position.z + layer_data.position_z
 	end
 	local factory_url = "/entities#" .. entity.prefab_id
-	factory.create(factory_url, position, nil, nil, entity.scale)
+	local scale = vmath.vector3(transform.scale_x, transform.scale_y, 1)
+	factory.create(factory_url, position, nil, nil, scale)
 end
 
 
@@ -24,7 +28,7 @@ function init(self)
 	detiled.load_tileset("/tiled/tilesets/grid_items.json")
 	detiled.load_tileset("/tiled/tilesets/grid_tileset.json")
 
-	local layers, map_params = detiled.get_entity_from_map("/tiled/maps/grid.json")
+	local layers, map_params = detiled.parse("/tiled/maps/grid.json")
 	spawn_map(layers)
 	self.map_params = map_params
 

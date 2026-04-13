@@ -15,7 +15,7 @@
 ---@field tilewidth number
 ---@field transformations detiled.tileset.transformations
 ---@field type string
----@field version string @Example: "1.9"
+---@field version string Example: "1.9"
 
 ---@class detiled.tileset.grid
 ---@field height number
@@ -157,9 +157,9 @@
 ---@field properties detiled.map.property[]
 ---@field layer_id string
 ---@field visible boolean
----@field position_x number
----@field position_y number
----@field position_z number
+---@field position_x number A layer Horizontal offset from layer settings
+---@field position_y number A layer Vertical offset from layer settings
+---@field position_z number A position_z custom property value from layer settings
 
 ---@class detiled.map_params.tile
 ---@field width number

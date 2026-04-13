@@ -177,10 +177,11 @@ end
 
 ---@param properties detiled.map.property[]
 ---@param property_name string
+---@param default_value any|nil
 ---@return any|nil
-function M.get_property_value(properties, property_name)
+function M.get_property_value(properties, property_name, default_value)
 	if not properties then
-		return nil
+		return default_value
 	end
 
 	for index = 1, #properties do
@@ -190,7 +191,7 @@ function M.get_property_value(properties, property_name)
 		end
 	end
 
-	return nil
+	return default_value
 end
 
 
@@ -280,7 +281,7 @@ function M.is_layer_excluded(tiled_map, layer_name)
 	for index = 1, #tiled_map.layers do
 		local layer = tiled_map.layers[index]
 		if layer.name == layer_name then
-			return M.get_property_value(layer.properties, "exclude") or false
+			return M.get_property_value(layer.properties, "exclude", false)
 		end
 	end
 	return false
