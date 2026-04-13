@@ -130,7 +130,6 @@
 ---@field firstgid number
 ---@field source string
 
-
 ---@class detiled.entity.transform
 ---@field position_x number
 ---@field position_y number

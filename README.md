@@ -15,7 +15,7 @@
 
 - Load tilesets and parse maps to get map entities
 - Use prefab IDs to spawn game entities
-- Adjust entity's properties from tilesets and maps
+- Adjust entity properties from tilesets and maps
 - Convert cell indices to world position and vice versa
 
 
@@ -176,7 +176,7 @@ Layers support special properties:
 - `position_z` *(number)* - Base Z for entities spawned from this layer
 
 Entities support specific properties:
-- `position_z` - A position_z custom property value from layer settings
+- `position_z` - A position_z for the entity transform
 - `width` and `height` - Width and height of the entity, available only when `prefab_id` is missing
 
 
@@ -189,6 +189,11 @@ local layers, map_params = detiled.parse("/tiled/maps/my_map.json")
 detiled.cell_to_pos(i, j, map_params) -- returns x, y
 detiled.pos_to_cell(x, y, map_params) -- returns i, j
 ```
+
+
+### Adjusting Entity Position
+
+You can set an `anchor` position for an entity in the tileset. This is useful when your Defold game object anchor differs from the sprite center. For example, a tree game object is usually placed on the ground. To adjust its placement, open the tileset, select the tree tile, and open `Tile Collision Editor`. Then add a `Point` object at the desired sprite anchor position. This point is used to calculate the final entity position in Defold.
 
 
 ## Game Example
